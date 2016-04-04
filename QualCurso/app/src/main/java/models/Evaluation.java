@@ -187,16 +187,21 @@ public class Evaluation extends Bean {
 	
 	public static Evaluation getFromRelation(int idInstitution, int idCourse, int year){
 		Evaluation result = new Evaluation();
+
 		result.setIdInstitution(idInstitution);
 		result.setIdCourse(idCourse);
 		result.setYear(year);
+
 		ArrayList<String> simplefields = new ArrayList<String>();
 		ArrayList<String> fields = new ArrayList<String>();
+
 		fields.add("id_institution");
 		fields.add("id_course");
 		fields.add("year");
+
 		simplefields.add("id_institution");
 		simplefields.add("id_course");
+
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		ArrayList<Bean> restricted = gDB.selectFromFields(result,fields,null);
 		if(restricted.size() != 0){

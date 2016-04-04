@@ -54,10 +54,139 @@ Methods:
                                        connection with the database */
 
     get(int id)
-        /* method that receives an id (unic identification number) and gets the element from the
+        /* Method that receives an id (unic identification number) and gets the element from the
         database */
         Variables: boolean result // Result to be given in the end.
                    GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
                                        connection with the database */
 
-     
+    getAll()
+    	// Returns an ArrayList with all the evaluation objects stored in the database.
+    	Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+
+    count()
+    	// Get the number of evaluation objects stored in the database.
+    	Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+
+    first()
+    	// Get the first evaluation object stored in the database.
+    	Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+
+    last()
+    	// Get the last evaluation object stored in the database.
+    	Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+
+    getWhere(String field, String value, boolean like)
+    	// Get where the evaluation is at the database with the field and its value.
+		Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+	
+	getFromRelation(int idInstitution, int idCourse, int year)
+		// Create evaluation object and compares with the database evaluation objects.
+		Variables: Evaluation result // Instance of Evaluation that will be set with the given values.
+				   ArrayList<String> simplefields /* Arraylist that represent the fields to be 
+				   								   compared in the most simple form. */
+				   ArrayList<String> fields // Arraylist that represent the fields to be compared.
+				   GenericBeanDAO gDB // Entity that will connect with the database.
+				   ArrayList<Bean> restricted // Received bean entity from the database
+
+	delete()
+		// Method to delete a evaluation object from the database.
+		Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+
+	getId() 
+		// Get and returns the unic identification number of the evaluation object.
+
+	setId(int id) 
+		// Set a new unic identification number of the evaluation object.
+
+	getIdInstitution() 
+		// Get and returns the institution identification number found in the evaluation object.
+
+	setIdInstitution(int idInstitution) 
+		// Set the institution ID present in the evaluation object.
+
+	getIdCourse() 
+		// Get and returns course ID present in evaluation object.
+
+	setIdCourse(int idCourse) 
+		// Set the course ID present in the evaluation object.
+
+	getYear() 
+		// Get and returns the Year when the evaluation was executed.
+
+	setYear(int year) 
+		// Set the Year of the that evaluation.
+
+	getModality() 
+		// Get and returns the modality of the executed evaluation.
+
+	setModality(String modality) 
+		// Set the modality of the executed evaluation.
+
+	getMasterDegreeStartYear() 
+		// Get and returns the year when the master degree started existing in that institution. 
+
+	setMasterDegreeStartYear(int masterDegreeStartYear) 
+		// Set the year when the master degree started existing in that institution. 
+
+	getDoctorateStartYear() 
+		// Get and returns the year when the doctorate degree started existing in that institution. 
+ 
+
+	setDoctorateStartYear(int doctorateStartYear) 
+		// Set the year when the doctorate degree started existing in that institution. 
+
+	getTriennialEvaluation() 
+		// Get and returns the number of evaluations in the triennial period.
+
+	setTriennialEvaluation(int triennialEvaluation) 
+		// Set the number of evaluations in the triennial period. 
+
+	getPermanentTeachers() 
+		// Get and returns the number of permanent teachers in the institution.
+
+	setPermanentTeachers(int permanentTeachers) 
+		// Set and returns the number of permanent teachers in the institution.	
+
+	getTheses() 
+		// Get and returns the number of theses produced in the institution.
+
+	setTheses(int theses) 
+		// Set the number of theses produced in the institution.
+
+	getDissertations() 
+		// Get and returns the number of dissertations produced in the institution.
+
+	setDissertations(int dissertations) 
+		// Set the number of dissertations produced in the institution.	
+
+	getIdArticles() 
+		// Get and returns the number of articles published by members of the institution.
+
+	setIdArticles(int idArticles) 
+		// Set the number of articles published by members of the institution.
+
+	getIdBooks() 
+		// Get and returns the number of books published by the university.
+
+	setIdBooks(int idBooks) 
+		// Set the number of books published by the academic institution.
+
+	getArtisticProduction() 
+		/* Get and returns the number of artistic prodution financed and produced in
+		 the institution. */
+
+	setArtisticProduction(int artisticProduction) 
+		// Set the number of artistic prodution financed and produced in the institution.

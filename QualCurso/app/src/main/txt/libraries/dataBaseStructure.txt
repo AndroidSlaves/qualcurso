@@ -1,0 +1,33 @@
+Class: DataBaseStructures
+    // class that creates the database and its functions.
+Attributes:
+    String sql
+        // This String is the sql code line that will be executed by all the build methods.
+Methods:
+    initDB()
+        /* Opens the SQL connection and creates all the other tables by calling all the build
+        functions in this class */
+
+    dropDB()
+        // Destroy all the tables and close database connection with SQL.
+
+    buildTableCourse()
+        // Creates database table for the courses and its attributes.
+
+    buildTableInstitution()
+        // Creates database table for the institution and its attributes.
+
+    buildTableCoursesInstitutions()
+        // Creates database table that relates intitution with its courses.
+
+    buildTableArticles()
+        // Creates database table for the articles and its attributes.
+
+    buildTableBooks()
+        // Creates database table for the books and its attributes.
+
+    buildTableEvaluation()
+        // Creates database table for the evaluations and its attributes.
+
+    buildTableSearch()
+        // Creates database table for the records of the searches.

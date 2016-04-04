@@ -1,0 +1,23 @@
+Class: DataBaseStructures
+    // class that creates the database and its functions.
+Methods:
+    initDB()
+        /* Opens the SQL connection and creates all the other tables by calling all the build
+        functions in this class */
+
+    dropDB()
+        //Destroy all the tables and close database connection with SQL.
+
+    buildTableCourse()
+        
+    buildTableInstitution()
+
+    buildTableCoursesInstitutions()
+
+    buildTableArticles()
+
+    buildTableBooks()
+
+    buildTableEvaluation()
+
+    buildTableSearch()

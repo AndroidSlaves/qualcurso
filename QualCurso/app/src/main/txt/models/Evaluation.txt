@@ -1,0 +1,63 @@
+Class: Evaluation
+    // Class that represents a single generic evaluation, which holds all the data necessary.
+
+Attributes:
+     int id
+        // Unic identification number for the evaluation.
+	 int idInstitution
+	    // Unic identification number of the institution in which the evaluation is connected.
+	 int idCourse
+	    // Unic identification number of the course in which the evaluation is connected.
+	 int year
+	    // Year when the evaluation was executed.
+	 String modality
+	    // What modality the evaluation was executed.
+	 int masterDegreeStartYear
+	    // when the master degree started existing in that Institution.
+	 int doctorateStartYear
+	    // When the doctor degree started existing in that institution.
+	 int triennialEvaluation
+	    // How many evaluations were executed in the triennial period.
+	 int permanentTeachers
+	    // How many permanent teachers there is in the evaluated institution.
+	 int theses
+	    // How many theses were defended in that institution.
+	 int dissertations
+	    // How many dissertations were produced and aproved in that institutions.
+	 int idArticles
+	    // How many articles werer produced and published from that institution.
+	 int idBooks
+	    // How many books were written and published in the institution.
+	 int artisticProduction
+	    // How many artistic produtions were financed and produced in that institution.
+
+Methods:
+    Evaluation()
+        // Creates an instance of the Evaluation with its default initial values.
+
+    Evaluation(int id)
+        // Creates an instance of the Evaluation with the given id and the initial values.
+
+    get(String field)
+        // Gets the value of the given field.
+
+    set(String field, String data)
+        // Sets a given field with a given value.
+
+    fieldsList()
+        // Return the ArrayList with all the fields names.
+        Variables ArrayList<String> fields //list containing all the fields strings.
+    save()
+        // Calls the Bean to do the database connection and sabe the data in the class.
+        Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+
+    get(int id)
+        /* method that receives an id (unic identification number) and gets the element from the
+        database */
+        Variables: boolean result // Result to be given in the end.
+                   GenericBeanDAO gDB /* Instance of the GenericBeanDAO which will make the
+                                       connection with the database */
+
+     

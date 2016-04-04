@@ -1,0 +1,32 @@
+class: GenericBeanDAO
+	/* Generic Dao class that connects to the SQL database by executing generic SQL commands. */
+
+Attributes:
+	SQLiteStatement pst
+		/* Represents a statement that can be executed against a database. The statement cannot
+		return multiple rows or columns, but a single value. */
+
+Methods:
+	GenericBeanDAO()
+		//Contructor which instatiate an object GenericBeanDAO
+
+	selectBeanRelationship(Bean bean, String table, String orderField)
+		/* Method that opens a connection with the database and executes SQL code to get ordered 
+	     table of values. */
+	     Attributes: ArrayList<Bean> beans // Represents the objects Beans to get from the database.
+	     			 String sql // It is the sql command line to be executed in the database.
+	     			 Cursor cs // Represents the interator for the database table being accessed.
+	     			 Bean object /* Represent an temporary Bean object that will be added to the 
+	     			 			  Arraylist beans */
+
+	selectBeanRelationship(Bean bean, String table, int year, String orderField)
+		/* Method that opens a connection with the database and executes SQL code to get ordered 
+	     table of values, but this time with the year. */
+		Attributes: ArrayList<Bean> beans // Represents the objects Beans to get from the database.
+	     			 String sql // It is the sql command line to be executed in the database.
+	     			 Cursor cs // Represents the interator for the database table being accessed.
+	     			 Bean object /* Represent an temporary Bean object that will be added to the 
+	     			 			  Arraylist beans */
+
+	selectFromFields(Bean bean, ArrayList<String> fields, String orderField)
+		/* Method that */

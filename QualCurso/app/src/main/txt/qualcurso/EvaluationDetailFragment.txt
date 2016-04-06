@@ -8,7 +8,7 @@ Attributes:
 	String YEAR = "year"
 		// Represents field year of the evaluated institution
 	BeanListCallbacks beanCallbacks
-		//
+		// Object that connects with the database.
 	EvaluationDetailFragment() 
 		// Method that instatiate the evaluationDetailFragment, an contructor.
 		Attributes: Bundle args /* Represents the object that will initiate the argument with the 
@@ -31,10 +31,10 @@ Attributes:
 	
 	getListItems(Evaluation evaluation)
 		Attributes: ArrayList<HashMap<String, String>> hashList /* List of Hashes list of strings with
-					with the information. */
+																with the information. */
 					ArrayList<Indicator> indicators /* List of indicator calculated from the evaluations*/
 					Book book // Book object with the books id present in the evaluation.
 					Article article // Book object with the books id present in the evaluation.
 					Bean bean // Generic object that connects to the database.
 					HashMap<String, String> hashMap /* Hash map containing all assets from the evaluated
-					intitution, like books and articles. */
+													intitution, like books and articles. */

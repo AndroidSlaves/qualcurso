@@ -1,0 +1,248 @@
+Class Course: Extends Bean implements Parcelable
+	
+VARIABLES:
+
+*id: type int
+
+*name: String 
+
+******************************************************
+
+FUNCTIONS
+
+*Course(): Constructor
+		this.id = 0;
+		this.identifier= "course";
+		this.relationship = "courses_institutions";
+
+	
+*Course(int id): Constructor
+		this.id = id;
+		this.identifier= "course";
+		this.relationship = "courses_institutions";
+
+	
+*getId(): int type function. return id;
+	
+*setId(int id): void type.
+		this.id = id;
+
+*getName(): String type. Return name;
+	
+*setName(String name): Void type
+		this.name = name;
+	
+	
+*save(): Boolean type. throws  SQLException.
+		boolean result = false;
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		result = gDB.insertBean(this);
+		this.setId(Course.last().getId());
+		return result;
+	
+	
+*addInstitution(Institution institution): Boolean type. Throws  SQLException.
+		boolean result = false;
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		result = gDB.addBeanRelationship(this, institution);
+		return result;
+
+*get(int id): Static Course type. Throws SQLException.
+		Course result = new Course(id);
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		result = (Course) gDB.selectBean(result);
+		return result;
+	
+
+*getAll(): static ArrayList<Course> type. Throws  SQLException.
+		Course type = new Course();
+		ArrayList<Course> result = new ArrayList<Course>();
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		for (Bean b : gDB.selectAllBeans(type,"name")) {
+			result.add((Course) b);
+		}
+		return result;
+	
+
+*count(): Static int type. Throws  SQLException.
+		Course type = new Course();
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		return gDB.countBean(type);
+
+
+*first(): Static Course type. Throws SQLException.
+		Course result = new Course();
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		result = (Course) gDB.firstOrLastBean(result, false);
+		return result;
+	
+
+*last(): Static Course type. Throws SQLException.
+		Course result = new Course();
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		result = (Course) gDB.firstOrLastBean(result, true);
+		return result;
+	
+
+*getInstitutions(): ArrayList<Institution> type. Throws SQLException.
+		ArrayList<Institution> institutions = new ArrayList<Institution>();
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		for (Bean b : gDB.selectBeanRelationship(this, "institution", "acronym")) {
+			institutions.add((Institution) b);
+		}
+		return institutions;
+	
+	
+*getInstitutions(int year): ArrayList<Institution> type. Throws SQLException.
+		ArrayList<Institution> institutions = new 			ArrayList<Institution>();
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		for (Bean b : gDB.selectBeanRelationship(this, 			"institution",year,"acronym")) {
+			institutions.add((Institution) b);
+		}
+		return institutions;
+
+
+*getWhere(String field, String value,boolean like): Static 			ArrayList<Course> type. Throws  SQLException.
+		Course type = new Course();
+		ArrayList<Course> result = new ArrayList<Course>();
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		for (Bean b : gDB.selectBeanWhere(type, field, value, 			like,"name")) {
+			result.add((Course) b);
+		}
+		return result;
+
+	
+*getCoursesByEvaluationFilter(Search search): Static ArrayList<Course> type. Throws  SQLException.
+		ArrayList<Course> result = new ArrayList<Course>();
+		String sql = "SELECT c.* FROM course AS c, evaluation 			AS e, articles AS a, books AS b "+
+					" WHERE 			year="+Integer.toString	(search.getYear())+
+					" AND e.id_course = c._id"+
+					" AND e.id_articles = a._id"+
+					" AND e.id_books = b._id"+
+					" AND "+search.getIndicator().getValue();
+
+		if(search.getMaxValue() == -1){
+			sql+=" >= "+Integer.toString(search.getMinValue());
+		}else{
+			sql+=" BETWEEN "+Integer.toString(search.getMinValue())+" AND "+Integer.toString(search.getMaxValue());
+		}
+		sql+=" GROUP BY c._id";
+		GenericBeanDAO
+		gDB = new GenericBeanDAO();
+
+		for (Bean b : gDB.runSql(new Course(), sql)){
+			result.add((Course)b);
+		}
+
+		return result;
+	
+
+*getInstitutionsByEvaluationFilter(int id_course, Search search): Static ArrayList<Institution> type. Throws  SQLException.
+		ArrayList<Institution> result = new 			ArrayList<Institution>();
+		String sql = "SELECT i.* FROM institution AS i, 		evaluation AS e, articles AS a, books AS b "+
+					" WHERE 			e.id_course="+Integer.toString(id_course)+
+					" AND e.id_institution = i._id"+
+					" AND e.id_articles = a._id"+
+					" AND e.id_books = b._id"+
+					" AND year="+Integer.toString(search.getYear())+
+					" AND "+search.getIndicator().getValue();
+		
+		if(search.getMaxValue() == -1){
+			sql+=" >= "+search.getMinValue();
+		}else{
+			sql+=" BETWEEN "+Integer.toString(search.getMinValue())+" AND "+Integer.toString(search.getMaxValue());
+		}
+		sql+=" GROUP BY i._id";
+		GenericBeanDAO gDB = new GenericBeanDAO();
+
+		for (Bean b : gDB.runSql(new Institution(), sql)){
+			result.add((Institution)b);
+		}
+		return result;
+	
+
+*delete(): Boolean type. Throws  SQLException {
+		boolean result = false;
+		GenericBeanDAO gDB = new GenericBeanDAO();
+		for(Institution i : this.getInstitutions()){
+			gDB.deleteBeanRelationship(this,i);
+		}
+		result = gDB.deleteBean(this);
+		return result;
+	
+	
+*get(String field): String type. @Override function.
+		if(field.equals("_id")){
+			return Integer.toString(this.getId());
+		}else if(field.equals("name")){
+			return this.getName();
+		}else {
+		return "";
+		}
+	}
+
+	
+*set(String field, String data): Void type. @Override function
+		if(field.equals("_id")){
+			this.setId(Integer.parseInt(data));
+		}else if(field.equals("name")){
+			this.setName(data);
+		}else {
+		
+		}
+		
+	
+
+	
+*fieldsList(): ArrayList<String> type. @Override function.
+		ArrayList<String> fields = new ArrayList<String>();
+		fields.add("_id");
+		fields.add("name");
+		return fields;
+	}
+
+	
+*toString(): String type. @Override function.
+		return getName();
+	}
+	
+*Course(Parcel in): Constructor.
+		this.id = in.readInt();
+		this.name = in.readString();
+		this.identifier = in.readString();
+		this.relationship = in.readString();
+	}
+
+	
+*describeContents(): Int type. @Override function.
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	
+*writeToParcel(Parcel dest, int flags): Void type. @Override function
+		dest.writeInt(this.id);
+		dest.writeString(this.name);
+		dest.writeString(this.identifier);
+		dest.writeString(this.relationship);
+		
+	}
+
+	
+
+*static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {
+
+		@Override
+		public Course createFromParcel(Parcel source) {
+			return new Course(source);
+		}
+
+		@Override
+		public Course[] newArray(int size) {
+			// TODO Auto-generated method stub
+			return new Course[size];
+		}
+	};
+	
+}
+

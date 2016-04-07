@@ -1,0 +1,70 @@
+/**
+ * Article is a Class that represents informations about Articles, like,
+ * number of published journals and conferences publications.
+ */
+Class: Article
+
+Attributes:
+
+    // This attribute is related to DB identifier of an Article.
+	private int id
+
+    // Quantity of Articles published in Journals
+	private int publishedJournals
+
+    // Quantity of Articles published on conferences.
+	private int publishedConferenceProceedings
+
+Methods:
+
+    // Empty Constructor of Article. It only set identifier as "articles".
+    public Article()
+
+    // Article constructor. It sets article identifier as "articles", and your id.
+	public Article(Integer id)
+
+    // Get the id of an Article. The id is unique for each Article.
+	public int getId()
+
+	// Set the id of Article. This id will be used in Database as unique number.
+	public void setId(int id)
+		this.id = id
+
+    // Get the quantity of published journals by Article.
+	public int getPublishedJournals()
+
+    // Set the number of published journals
+	public void setPublishedJournals(int publishedJournals)
+
+    // Get the number of published conference journals to show on screen.
+	public int getPublishedConferenceProceedings()
+
+    // Set the number (quantity) of published conference journals.
+	public void setPublishedConferenceProceedings()
+
+    // Save an unique ID on Database, and verify if save was successful.
+	public boolean save() throws  SQLException
+
+    // Get an Article previously saved on database
+	public static Article get(Integer id) throws  SQLException
+
+    // Create an List of all Articles previously saved on Database.
+	public static ArrayList<Article> getAll() throws SQLException
+
+    // Get the number of Articles on Database.
+	public static int count() throws SQLException
+
+    // Get first Article saved on Database.
+	public static Article first() throws SQLException
+
+    // Get last Article saved on Database.
+	public static Article last() throws	SQLException
+
+    /* Get an Article from Database, with attributes specified by field, value
+     * and the boolean that represents user like something.
+     */
+    public static ArrayList<Article> getWhere(String field, String value,
+                                              boolean like) throws SQLException
+
+    // Delete an Article from Database.
+	public boolean delete() throws  SQLException

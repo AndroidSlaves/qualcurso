@@ -34,11 +34,8 @@ FUNCTIONS
 	  * @Override void function. called immediately prior to the 		  * fragment no longer being associated with beanCallbacks
 	  */
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, 	Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.about_fragment, container, false);
-
-		return rootView;
-	}
-}
+*onCreateView(LayoutInflater inflater, ViewGroup container, 	Bundle savedInstanceState):
+	/**
+	  * Used to instanciated a fragment view
+	  */
 

@@ -1,5 +1,5 @@
 Class: AboutFragment
-	/**extends Fragment
+	/**extends Fragment. It's a fragment view to BeanListCallbacks
 
 *******************************************
 
@@ -21,7 +21,6 @@ FUNCTIONS
 	/**
 	  * AboutFragment. Used to instaciated one AboutFragment.
 	  */
-
 	
 *onAttach(Activity activity):
 	/**

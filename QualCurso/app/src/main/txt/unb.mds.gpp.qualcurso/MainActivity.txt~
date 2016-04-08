@@ -1,4 +1,9 @@
 Class: MainActivity
+	 /*
+	  * Create the principal view
+	  */
+
+VARIABLES
 
 *mNavigationDrawerFragment:
 	/**
@@ -25,15 +30,18 @@ Class: MainActivity
 *mSearchView: SearchView:
 	// Used to receive the seach view
 	
+
+**********************************************************************
+
+FUNCTIONS
+
 *onCreate(Bundle savedInstanceState):
 	/**
 	  *Set up the content view and Set up the drawer.
 	  */
-	
-	
+		
 *getFormatedTitle(CharSequence s):
 	// CharSequence type. Formate the color title.
-
 	
 *onConfigurationChanged(Configuration newConfig):
 	/**
@@ -52,12 +60,10 @@ Class: MainActivity
 *restoreActionBar():
 	// Void type. Shows the actionbar again
 
-
 onCreateOptionsMenu(Menu menu):
 	/**
 	  * Boolean type.Only show items in the action bar relevant to 		  * this screen if the drawer is not showing. Otherwise, let 		  * the drawer decide what to show in the action bar.
 	  */
-			
 
 *setupSearchView(MenuItem searchItem):
 	// Void type. Set up the seach view
@@ -85,7 +91,6 @@ onCreateOptionsMenu(Menu menu):
 	  * Void type. selected the institution on the fild seached.
 	  */
 		
-
 *onQueryTextChange(String arg0):
 	/**
 	  * Boolean type. Used to asks texts

@@ -1,248 +1,181 @@
-Class Course: Extends Bean implements Parcelable
+Class Course: 
+	/**
+	  *Extends Bean implements Parcelable. Used to modeling the 		  *Course and and manipulate the informations storeds.
+	  */
+
 	
 VARIABLES:
 
-*id: type int
+*id: 
+	// Int type. Used to give an identifier number to each course.
 
-*name: String 
+*name: 
+	// String type. Used to give a name to each course.
 
 ******************************************************
 
 FUNCTIONS
 
-*Course(): Constructor
-		this.id = 0;
-		this.identifier= "course";
-		this.relationship = "courses_institutions";
+*Course(): 
+	/**
+	  *Default Constructor. Creates an instance of the Course with
+	  *id receiving 0, identifier receiving "course" and 
+          *relationship receiving the string "courses_institutions";
+	  */
 
 	
-*Course(int id): Constructor
-		this.id = id;
-		this.identifier= "course";
-		this.relationship = "courses_institutions";
-
+*Course(int id): 
+	/**
+ 	  *Constructor with id initial value
+	  *id receiving id, identifier receiving "course" and
+	  *relationship receiving the string "courses_institutions".
+	  */
 	
-*getId(): int type function. return id;
+*getId(): 
+	// Int type function. Used to access return id value.
 	
-*setId(int id): void type.
-		this.id = id;
+*setId(int id): 
+	/**
+	  *Void type. Used to access the access the variable id and 	      *store a value there.
+	  */
 
-*getName(): String type. Return name;
+*getName():
+	/**String type. Used to return name value.
 	
-*setName(String name): Void type
-		this.name = name;
-	
-	
-*save(): Boolean type. throws  SQLException.
-		boolean result = false;
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = gDB.insertBean(this);
-		this.setId(Course.last().getId());
-		return result;
-	
-	
-*addInstitution(Institution institution): Boolean type. Throws  SQLException.
-		boolean result = false;
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = gDB.addBeanRelationship(this, institution);
-		return result;
-
-*get(int id): Static Course type. Throws SQLException.
-		Course result = new Course(id);
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = (Course) gDB.selectBean(result);
-		return result;
-	
-
-*getAll(): static ArrayList<Course> type. Throws  SQLException.
-		Course type = new Course();
-		ArrayList<Course> result = new ArrayList<Course>();
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		for (Bean b : gDB.selectAllBeans(type,"name")) {
-			result.add((Course) b);
-		}
-		return result;
-	
-
-*count(): Static int type. Throws  SQLException.
-		Course type = new Course();
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		return gDB.countBean(type);
-
-
-*first(): Static Course type. Throws SQLException.
-		Course result = new Course();
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = (Course) gDB.firstOrLastBean(result, false);
-		return result;
-	
-
-*last(): Static Course type. Throws SQLException.
-		Course result = new Course();
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = (Course) gDB.firstOrLastBean(result, true);
-		return result;
-	
-
-*getInstitutions(): ArrayList<Institution> type. Throws SQLException.
-		ArrayList<Institution> institutions = new ArrayList<Institution>();
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		for (Bean b : gDB.selectBeanRelationship(this, "institution", "acronym")) {
-			institutions.add((Institution) b);
-		}
-		return institutions;
-	
-	
-*getInstitutions(int year): ArrayList<Institution> type. Throws SQLException.
-		ArrayList<Institution> institutions = new 			ArrayList<Institution>();
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		for (Bean b : gDB.selectBeanRelationship(this, 			"institution",year,"acronym")) {
-			institutions.add((Institution) b);
-		}
-		return institutions;
-
-
-*getWhere(String field, String value,boolean like): Static 			ArrayList<Course> type. Throws  SQLException.
-		Course type = new Course();
-		ArrayList<Course> result = new ArrayList<Course>();
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		for (Bean b : gDB.selectBeanWhere(type, field, value, 			like,"name")) {
-			result.add((Course) b);
-		}
-		return result;
-
-	
-*getCoursesByEvaluationFilter(Search search): Static ArrayList<Course> type. Throws  SQLException.
-		ArrayList<Course> result = new ArrayList<Course>();
-		String sql = "SELECT c.* FROM course AS c, evaluation 			AS e, articles AS a, books AS b "+
-					" WHERE 			year="+Integer.toString	(search.getYear())+
-					" AND e.id_course = c._id"+
-					" AND e.id_articles = a._id"+
-					" AND e.id_books = b._id"+
-					" AND "+search.getIndicator().getValue();
-
-		if(search.getMaxValue() == -1){
-			sql+=" >= "+Integer.toString(search.getMinValue());
-		}else{
-			sql+=" BETWEEN "+Integer.toString(search.getMinValue())+" AND "+Integer.toString(search.getMaxValue());
-		}
-		sql+=" GROUP BY c._id";
-		GenericBeanDAO
-		gDB = new GenericBeanDAO();
-
-		for (Bean b : gDB.runSql(new Course(), sql)){
-			result.add((Course)b);
-		}
-
-		return result;
-	
-
-*getInstitutionsByEvaluationFilter(int id_course, Search search): Static ArrayList<Institution> type. Throws  SQLException.
-		ArrayList<Institution> result = new 			ArrayList<Institution>();
-		String sql = "SELECT i.* FROM institution AS i, 		evaluation AS e, articles AS a, books AS b "+
-					" WHERE 			e.id_course="+Integer.toString(id_course)+
-					" AND e.id_institution = i._id"+
-					" AND e.id_articles = a._id"+
-					" AND e.id_books = b._id"+
-					" AND year="+Integer.toString(search.getYear())+
-					" AND "+search.getIndicator().getValue();
+*setName(String name): 
+	/**
+	  *Void type. Used to access the variable name and store a 	     *value there.
+	  */
 		
-		if(search.getMaxValue() == -1){
-			sql+=" >= "+search.getMinValue();
-		}else{
-			sql+=" BETWEEN "+Integer.toString(search.getMinValue())+" AND "+Integer.toString(search.getMaxValue());
-		}
-		sql+=" GROUP BY i._id";
-		GenericBeanDAO gDB = new GenericBeanDAO();
+*save(): 
+	/**
+	  *Boolean type and throws  SQLException.
+	  *Initing with a boolean variable called "result" that    		  *receive false. Instaciated a GenericBeanDAO called "gDB" 
+	  *result receive the method that insert the fields and set it
+	  * in id Course. In the end return result equals true.
+	  */
+	
+*addInstitution(Institution institution):
+	/**
+	  *Boolean type. Throws  SQLException. Initing with a boolean 		  *variable called "result" that receive false.
+	  *Instance GenericBeanDAO called "gDB". The "result" receive 		  *the method addBeanRelationship that add a list of fields in 		  *database and return the result true.
+	  */
 
-		for (Bean b : gDB.runSql(new Institution(), sql)){
-			result.add((Institution)b);
-		}
-		return result;
+*get(int id): 
+	/**
+	  *Static Course type. Throws SQLException.
+	  *This function instaciated the Course(id) and select
+	  *one field returning true in the end.
+	  */
+	  
+*getAll(): 
+	/**
+	  *Static ArrayList<Course> type. Throws  SQLException.
+	  *Instanciated Course "type" and do an	ArrayList<Course> 		  *called "result". After that instance a GenericBeanDAO 		  *called "gDB". In the end uses an interactive for to 		  *select all the Courses take type and add the substituition  		  *for "name". Returning true.
+	  */	
+
+*count(): 
+	/**
+	  *Static int type. Throws  SQLException.
+	  *Count the GenericBeanDAO fields.
+	  */
+
+*first(): 
+	/**
+	  *Static Course type. Throws SQLException.
+	  *Move the Course to the first GenericBeanDAO field
+	  */
+
+*last(): 
+	/**
+	  *Static Course type. Throws SQLException.
+	  *Move the Course to the first GenericBeanDAO field
+	  */
+
+*getInstitutions(): 
+	/**
+	  *ArrayList<Institution> type. Throws SQLException.
+	  *Select one Institution added and return it.
+	  */	
+	
+*getInstitutions(int year): 
+	/**
+	  *ArrayList<Institution> type. Throws SQLException.
+	  *You put the year and it return institutions in the array 	      *with this same information.
+	  */
+
+*getWhere(String field, String value,boolean like):
+	/**
+	  *Static ArrayList<Course> type. Throws  SQLException.
+	  *When you are looking for a instutions about the State
+	  * you put the field and the string values
+	  */
+	
+*getCoursesByEvaluationFilter(Search search):
+	/**
+	  *Static ArrayList<Course> type. Throws  SQLException.
+	  *Filter the Courses about the evalutions and return an array 		  *of then
+	  */	
+
+*getInstitutionsByEvaluationFilter(int id_course, Search search):
+	/**
+	  *Static ArrayList<Institution> type. Throws  SQLException.
+	  *Filter the Courses about the evalutions and return an array 		  *of then
+	  */
 	
 
-*delete(): Boolean type. Throws  SQLException {
-		boolean result = false;
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		for(Institution i : this.getInstitutions()){
-			gDB.deleteBeanRelationship(this,i);
-		}
-		result = gDB.deleteBean(this);
-		return result;
+*delete():
+	/**
+	  *Boolean type. Throws  SQLException
+	  *Delete one instituction
+	  */
 	
 	
-*get(String field): String type. @Override function.
-		if(field.equals("_id")){
-			return Integer.toString(this.getId());
-		}else if(field.equals("name")){
-			return this.getName();
-		}else {
-		return "";
-		}
-	}
-
+*get(String field):
+	/**
+	  *String type. @Override function.
+	  *Used to take the "id" number from the course or its "name"
+	  *and return a String with these one informations
+	  */
 	
-*set(String field, String data): Void type. @Override function
-		if(field.equals("_id")){
-			this.setId(Integer.parseInt(data));
-		}else if(field.equals("name")){
-			this.setName(data);
-		}else {
+*set(String field, String data): 
+	/**
+	  *Void type. @Override function
+	  *Used to store data into the "id" number or the "name" course
+	  */
 		
-		}
-		
+*fieldsList(): 
+	/**
+	  *ArrayList<String> type. @Override function.
+	  *Used to access a list of fields and add string "_id" and 	      *"name" on the fields
+	  */
 	
-
+*toString(): 
+	/**
+	  *String type. @Override function.
+	  *return the name value from the course
+	  */
 	
-*fieldsList(): ArrayList<String> type. @Override function.
-		ArrayList<String> fields = new ArrayList<String>();
-		fields.add("_id");
-		fields.add("name");
-		return fields;
-	}
-
 	
-*toString(): String type. @Override function.
-		return getName();
-	}
+*Course(Parcel in): 
+	/**
+	  *Constructor.
+ 	  *Made like a parcelable container of Parcel to interface
+	  */
+
+*describeContents():
+	/**
+	  *Int type. @Override function.
+	  *TODO Auto-generated method stub, and return 0
+	  */
+
+*writeToParcel(Parcel dest, int flags): 
+	/**
+	  *Void type. @Override function
+	  *insert the values into the parcelable interface container
+	  */
 	
-*Course(Parcel in): Constructor.
-		this.id = in.readInt();
-		this.name = in.readString();
-		this.identifier = in.readString();
-		this.relationship = in.readString();
-	}
+*static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>():
+	// Used to create a list of Parcelables "containers" of courses
 
-	
-*describeContents(): Int type. @Override function.
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	
-*writeToParcel(Parcel dest, int flags): Void type. @Override function
-		dest.writeInt(this.id);
-		dest.writeString(this.name);
-		dest.writeString(this.identifier);
-		dest.writeString(this.relationship);
-		
-	}
-
-	
-
-*static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {
-
-		@Override
-		public Course createFromParcel(Parcel source) {
-			return new Course(source);
-		}
-
-		@Override
-		public Course[] newArray(int size) {
-			// TODO Auto-generated method stub
-			return new Course[size];
-		}
-	};
-	
-}
 

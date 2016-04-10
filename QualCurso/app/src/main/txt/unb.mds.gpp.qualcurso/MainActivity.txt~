@@ -1,0 +1,137 @@
+Class: MainActivity
+
+*mNavigationDrawerFragment:
+	/**
+	  * NavigationDrawerFragment type. Fragment managing the 
+	  * behaviors, interactions and presentation of the navigation 		  * drawer.
+	  */
+
+*mTitle:
+	/**
+	  * CharSequenceUsed type. To store the last screen title. For 
+	  * use in {@link #restoreActionBar()}.
+	  */
+	 
+*drawerPosition: 
+	/**
+	  * Int type, receive 10.
+	public static String DRAWER_POSITION = "drawerPosition";
+
+*CURRENT_TITLE:
+	/**
+	  * String type. Receive "currentTitle".
+	  */
+
+*mSearchView: SearchView:
+	// Used to receive the seach view
+	
+*onCreate(Bundle savedInstanceState):
+	/**
+	  *Set up the content view and Set up the drawer.
+	  */
+	
+	
+*getFormatedTitle(CharSequence s):
+	// CharSequence type. Formate the color title.
+
+	
+*onConfigurationChanged(Configuration newConfig):
+	/**
+	  * Void type. Don't reload the current page when the 	  	    * orientation is changed
+	  */
+	
+*onSaveInstanceState(Bundle outState): 
+	// Void type. Recreate an Activity
+	
+*onNavigationDrawerItemSelected(int position):
+	// Void type. Update the main content by replacing fragments
+		
+*onSectionAttached(int number):
+	// show the selected 
+	
+*restoreActionBar():
+	// Void type. Shows the actionbar again
+
+
+onCreateOptionsMenu(Menu menu):
+	/**
+	  * Boolean type.Only show items in the action bar relevant to 		  * this screen if the drawer is not showing. Otherwise, let 		  * the drawer decide what to show in the action bar.
+	  */
+			
+
+*setupSearchView(MenuItem searchItem):
+	// Void type. Set up the seach view
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+
+		switch(item.getItemId()) {
+			case R.id.action_about:
+				aboutApplication();
+				return true;
+			case R.id.action_exit:
+				closeApplication();
+				return true;
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void closeApplication() {
+		finish();
+		System.exit(1);
+	}
+	
+	private void aboutApplication() {
+		onBeanListItemSelected(AboutFragment.newInstance());
+	}
+
+	@Override
+	public void onBeanListItemSelected(Fragment fragment) {
+		// update the main content by replacing fragments
+		FragmentManager fragmentManager = getSupportFragmentManager();
+
+				fragmentManager
+						.beginTransaction()
+						.replace(R.id.container,
+								fragment).addToBackStack(null).commit();
+	}
+
+	@Override
+	public void onBeanListItemSelected(Fragment fragment, int container) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+
+		fragmentManager
+				.beginTransaction()
+				.replace(container,
+						fragment).commit();
+	}
+
+	@Override
+	public void onSearchBeanSelected(Search search, Parcelable bean) {
+		if(bean instanceof Institution){
+			onBeanListItemSelected(CourseListFragment.newInstance(((Institution)bean).getId(),
+					search.getYear(),
+					Institution.getCoursesByEvaluationFilter(((Institution)bean).getId(),search)));
+		}else if(bean instanceof Course){
+			onBeanListItemSelected(InstitutionListFragment.newInstance(((Course)bean).getId(),
+					search.getYear(),
+					Course.getInstitutionsByEvaluationFilter(((Course)bean).getId(),search)));
+		}		
+	}
+
+	@Override
+	public boolean onQueryTextChange(String arg0) {
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}
+

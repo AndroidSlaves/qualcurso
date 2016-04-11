@@ -1,0 +1,44 @@
+Class: AboutFragment
+	/**extends Fragment
+
+*******************************************
+
+VARIABLES
+
+*beanCallbacks: 
+	/** 
+	  * BeanListCallbacks type.
+	  */
+
+********************************************
+
+FUNCTIONS
+
+*AboutFragment(): 
+	// Default constructor
+
+*newInstance():
+	/**
+	  * AboutFragment. Used to instaciated one AboutFragment.
+	  */
+
+	
+*onAttach(Activity activity):
+	/**
+	  * @Override void function. called to associated the   
+	  * fragment BeanListCallbacks
+	  */
+
+*onDetach():
+	/**
+	  * @Override void function. called immediately prior to the 		  * fragment no longer being associated with beanCallbacks
+	  */
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, 	Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.about_fragment, container, false);
+
+		return rootView;
+	}
+}
+

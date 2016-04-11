@@ -62,76 +62,37 @@ onCreateOptionsMenu(Menu menu):
 *setupSearchView(MenuItem searchItem):
 	// Void type. Set up the seach view
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+*onOptionsItemSelected(MenuItem item):
+	/** Boolean type. Handle action bar item clicks here. The 	    * action bar will automatically handle clicks on the Home/Up 		  * button, so long as you specify a parent activity in 	  * AndroidManifest.xml.
+	  */
 
-		switch(item.getItemId()) {
-			case R.id.action_about:
-				aboutApplication();
-				return true;
-			case R.id.action_exit:
-				closeApplication();
-				return true;
-		}
+*closeApplication():
+	// Close the app
 
-		return super.onOptionsItemSelected(item);
-	}
+*onBeanListItemSelected(Fragment fragment):
+	/**
+	  * Void type. Update the main content by replacing fragments
+	  * An Optional fragment for this back stack state, or null.
+	  */
+		
+*onBeanListItemSelected(Fragment fragment, int container):
+	/** 
+	  * Void type. Update the main content by replacing fragments
+	  */
 
-	private void closeApplication() {
-		finish();
-		System.exit(1);
-	}
-	
-	private void aboutApplication() {
-		onBeanListItemSelected(AboutFragment.newInstance());
-	}
+*onSearchBeanSelected(Search search, Parcelable bean): 
+	/**
+	  * Void type. selected the institution on the fild seached.
+	  */
+		
 
-	@Override
-	public void onBeanListItemSelected(Fragment fragment) {
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getSupportFragmentManager();
+*onQueryTextChange(String arg0):
+	/**
+	  * Boolean type. Used to asks texts
+	  */
 
-				fragmentManager
-						.beginTransaction()
-						.replace(R.id.container,
-								fragment).addToBackStack(null).commit();
-	}
-
-	@Override
-	public void onBeanListItemSelected(Fragment fragment, int container) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-
-		fragmentManager
-				.beginTransaction()
-				.replace(container,
-						fragment).commit();
-	}
-
-	@Override
-	public void onSearchBeanSelected(Search search, Parcelable bean) {
-		if(bean instanceof Institution){
-			onBeanListItemSelected(CourseListFragment.newInstance(((Institution)bean).getId(),
-					search.getYear(),
-					Institution.getCoursesByEvaluationFilter(((Institution)bean).getId(),search)));
-		}else if(bean instanceof Course){
-			onBeanListItemSelected(InstitutionListFragment.newInstance(((Course)bean).getId(),
-					search.getYear(),
-					Course.getInstitutionsByEvaluationFilter(((Course)bean).getId(),search)));
-		}		
-	}
-
-	@Override
-	public boolean onQueryTextChange(String arg0) {
-		return false;
-	}
-
-	@Override
-	public boolean onQueryTextSubmit(String arg0) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-}
+*onQueryTextSubmit(String arg0):
+	/**
+	  * TODO Auto-generated method stub
+	  */
 

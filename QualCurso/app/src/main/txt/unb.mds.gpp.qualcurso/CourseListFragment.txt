@@ -1,6 +1,6 @@
 Class CourseListFragment:
 	/**
-	  * Extends ListFragment
+	  * Extends ListFragment. It's a Fragment to show a list of 		  * Course
 	  */
 
 ********************************************

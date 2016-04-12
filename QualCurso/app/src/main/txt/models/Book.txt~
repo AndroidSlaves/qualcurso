@@ -1,0 +1,162 @@
+Class Book: 
+	/**
+	  * Extends Bean implements Parcelable. Used to modeling the 		  * Book and and manipulate the informations storeds.
+	  */
+
+*********************************************************
+	
+VARIABLES:
+
+*id: 
+	// Int type. Used to give an identifier number to each book.
+
+*integralText:
+	// private int type. Receive an int to text in book
+
+*chapters:
+	// private int type. Receive an int to chapters
+
+*collections:
+	// private int type. Receive an int to colletions
+
+*entries: 
+	// private int type. Receive an int to entries 
+
+******************************************************
+
+FUNCTIONS
+
+*Book(): 
+	/**
+	  * Default Constructor. Creates an instance of the Book with
+	  * id receiving 0, identifier receiving "books" and 
+          * relationship receiving the string "";
+	  */
+
+*Book(int id): 
+	/**
+ 	  *Constructor with id initial value
+	  *id receiving id, identifier receiving "books" and
+	  *relationship receiving the string "".
+	  */
+	
+*getId(): 
+	// Int type function. Used to access return id value.
+	
+*setId(int id): 
+	/**
+	  * Void type. Used to access the variable id and 	      		  * store a value there.
+	  */
+
+*getIntegralText():
+	/** String type. Used to return integralText value.
+	
+*setIntegralText(String integralText): 
+	/**
+	  * Void type. Used to access the variable integralText and  	       * store a value there.
+	  */
+*getChapters():
+	/** String type. Used to return chapters value.
+	
+*setChapters(String Chapters): 
+	/**
+	  * Void type. Used to access the variable chapters and  	   * store a value there.
+	  */
+
+*getCollections():
+	/** String type. Used to return collections value.
+	
+*setCollections(String Collections): 
+	/**
+	  * Void type. Used to access the variable collections and  	      * store a value there.
+	  */
+
+*getEntries():
+	/** String type. Used to return entries value.
+	
+*setEntries(String Entries): 
+	/**
+	  * Void type. Used to access the variable entries and  	  * store a value there.
+	  */
+		
+*save(): 
+	/**
+	  * Boolean type and throws  SQLException.
+	  * Initing with a boolean variable called "result" that    		  * receive false. Instaciated a GenericBeanDAO called "gDB" 
+	  * result receive the method that insert the fields and set it
+	  * in id Book. In the end return result equals true.
+	  */
+	
+*addInstitution(Institution institution):
+	/**
+	  * Boolean type. Throws  SQLException. Initing with a boolean 		  * variable called "result" that receive false.
+	  * Instance GenericBeanDAO called "gDB". The "result" receive 		  * the method addBeanRelationship that add a list of fields  		  * in database and return the result true.
+	  */
+
+*get(int id): 
+	/**
+	  *Static Book type. Throws SQLException.
+	  *This function instaciated the Book(id) and select
+	  *one field returning true in the end.
+	  */
+	  
+*getAll(): 
+	/**
+	  * Static ArrayList<Book> type. Throws  SQLException.
+	  * Instanciated Book "type" and do an ArrayList<Book> 		  * called "result". After that instance a GenericBeanDAO 		  * called "gDB". In the end uses an interactive for to    
+          * select all the Book take type and add the  		  
+	  * substituition for. Returning true.
+	  */	
+
+*count(): 
+	/**
+	  * Static int type. Throws  SQLException.
+	  * Count the GenericBeanDAO fields.
+	  */
+
+*first(): 
+	/**
+	  * Static Book type. Throws SQLException.
+	  * Move the Book to the first GenericBeanDAO field
+	  */
+
+*last(): 
+	/**
+	  * Static Book type. Throws SQLException.
+	  * Move the Book to the first GenericBeanDAO field
+	  */
+
+*getWhere(String field, String value,boolean like):
+	/**
+	  * Static ArrayList<Book> type. Throws  SQLException.
+	  * When you are looking for a instutions about the State
+	  * you put the field and the string values
+	  */
+
+*delete():
+	/**
+	  * Boolean type. Throws  SQLException
+	  * Delete one instituction
+	  */
+	
+	
+*get(String field):
+	/**
+	  * String type. @Override function.
+	  * Used to take the "id" number from the book
+	  * and return a String with these one informations
+	  */
+	
+*set(String field, String data): 
+	/**
+	  * Void type. @Override function
+	  * Used to store data into the book atributes
+	  */
+		
+*fieldsList(): 
+	/**
+	  * ArrayList<String> type. @Override function.
+	  * Used to access a list of fields and the others atributes 		  * of book
+	  */
+	
+

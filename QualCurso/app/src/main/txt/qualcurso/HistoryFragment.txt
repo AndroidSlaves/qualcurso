@@ -1,0 +1,40 @@
+class: HistoryFragment
+	/* Class that shows to the user the history of views viewed in the program
+	 recently. */
+Attributes:
+	BeanListCallbacks beanCallbacks // entity that connects to the database.
+Methods:
+	HistoryFragment() 
+		// Method that instaciate the historyfragment object, the constructor.
+
+	onAttach(Activity activity) 
+		// Method that attach an activity and treat the possible exceptions.
+	
+	onDetach() 
+		// Method that detach an activity and treat the possible exceptions.
+	
+	onCreateView(LayoutInflater inflater, ViewGroup container, 
+			Bundle savedInstanceState) 
+		Attributes: View rootView // View that works as a container for the data. 
+					ListView history /* List of objects to be translated in itens
+					for the user. */
+					ArrayList<Search> searches /* List of object searches that are
+					filters for the list */
+					ListHistoryAdapter histotyAdapter /* Adapter that creates a
+					list of itens in the history (listview) */
+					
+	displayInstitutionList(Search search) 
+		// Show list of institutions to the user filtered by the search attr.
+		Attributes:ArrayList<Institution> institutions /* List of institutions to be
+		displayed to the user. */
+
+	displayCourseList(Search search) 
+		// Show list of institutions to the user filtered by the search attr.
+		Attributes:ArrayList<Course> courses /* List of courses to be
+		displayed to the user. */
+
+	displayToastMessage(String textMenssage) 
+		// Show custom message to the user on screen.
+		Attributes:Toast toast // Object that interacts to the screen and shows message.
+	
+

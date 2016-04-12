@@ -1,0 +1,33 @@
+
+Abstract Class: Bean
+
+Attributes:
+
+    // Identifier is used to make some operations on databse.
+    protected String identifier
+
+    // Relationship is used to make some operations on database.
+    protected String relationship
+
+Methods:
+
+    /*
+     * Get informations about some object. This method will be Override on
+     * classes that inherit Bean.
+     */
+    public abstract String get(String field)
+
+    /*
+     * Set informations about some object. This method will be Override on
+     * classes that inherit Bean.
+     */
+    public abstract void set(String field, String data)
+
+    // Create an ArrayList with fields of Database.
+    public abstract ArrayList<String> fieldsList()
+
+    // Get id of object saved on database.
+	public abstract int getId()
+
+    // Set id of object that will be saved on database.
+	public abstract void setId(int id)

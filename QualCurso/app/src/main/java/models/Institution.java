@@ -18,6 +18,8 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public Institution(int id) {
+		Assert(id >=0);
+
 		this.id = id;
 		this.identifier = "institution";
 		this.relationship = "courses_institutions";
@@ -28,10 +30,14 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public void setAcronym(String acronym) {
+		Assert(acronym != null);
+
 		this.acronym = acronym;
 	}
 
 	public void setId(int id) {
+		Assert(id >=0);
+
 		this.id = id;
 	}
 
@@ -48,6 +54,8 @@ public class Institution extends Bean implements Parcelable {
 	}
 	
 	public boolean addCourse(Course course) throws SQLException {
+		Assert(course != null);
+
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = gDB.addBeanRelationship(this, course);
@@ -55,6 +63,8 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public static Institution get(int id) throws SQLException {
+		Assert(id >= 0);
+
 		Institution result = new Institution(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Institution) gDB.selectBean(result);
@@ -104,6 +114,7 @@ public class Institution extends Bean implements Parcelable {
 	
 	public ArrayList<Course> getCourses(int year) throws 
 			SQLException {
+		Assert(year > 2000); // See how to get current year.
 		ArrayList<Course> courses = new ArrayList<Course>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		for (Bean b : gDB.selectBeanRelationship(this, "course", year,"name")) {
@@ -116,6 +127,11 @@ public class Institution extends Bean implements Parcelable {
 
 	public static ArrayList<Institution> getWhere(String field, String value,
 			boolean like) throws  SQLException {
+		Assert(field != null);
+		Assert(value != null);
+		Assert(field != "");
+		Assert(value != "");
+
 		Institution type = new Institution();
 		ArrayList<Institution> result = new ArrayList<Institution>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -126,6 +142,13 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public static ArrayList<Institution> getInstitutionsByEvaluationFilter(Search search) throws  SQLException {
+		Assert(search != null);
+		Assert(search.getIndicator != null);
+		Assert(search.getValue != null);
+		Assert(search.getMaxValue != null);
+		Assert(search.getYear != null);
+		Assert(search.getYear > 2000);
+		
 		ArrayList<Institution> result = new ArrayList<Institution>();
 		String sql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a, books AS b "+
 					" WHERE year="+Integer.toString(search.getYear())+
@@ -151,6 +174,14 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public static ArrayList<Course> getCoursesByEvaluationFilter(int id_institution, Search search) throws  SQLException {
+		Assert(search != null);
+		Assert(search.getIndicator != null);
+		Assert(search.getValue != null);
+		Assert(search.getMinValue != null);
+		Assert(search.getYear != null);
+		Assert(search.getYear > 2000);
+		Assert(id_institution >=0);
+
 		ArrayList<Course> result = new ArrayList<Course>();
 		String sql = "SELECT c.* FROM course AS c, evaluation AS e, articles AS a, books AS b "+
 					" WHERE e.id_institution="+id_institution+
@@ -186,6 +217,8 @@ public class Institution extends Bean implements Parcelable {
 
 	@Override
 	public String get(String field) {
+		Assert(field != null);
+
 		if (field.equals("_id")) {
 			return Integer.toString(this.getId());
 		} else if (field.equals("acronym")) {
@@ -197,13 +230,14 @@ public class Institution extends Bean implements Parcelable {
 
 	@Override
 	public void set(String field, String data) {
+		Assert(field != null);
+		Assert(data != null);
+		
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
 		} else if (field.equals("acronym")) {
 			this.setAcronym(data);
-		} else {
-
-		}
+		} else {/* Nothing to do. */}
 
 	}
 
@@ -221,6 +255,8 @@ public class Institution extends Bean implements Parcelable {
 	}
 	
 	private Institution(Parcel in){
+		Assert(in != null);
+
 		this.id = in.readInt();
 		this.acronym = in.readString();
 		this.identifier = in.readString();
@@ -235,6 +271,8 @@ public class Institution extends Bean implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
+		Assert(dest != null);
+
 		dest.writeInt(this.id);
 		dest.writeString(this.acronym);
 		dest.writeString(this.identifier);
@@ -246,6 +284,7 @@ public class Institution extends Bean implements Parcelable {
 
 		@Override
 		public Institution createFromParcel(Parcel source) {
+			Assert(source != null);
 			return new Institution(source);
 		}
 

@@ -45,7 +45,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onAttach(Activity activity) {
-		Assert(activity != null);
+		assert(activity != null);
 
 		super.onAttach(activity);
 		try {
@@ -66,7 +66,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Assert(savedInstanceState != null);
+		assert(savedInstanceState != null);
 
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
@@ -94,8 +94,8 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onTabChanged(String tabId) {
-		Assert(tabId != null);
-		Assert(tabId != "");
+		assert(tabId != null);
+		assert(tabId != "");
 
 		if (TAB_INSTITUTIONS.equals(tabId)) {
 			updateTab(tabId, R.id.tab_1);
@@ -111,8 +111,8 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		Assert(menu != null);
-		Assert(inflater != null);
+		assert(menu != null);
+		assert(inflater != null);
 
 		inflater.inflate(R.menu.search_menu, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -122,14 +122,14 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	private void setupSearchView(MenuItem searchItem){
-		Assert(searchItem != null);
+		assert(searchItem != null);
 		searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM|MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		mSearchView.setOnQueryTextListener(this);
 	}
 
 	private void updateTab(String tabId, int placeholder) {
-		Assert(tabId != null);
-		Assert(placeholder != null);
+		assert(tabId != null);
+		assert(placeholder != null);
 
 		FragmentManager fm = getFragmentManager();
 		if (fm.findFragmentByTag(tabId) == null) {
@@ -143,7 +143,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public boolean onQueryTextChange(String arg0) {
-		Assert(arg0 != null);
+		assert(arg0 != null);
 
 		if(arg0.length()>=1){
 			if(mCurrentTab == 0){
@@ -164,7 +164,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	public ArrayList<Institution> castToInstitutions(ArrayList<Bean> beans){
-		Assert(beans != null);
+		assert(beans != null);
 
 		ArrayList<Institution> institutions = new ArrayList<Institution>();
 		for(Bean b : beans){
@@ -174,7 +174,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	public ArrayList<Course> castToCourses(ArrayList<Bean> beans){
-		Assert(beans != null);
+		assert(beans != null);
 
 		ArrayList<Course> courses = new ArrayList<Course>();
 		for(Bean b : beans){
@@ -184,9 +184,9 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	private ArrayList<Bean> getFilteredList(String filter, ArrayList<? extends Bean> list){
-		Assert(filter != null);
-		Assert(filter != "");
-		Assert(list != null);
+		assert(filter != null);
+		assert(filter != "");
+		assert(list != null);
 
 		ArrayList<Bean> beans = new ArrayList<Bean>();
 		for(Bean b : list){
@@ -199,7 +199,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public boolean onQueryTextSubmit(String arg0) {
-		Assert(arg0 != null);
+		assert(arg0 != null);
 		return false;
 	}
 

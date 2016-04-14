@@ -29,7 +29,7 @@ public class Evaluation extends Bean {
 	}
 
 	public Evaluation(int id) {
-		Assert(id >= 0);
+		assert(id >= 0);
 
 		this.id = id;
 		this.identifier = "evaluation";
@@ -38,7 +38,7 @@ public class Evaluation extends Bean {
 
 	@Override
 	public String get(String field) {
-		Assert(field != null);
+		assert(field != null);
 
 		if (field.equals("_id")) {
 			return Integer.toString(this.getId());
@@ -75,8 +75,8 @@ public class Evaluation extends Bean {
 
 	@Override
 	public void set(String field, String data){
-		Assert(field != null);
-		Assert(data != null);
+		assert(field != null);
+		assert(data != null);
 
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
@@ -140,7 +140,7 @@ public class Evaluation extends Bean {
 	}
 
 	public static Evaluation get(int id) throws  SQLException {
-		Assert(id >=0);
+		assert(id >=0);
 
 		Evaluation result = new Evaluation(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -183,9 +183,9 @@ public class Evaluation extends Bean {
 
 	public static ArrayList<Evaluation> getWhere(String field, String value, boolean like) 
 			throws  SQLException {
-		Assert(field != null);
-		Assert(value != null);
-		Assert(field != "");
+		assert(field != null);
+		assert(value != null);
+		assert(field != "");
 
 		Evaluation type = new Evaluation();
 		ArrayList<Evaluation> result = new ArrayList<Evaluation>();
@@ -197,9 +197,9 @@ public class Evaluation extends Bean {
 	}
 	
 	public static Evaluation getFromRelation(int idInstitution, int idCourse, int year){
-		Assert(idInstitution >= 0);
-		Assert(idCourse >= 0);
-		Assert(year > 2000);
+		assert(idInstitution >= 0);
+		assert(idCourse >= 0);
+		assert(year > 2000);
 
 		Evaluation result = new Evaluation();
 
@@ -240,7 +240,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setId(int id) {
-		Assert(id >= 0);
+		assert(id >= 0);
 		this.id = id;
 	}
 
@@ -249,7 +249,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdInstitution(int idInstitution) {
-		Assert(idInstitution >= 0);
+		assert(idInstitution >= 0);
 		this.idInstitution = idInstitution;
 	}
 
@@ -258,7 +258,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdCourse(int idCourse) {
-		Assert(idCourse >= 0);
+		assert(idCourse >= 0);
 		this.idCourse = idCourse;
 	}
 
@@ -267,7 +267,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setYear(int year) {
-		Assert(year > 2000);
+		assert(year > 2000);
 		this.year = year;
 	}
 
@@ -276,7 +276,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setModality(String modality) {
-		Assert(modality != null);
+		assert(modality != null);
 		this.modality = modality;
 	}
 
@@ -303,7 +303,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setTriennialEvaluation(int triennialEvaluation) {
-		Assert(triennialEvaluation >= 0);
+		assert(triennialEvaluation >= 0);
 
 		this.triennialEvaluation = triennialEvaluation;
 	}
@@ -313,7 +313,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setPermanentTeachers(int permanentTeachers) {
-		Assert(permanentTeachers >= 0);
+		assert(permanentTeachers >= 0);
 
 		this.permanentTeachers = permanentTeachers;
 	}
@@ -323,7 +323,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setTheses(int theses) {
-		Assert(theses >= 0);
+		assert(theses >= 0);
 		
 		this.theses = theses;
 	}
@@ -333,7 +333,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setDissertations(int dissertations) {
-		Assert(dissertations >= 0);
+		assert(dissertations >= 0);
 		
 		this.dissertations = dissertations;
 	}
@@ -343,7 +343,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdArticles(int idArticles) {
-		Assert(idArticles >= 0);
+		assert(idArticles >= 0);
 		
 		this.idArticles = idArticles;
 	}
@@ -353,7 +353,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdBooks(int idBooks) {
-		Assert(idBooks >= 0);
+		assert(idBooks >= 0);
 		
 		this.idBooks = idBooks;
 	}
@@ -363,7 +363,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setArtisticProduction(int artisticProduction) {
-		Assert(artisticProduction >= 0);
+		assert(artisticProduction >= 0);
 
 		this.artisticProduction = artisticProduction;
 	}

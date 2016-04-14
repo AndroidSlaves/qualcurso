@@ -37,9 +37,9 @@ public class EvaluationDetailFragment extends Fragment{
 	}
 	
 	public static EvaluationDetailFragment newInstance(int id_institution, int id_course,int year){
-		Assert(id_institution >= 0);
-		Assert(id_course >= 0);
-		Assert(year > 2000);
+		assert(id_institution >= 0);
+		assert(id_course >= 0);
+		assert(year > 2000);
 
 		EvaluationDetailFragment fragment = new EvaluationDetailFragment();
 		Bundle args = new Bundle();
@@ -75,9 +75,9 @@ public class EvaluationDetailFragment extends Fragment{
 	}
 	
 	public ArrayList<HashMap<String, String>> getListItems(Evaluation evaluation){
-		Assert(evaluation != null);
-		Assert(evaluation.getIdArticles >= 0);
-		Assert(evaluation.getIdBooks >= 0);
+		assert(evaluation != null);
+		assert(evaluation.getIdArticles >= 0);
+		assert(evaluation.getIdBooks >= 0);
 		
 		ArrayList<HashMap<String, String>> hashList = new ArrayList<HashMap<String,String>>();
 		ArrayList<Indicator> indicators = Indicator.getIndicators();
@@ -104,7 +104,7 @@ public class EvaluationDetailFragment extends Fragment{
 	
 	@Override
 	public void onAttach(Activity activity) {
-		Assert(activity != null);
+		assert(activity != null);
 		
 		super.onAttach(activity);
 		try {

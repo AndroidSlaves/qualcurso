@@ -28,7 +28,7 @@ public class HistoryFragment extends Fragment {
 
 	@Override
 	public void onAttach(Activity activity) {
-		Assert(activity !=null);
+		assert(activity !=null);
 		super.onAttach(activity);
 		try {
 			beanCallbacks = (BeanListCallbacks) activity;
@@ -75,7 +75,7 @@ public class HistoryFragment extends Fragment {
 	}
 
 	private void displayInstitutionList(Search search) {
-		Assert(search != null);
+		assert(search != null);
 		
 		ArrayList<Institution> institutions = Institution.getInstitutionsByEvaluationFilter(search);
 
@@ -86,7 +86,7 @@ public class HistoryFragment extends Fragment {
 	}
 
 	private void displayCourseList(Search search) {
-		Assert(search != null);
+		assert(search != null);
 		
 		ArrayList<Course> courses = Course.getCoursesByEvaluationFilter(search);
 
@@ -97,7 +97,7 @@ public class HistoryFragment extends Fragment {
 	}
 
 	private void displayToastMessage(String textMenssage) {
-		Assert(textMenssage != null);
+		assert(textMenssage != null);
 
 		Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), textMenssage, Toast.LENGTH_LONG);
 		toast.show();

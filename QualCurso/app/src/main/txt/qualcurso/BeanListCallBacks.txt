@@ -1,0 +1,13 @@
+// Declares prototypes of some methods. They will be used to show beans on screen.
+Interface: BeanListCallbacks
+
+Methods:
+
+    // Must show beans on fragment.
+	onBeanListItemSelected(Fragment fragment)
+
+    // Must show beans on fragment determined by container.
+    onBeanListItemSelected(Fragment fragment, int container)
+
+    // When bean clicked, must show search on screen.
+    onSearchBeanSelected(Search search, Parcelable bean)

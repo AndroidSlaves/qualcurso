@@ -21,6 +21,12 @@ public class GenericBeanDAO extends DataBase{
 	
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, String orderField)
 			throws SQLException {
+	    Assert(bean != null);
+		Assert(bean.identifier != null);
+	    Assert(table != null);
+	    Assert(table != "");
+	    Assert(orderField != null);
+
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
 		String sql = "SELECT c.* FROM " + table + " as c, " + bean.relationship
@@ -43,6 +49,13 @@ public class GenericBeanDAO extends DataBase{
 	
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, int year, String orderField)
 			throws SQLException {
+	    Assert(bean != null);
+		Assert(bean.identifier != null);
+	    Assert(table != null);
+	    Assert(table != "");
+	    Assert(orderField != null);
+	    Assert(year > 2000);
+
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
 		String sql = "SELECT c.* FROM " + table + " as c, " + "evaluation"
@@ -65,6 +78,12 @@ public class GenericBeanDAO extends DataBase{
 	
 	public ArrayList<Bean> selectFromFields(Bean bean, ArrayList<String> fields, String orderField)
 			throws SQLException {
+		Assert(bean != null);
+		Assert(bean.identifier != null);
+	    Assert(fields != null);
+	    Assert(fields.length > 0);
+	    Assert(orderField != null);
+
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
 		ArrayList<String> values = new ArrayList<String>();
@@ -98,6 +117,9 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public boolean insertBean(Bean bean) throws SQLException {
+		Assert(bean != null);
+		Assert(bean.identifier != null);
+
 		this.openConnection();
 		String replace = "";
 		int i = 1;
@@ -124,6 +146,12 @@ public class GenericBeanDAO extends DataBase{
 
 	public boolean addBeanRelationship(Bean parentBean, Bean childBean)
 			throws SQLException {
+		Assert(parentBean != null);
+		Assert(parentBean.identifier != null);
+		Assert(parentBean.relationship != null);
+		Assert(childBean != null);
+		Assert(childBean.identifier != null);
+
 		this.openConnection();
 		String sql = "INSERT INTO " + parentBean.relationship + "(id_"
 				+ parentBean.identifier + ",id_" + childBean.identifier
@@ -139,6 +167,12 @@ public class GenericBeanDAO extends DataBase{
 	
 	public boolean deleteBeanRelationship(Bean parentBean, Bean childBean)
 			throws SQLException {
+		Assert(parentBean != null);
+		Assert(parentBean.identifier != null);
+		Assert(parentBean.relationship != null);
+		Assert(childBean != null);
+		Assert(childBean.identifier != null);
+
 		this.openConnection();
 		String sql = "DELETE FROM " + parentBean.relationship + "  WHERE id_"
 				+ parentBean.identifier + " = ? AND id_" + childBean.identifier
@@ -153,6 +187,9 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Bean selectBean(Bean bean) throws SQLException {
+		Assert(bean != null);
+		Assert(bean.identifier != null);
+
 		this.openConnection();
 		Bean result = null;
 		String sql = "SELECT * FROM " + bean.identifier + " WHERE "
@@ -169,6 +206,10 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public ArrayList<Bean> selectAllBeans(Bean type, String orderField) throws SQLException {
+		Assert(type != null);
+		Assert(type.identifier != null);
+	    Assert(orderField != null);
+
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
 		Cursor cs = this.database.query(type.identifier, null, null, null, null, null, orderField);
@@ -184,6 +225,9 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public ArrayList<String[]> runSql(String sql) throws SQLException {
+		Assert(sql != null);
+		Assert(sql != "");
+
 		this.openConnection();
 		ArrayList<String[]> result = new ArrayList<String[]>();
 
@@ -203,6 +247,11 @@ public class GenericBeanDAO extends DataBase{
 	
 	
 	public ArrayList<Bean> runSql(Bean type, String sql) throws SQLException {
+		Assert(type != null);
+		Assert(type.identifier != null);
+		Assert(sql != null);
+		Assert(sql != "");
+
 		this.openConnection();
 		ArrayList<Bean> result = new ArrayList<Bean>();
 		Cursor cs = this.database.rawQuery(sql, null);
@@ -218,6 +267,9 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Integer countBean(Bean type) throws SQLException {
+		Assert(type != null);
+		Assert(type.identifier != null);
+
 		this.openConnection();
 		Integer count = 0;
 		String sql = "SELECT * FROM " + type.identifier;
@@ -229,6 +281,9 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Bean firstOrLastBean(Bean type, boolean last) throws SQLException {
+		Assert(type != null);
+		Assert(type.identifier != null);
+
 		Bean bean = null;
 		String sql = "SELECT * FROM " + type.identifier + " ORDER BY "
 				+ type.fieldsList().get(0);
@@ -253,7 +308,14 @@ public class GenericBeanDAO extends DataBase{
 		return bean;
 	}
 	
-	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields, String orderedBy, String condition, String groupBy, boolean desc){
+	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields, String orderedBy,
+															String condition, String groupBy, boolean desc){
+		Assert(orderedBy != null);
+		Assert(condition != null);
+		Assert(groupBy != null);
+		Assert(returnFields != null);
+		Assert(returnFields.length > 0);
+
 		String fields = "";
 		for(String s : returnFields){
 			fields+=s+",";
@@ -292,6 +354,12 @@ public class GenericBeanDAO extends DataBase{
 
 	public ArrayList<Bean> selectBeanWhere(Bean type, String field,
 			String value, boolean use_like, String orderField) throws SQLException {
+		Assert(type != null);
+		Assert(type.identifier != null);
+		Assert(field != null);
+		Assert(value != null);
+		Assert(orderField != null);
+
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
 		String sql = "SELECT * FROM " + type.identifier + " WHERE ";
@@ -320,6 +388,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 	
 	public boolean deleteBean(Bean bean) throws SQLException {
+		Assert(bean != null);
+		Assert(bean.identifier != null);
 		this.openConnection();
 		String sql = "DELETE FROM "+bean.identifier+ " WHERE "+bean.fieldsList().get(0)+" = ?";
 		this.pst = this.database.compileStatement(sql);
@@ -331,6 +401,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Bean init(String beanIdentifier) {
+		Assert(beanIdentifier != null);
+		
 		Bean object = null;
 		if (beanIdentifier.equals("institution")) {
 			object = new Institution();

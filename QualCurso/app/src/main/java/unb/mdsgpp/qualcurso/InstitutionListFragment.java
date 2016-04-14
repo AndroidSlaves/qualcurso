@@ -39,6 +39,9 @@ public class InstitutionListFragment extends ListFragment{
 
 
 	public static InstitutionListFragment newInstance(int id, int year){
+		Assert(id >= 0);
+		Assert(year > 2000);
+
 		InstitutionListFragment fragment = new InstitutionListFragment();
 		Bundle args = new Bundle();
 		args.putInt(ID_COURSE, id);
@@ -48,6 +51,10 @@ public class InstitutionListFragment extends ListFragment{
 		return fragment;
 	}
 	public static InstitutionListFragment newInstance(int id, int year, ArrayList<Institution> institutions){
+		Assert(id >= 0);
+		Assert(year > 2000);
+		Assert(institutions != null);
+
 		InstitutionListFragment fragment = new InstitutionListFragment();
 		Bundle args = new Bundle();
 		args.putInt(ID_COURSE, id);
@@ -91,6 +98,7 @@ public class InstitutionListFragment extends ListFragment{
 
 	@Override
 	public void onAttach(Activity activity) {
+		Assert(activity != null);
 		super.onAttach(activity);
 		try {
             beanCallbacks = (BeanListCallbacks) activity;
@@ -107,6 +115,11 @@ public class InstitutionListFragment extends ListFragment{
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		Assert(l != null);
+		Assert(v != null);
+		Assert(position >= 0);
+		Assert(id >= 0);
+
 		if(getArguments().getInt(ID_COURSE)==0){
 			beanCallbacks.onBeanListItemSelected(CourseListFragment.newInstance(((Institution)l.getItemAtPosition(position)).getId(),getArguments().getInt(YEAR)));
 		}else {
@@ -116,6 +129,7 @@ public class InstitutionListFragment extends ListFragment{
 	}
 	
 	private static ArrayList<Institution> getInstitutionsList(int idCourse) throws SQLException{
+		Assert(id >= 0);
 		if(idCourse == 0){
 			return Institution.getAll();
 		}else{

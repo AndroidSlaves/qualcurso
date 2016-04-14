@@ -1,0 +1,31 @@
+﻿Class: ListCompareAdapter extends ArrayAdapter<Institution> implements OnCheckedChangeListener
+   // 
+	
+	VARIABLES
+	* static int INSTITUTION
+	   // Variável global definindo com o termo deve ser apresentado, com primeira letra maiúscula e 
+	* static int POSITION
+	   // Indica a posição selecionada do item na lista do componente CheckBox
+	* Fragment callingFragment
+	   // Solicita a chamada de outra Fragment identificando a atual
+	* CheckBoxListCallbacks checkBoxCallBacks;
+	   // Utilizado para identificar qual item da lista foi selecionado pelo usuário.
+	* CheckBox cb = null;
+	   // Componente utilizado para listagem dos itens 
+	* ArrayList<Boolean> checkedItems = new ArrayList<Boolean>();
+	   // Lista de itens dentro do componente CheckBox
+		
+	FUNCTIONS
+	* ListCompareAdapter(Context context, int resource, List<Institution> item, Fragment callingFragment) 
+		/* Resgata valores de atributos da classe Pai, define o atributo <tipo> para chamada de fragment, 
+		* cria a lista e adiciona itens a uma lista para ser utilizada na aplicação.
+		*/	
+
+	* View getView(int position, View contextView, ViewGroup parent)
+		/* Trabalha para inflar a tela de visão do usuário mostrando a lista em CheckBox
+		* Seleciona e transmite os dados da instituição selecionada para o usuário
+		*/
+
+	* void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+		// Seleciona o item ao ser clicado, utilizado para retornar a posição do botão na lista.
+        

@@ -1,0 +1,38 @@
+Class: Indicator 
+   // Class that handles the data of the indicators used to instutuições rating.
+
+	VARIABLES
+	* String name;
+	   // Initialize the bookmark name.
+	* String value;
+           // Initialize the real value of the indicator.
+	* static final String DEFAULT_INDICATOR = "defaultIndicator"; 
+	   // Initialize and assign the constant value.
+
+	FUNCTIONS
+	* Indicator(String name, String value) 
+	   	// Method to build Indicator objects, if only if the two variable name and value.
+
+	* String getName()
+	   	// Access and get the bookmark name given
+
+	* void setName(String name)
+	   	// Establish the bookmark name may change it
+
+	* String getValue()
+	   	// Access and obtain the value of the received indicator
+
+	* void setValue(String value)
+	   	// To establish the value of the indicator can change it
+	
+	* String toString()
+	   	// Get the bookmark name given overriding the toString () default Java
+
+	* static ArrayList<Indicator> getIndicators()
+   	      	/* Get all the indicators assigned to evaluation, book and article and places 
+               	*  on a list of indicators returning to list.
+	       	*/
+
+	* static Indicator getIndicatorByValue(String value)
+		// Search an indicator value in the indicator list and returns the index.
+		

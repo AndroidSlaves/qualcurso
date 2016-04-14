@@ -1,0 +1,89 @@
+Class CourseListFragment:
+	/**
+	  * Extends ListFragment. It's a Fragment to show a list of 		  * Course
+	  */
+
+********************************************
+
+VARIABLES
+
+*ID_INSTITUTION:
+	/**
+	  * Private static final String type. Receive "idInstitution"
+	  * Used to store the identifier of the institution
+	  */
+
+*IDS_COURSES:
+	/**
+	  * Private static final String Type. Receive "idsCourses".
+	  * Used to store the course's identifier.
+	  */
+*YEAR:
+	/**
+	  * Private static final String type. Receive "year"
+	  * Used to store the course's year.
+	  */
+	
+*beanCallbacks:
+	/**
+	  * BeanListCallbacks type. Used to access BeanListCallbacks 		  * class.
+	  */
+
+***********************************************
+
+FUNCTIONS
+
+*CourseListFragment():
+	/**
+	  * Set up a default list fragment of courses
+	  */
+
+*CourseListFragment newInstance(int id, int year):
+	/**
+	  * Set up a list fragmente of cousers with identifier and year
+	  */
+
+*newInstance(int id, int year, ArrayList<Course> list):
+	/**
+	  * Instanciate de list of courses's itens
+	  */
+	
+
+*onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState):
+	/**
+	  * Create the fragment that will receive the list and
+	  * use conditions to the list be not null.
+	  */ 
+		
+*onSaveInstanceState(Bundle outState):
+	/**
+	  * Used to save the State's instances
+	  */
+	
+*onListItemClick(ListView l, View v, int position, long id):
+	/**
+	  * Used to set up a clicable itens in a list view
+	  */
+	
+*onAttach(Activity activity):
+	/**
+	  * @Override void function. called to associated the   
+	  * fragment BeanListCallbacks
+	  */
+		
+*onDetach():
+	/**
+	  * @Override void function. called immediately prior to the 		  * fragment no longer being associated with beanCallbacks
+	  */
+ 
+*getCoursesList(int idInstitution):
+	/**
+	  * Private static ArrayList<Course> type and throws 		  * SQLException. Used to verify the list, if it's null,
+	  * It will be fuller with list of Courses, else, return the 		  * course.
+	  */
+	
+*getActionBar():
+	/**
+	  * Private ActionBar type. Used to return 		  	    * ActionBarActivity
+	  */
+

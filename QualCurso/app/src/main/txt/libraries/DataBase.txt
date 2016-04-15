@@ -1,0 +1,43 @@
+Class DataBase:
+	/**
+	  * Extends SQLiteAssetHelper. This class controle the 		  * conections with database
+	  */
+
+****************************************
+
+VARIABLES
+
+*DATABASE_NAME:
+	/**
+	  * Private static final String type. Receive
+	  * "database.sqlite3.db". Used to named the database
+	  */
+
+*DATABASE_VERSION
+	/**
+	  * Int type, receive 1. Used to receive the version of the 		  * database
+	  */
+
+*database:
+	/**
+	  * SQLiteDatabase type. Used to manipulate database.
+	  */
+
+******************************************************
+
+FUNCTIONS
+	
+*DataBase():
+	/**
+	  * Default constructor
+	  */
+	
+*openConnection():
+	/**
+	  * Protected void type. Used to get and open the Database.
+	  */
+	
+*closeConnection():
+	/**
+	  * Protected void type. Used to close the database.
+	  */

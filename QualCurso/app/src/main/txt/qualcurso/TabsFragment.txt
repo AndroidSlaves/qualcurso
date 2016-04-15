@@ -4,10 +4,10 @@ Attributes:
 	String TAG // Represent the name of the tab object.
 	String TAB_INSTITUTIONS // Represent the name "institutions" shown in the tab to the user.
 	String TAB_COURSES // Represent the name "courses" shown in the tab to the user.
-	View mRoot // 
-	TabHost mTabHost
-	int mCurrentTab
-	SearchView mSearchView
+	View mRoot // The container view that holds the tabs.
+	TabHost mTabHost 
+	int mCurrentTab // Represents the tab that the user is seeing at that momment.
+	SearchView mSearchView // View on the screen to search for institution or courses.
 	ArrayList<Course> allCourses // List of all courses to be listed when clicking the tabs.
 	ArrayList<Institution> allInstitutions /* List of all courses to be listed when clicking
 											 the tabs.*/ 
@@ -20,118 +20,47 @@ Methods:
 		// Inflates the fragments with the tabs. 	
 
 	onActivityCreated(Bundle savedInstanceState) 
-		super.onActivityCreated(savedInstanceState);
-		setRetainInstance(true);
-		setHasOptionsMenu(true);
-		mTabHost.setOnTabChangedListener(this);
-		mTabHost.setCurrentTab(mCurrentTab);
-		// manually start loading stuff in the first tab
-		updateTab(TAB_INSTITUTIONS, R.id.tab_1);
-	
+		// Saves instance of the activity in order to not lose information.
 
-	  setupTabs() 
-		mTabHost.setup(); // you must call this before adding your tabs!
-		mTabHost.addTab(mTabHost.newTabSpec(TAB_INSTITUTIONS).setIndicator(getString(R.string.institutions)).setContent(R.id.tab_1));
-		mTabHost.addTab(mTabHost.newTabSpec(TAB_COURSES).setIndicator(getString(R.string.courses)).setContent(R.id.tab_2));
-		TabWidget widget = mTabHost.getTabWidget();
-		for(int i = 0; i < widget.getChildCount(); i++)
-			View v = widget.getChildAt(i);
-			TextView tv = (TextView) v.findViewById(android.R.id.title);
-			if(tv==null)
-				continue;
-			
-			v.setBackgroundResource(R.drawable.tab_indicator_ab_light_green_acb);
-		
-	
+	setupTabs() 
+	  	// create the initial values for the tabs with its views.
+		Attributes: TabWidget widget // Area where the itens will be inserted.
+				    View v // Generic view that will inflate the widget.
+				    TextView tv /* Text returned from the view in order to check if there
+				    			 is something inside. */
 
-	
-	  onTabChanged(String tabId) 
-		if (TAB_INSTITUTIONS.equals(tabId)) 
-			updateTab(tabId, R.id.tab_1);
-			mCurrentTab = 0;
-			return;
+	onTabChanged(String tabId) 
+		//update the view when chaging tabs.
 		
-		if (TAB_COURSES.equals(tabId)) 
-			updateTab(tabId, R.id.tab_2);
-			mCurrentTab = 1;
-			return;
-		
+	onCreateOptionsMenu(Menu menu, MenuInflater inflater) 
+		// Setup basic information when creating optionsMenu.
+		Attributes: MenuItem searchItem // Represents search choice selected on the option menu.
+					mSearchView // Represents the view where the user can search in the options menu.
 	
-	
-	
-	  onCreateOptionsMenu(Menu menu, MenuInflater inflater) 
-		inflater.inflate(R.menu.search_menu, menu);
-		MenuItem searchItem = menu.findItem(R.id.action_search);
-		mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-		setupSearchView(searchItem);
-		super.onCreateOptionsMenu(menu, inflater);
-	
-	
-	  setupSearchView(MenuItem searchItem)
-		searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM|MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
-		mSearchView.setOnQueryTextListener(this);
-	
+	setupSearchView(MenuItem searchItem)
+	  	/* Set basic values of view for the search views, where the user can choose an option
+	  	for filter. */
 
-	  updateTab(String tabId, int placeholder) 
-		FragmentManager fm = getFragmentManager();
-		if (fm.findFragmentByTag(tabId) == null) 
-			if(tabId.equalsIgnoreCase(TAB_INSTITUTIONS))
-				beanCallbacks.onBeanListItemSelected(InstitutionListFragment.newInstance(0,2010), placeholder);
-			else if (tabId.equalsIgnoreCase(TAB_COURSES))
-				beanCallbacks.onBeanListItemSelected(CourseListFragment.newInstance(0,2010), placeholder);
-			
-		
-	
+	updateTab(String tabId, int placeholder) 
+		/* Update the tabs with the specified values (TabId =  the identification of the
+		selected tab. placeholder: Where the user is.) */
 
+	onQueryTextChange(String arg0) 
+		// Typing text in the search view, it searches for the 
 	
-	 boolean onQueryTextChange(String arg0) 
-		if(arg0.length()>=1)
-			if(mCurrentTab == 0)
-				ArrayList<Bean> beans = getFilteredList(arg0, allInstitutions);
-				beanCallbacks.onBeanListItemSelected(InstitutionListFragment.newInstance(0, 2010, castToInstitutions(beans)), R.id.tab_1);
-			else if (mCurrentTab == 1)
-				ArrayList<Bean> beans = getFilteredList(arg0, allCourses);
-				beanCallbacks.onBeanListItemSelected(CourseListFragment.newInstance(0, 2010, castToCourses(beans)), R.id.tab_2);
-			
-		else
-			if(mCurrentTab == 0)
-				beanCallbacks.onBeanListItemSelected(InstitutionListFragment.newInstance(0, 2010), R.id.tab_1);
-			else if (mCurrentTab == 1)
-				beanCallbacks.onBeanListItemSelected(CourseListFragment.newInstance(0, 2010), R.id.tab_2);
-			
-		
-		return false;
+	castToInstitutions(ArrayList<Bean> beans)
+		// Converts a list of bens (generic objects)to a list of institutions.
+		Attributes: ArrayList<Institution> institutions /* The list of institutions to be populated
+			 				with beans data converted. */
 	
 	
-	 ArrayList<Institution> castToInstitutions(ArrayList<Bean> beans)
-		ArrayList<Institution> institutions = new ArrayList<Institution>();
-		for(Bean b : beans)
-			institutions.add((Institution)b);
-		
-		return institutions;
-	
-	
-	 ArrayList<Course> castToCourses(ArrayList<Bean> beans)
-		ArrayList<Course> courses = new ArrayList<Course>();
-		for(Bean b : beans)
-			courses.add((Course)b);
-		
-		return courses;
-	
-	
-	 ArrayList<Bean> getFilteredList(String filter, ArrayList<? extends Bean> list)
-		ArrayList<Bean> beans = new ArrayList<Bean>();
-		for(Bean b : list)
-			if(b.toString().toLowerCase().startsWith(filter.toLowerCase()))
-				beans.add(b);
-			
-		
-		return beans;
-	
+	castToCourses(ArrayList<Bean> beans)
+		// Converts a list of beans ( generic objects)  to a list of courses with its data..
+		Attributes: ArrayList<Course> courses /* List of courses that will be populated with the 
+							converted beans. */
+	getFilteredList(String filter, ArrayList<? extends Bean> list)
+		// Get the list of beans filtered a String (factor). 
+		ArrayList<Bean> beans // List of beans to be sorted and returned.
 
-	
-	 boolean onQueryTextSubmit(String arg0) 
-		return false;
-	
-
-
+	onQueryTextSubmit(String arg0) 
+		// returns false.

@@ -1,0 +1,36 @@
+Class: CompareListAdapter extends ArrayAdapter<HashMap<String, String>>
+	// Comparison screen presentation institutions
+
+	VARIABLES
+	* static String INDICATOR_VALUE = "indicatorValue";
+	   // Receive pre-set value of the value of the indicator for comparison between courses.
+	* static String FIRST_VALUE = "firstValue";
+	   // Receive pre-set value of the value of the first course identification for comparison between courses.
+	* static String SECOND_VALUE = "secondValue";
+	   // Receive pre-set value of the value of the second course identification for comparison between courses.
+	* static String IGNORE_INDICATOR = "ignoreIndicator";
+	   // Receives permission indicator value to compare the courses.
+
+	FUNCTIONS
+	* CompareListAdapter(Context context, int textViewResourceId) 
+		// Constructor receiving parent class data and application context.
+
+	* CompareListAdapter(Context context, int resource, List<HashMap<String, String>> items) 
+		// Constructor receiving parent class data and application context.
+
+	* View getView(int position, View convertView, ViewGroup parent)
+		/* Courses inflates the comparison screen for the user
+		*  Identify each course attribute and provides the user visually
+		*  Analyzes the relative amount of attributes and identifies what advantage would
+		*  in comparison, changing colors, in which red course loses the comparison and
+		*  the green wins the comparison attribute or end.
+		*/
+
+		View v;
+		   // Initialize instance vision - the user's screen.
+
+		HashMap<String, String> h = getItem(position);
+		   // Stores course data selected for comparison.
+
+
+		

@@ -29,6 +29,8 @@ public class Evaluation extends Bean {
 	}
 
 	public Evaluation(int id) {
+		Assert(id >= 0);
+
 		this.id = id;
 		this.identifier = "evaluation";
 		this.relationship = "";
@@ -36,6 +38,8 @@ public class Evaluation extends Bean {
 
 	@Override
 	public String get(String field) {
+		Assert(field != null);
+
 		if (field.equals("_id")) {
 			return Integer.toString(this.getId());
 		} else if (field.equals("id_institution")) {
@@ -71,6 +75,9 @@ public class Evaluation extends Bean {
 
 	@Override
 	public void set(String field, String data){
+		Assert(field != null);
+		Assert(data != null);
+
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
 		} else if (field.equals("id_institution")) {
@@ -99,9 +106,7 @@ public class Evaluation extends Bean {
 			this.setIdBooks(Integer.parseInt(data));
 		} else if (field.equals("artistic_production")) {
 			this.setArtisticProduction(Integer.parseInt(data));
-		} else{
-			
-		}
+		} else{/* Nothing to do. */}
 		
 
 	}
@@ -135,6 +140,8 @@ public class Evaluation extends Bean {
 	}
 
 	public static Evaluation get(int id) throws  SQLException {
+		Assert(id >=0);
+
 		Evaluation result = new Evaluation(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Evaluation) gDB.selectBean(result);
@@ -176,6 +183,10 @@ public class Evaluation extends Bean {
 
 	public static ArrayList<Evaluation> getWhere(String field, String value, boolean like) 
 			throws  SQLException {
+		Assert(field != null);
+		Assert(value != null);
+		Assert(field != "");
+
 		Evaluation type = new Evaluation();
 		ArrayList<Evaluation> result = new ArrayList<Evaluation>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -186,6 +197,10 @@ public class Evaluation extends Bean {
 	}
 	
 	public static Evaluation getFromRelation(int idInstitution, int idCourse, int year){
+		Assert(idInstitution >= 0);
+		Assert(idCourse >= 0);
+		Assert(year > 2000);
+
 		Evaluation result = new Evaluation();
 
 		result.setIdInstitution(idInstitution);
@@ -225,6 +240,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setId(int id) {
+		Assert(id >= 0);
 		this.id = id;
 	}
 
@@ -233,6 +249,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdInstitution(int idInstitution) {
+		Assert(idInstitution >= 0);
 		this.idInstitution = idInstitution;
 	}
 
@@ -241,6 +258,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdCourse(int idCourse) {
+		Assert(idCourse >= 0);
 		this.idCourse = idCourse;
 	}
 
@@ -249,6 +267,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setYear(int year) {
+		Assert(year > 2000);
 		this.year = year;
 	}
 
@@ -257,6 +276,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setModality(String modality) {
+		Assert(modality != null);
 		this.modality = modality;
 	}
 
@@ -265,6 +285,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setMasterDegreeStartYear(int masterDegreeStartYear) {
+		// must be bigger than the minimun
 		this.masterDegreeStartYear = masterDegreeStartYear;
 	}
 
@@ -273,6 +294,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setDoctorateStartYear(int doctorateStartYear) {
+		//must be bigger than the year
 		this.doctorateStartYear = doctorateStartYear;
 	}
 
@@ -281,6 +303,8 @@ public class Evaluation extends Bean {
 	}
 
 	public void setTriennialEvaluation(int triennialEvaluation) {
+		Assert(triennialEvaluation >= 0);
+
 		this.triennialEvaluation = triennialEvaluation;
 	}
 
@@ -289,6 +313,8 @@ public class Evaluation extends Bean {
 	}
 
 	public void setPermanentTeachers(int permanentTeachers) {
+		Assert(permanentTeachers >= 0);
+
 		this.permanentTeachers = permanentTeachers;
 	}
 
@@ -297,6 +323,8 @@ public class Evaluation extends Bean {
 	}
 
 	public void setTheses(int theses) {
+		Assert(theses >= 0);
+		
 		this.theses = theses;
 	}
 
@@ -305,6 +333,8 @@ public class Evaluation extends Bean {
 	}
 
 	public void setDissertations(int dissertations) {
+		Assert(dissertations >= 0);
+		
 		this.dissertations = dissertations;
 	}
 
@@ -313,6 +343,8 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdArticles(int idArticles) {
+		Assert(idArticles >= 0);
+		
 		this.idArticles = idArticles;
 	}
 
@@ -321,6 +353,8 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdBooks(int idBooks) {
+		Assert(idBooks >= 0);
+		
 		this.idBooks = idBooks;
 	}
 
@@ -329,6 +363,8 @@ public class Evaluation extends Bean {
 	}
 
 	public void setArtisticProduction(int artisticProduction) {
+		Assert(artisticProduction >= 0);
+
 		this.artisticProduction = artisticProduction;
 	}
 

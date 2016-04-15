@@ -1,0 +1,39 @@
+Class: ListHistoryAdapter extends ArrayAdapter<Search> 
+   // Infla os dados para lista de histórico do aplicativo, cursos já comparados anteriormente.
+
+	VARIABLES
+	TextView option;
+	   // Armazena o tipo de busca que foi realizada.
+	TextView year;
+	   // Ano do item da pesquisa.
+	TextView indicator;
+	   // O indicador utilizado na pesquisa, como conceito do ano do curso.
+	TextView firstValue;
+	   // Valor mínimo para o indicador selecionado na pesquisa
+	TextView secondValue;
+	   // Valor màximopara o indicador selecionado na pesquisa
+	TextView searchDate;
+	   // Data e hora da pesquisa.
+
+
+	FUNCTIONS
+	* ListHistoryAdapter(Context context, int resource, List<Search> items)
+		/* Construtor recebendo atributos da classe pai para inflar a lista e 
+		* receber o contexto da aplicação.
+		*/	
+
+	* View getView(int position, View contextView, ViewGroup parent)
+		/* Recebe o contexto para aplicar a visão, infla o layout apresentado ao usuário
+		* com os dados de histórico de um curso.
+
+	* void setListRow(Search s)
+		// Inclui os dados do curso e da instituição em um item da Lista de cursos.
+		int max;
+		   // Valor máximo inteiro de retorno de pesquisa de curso.
+
+	* void setItem(TextView view, String data) 
+		// Escreve o dado em uma TextView para visualização do usuário.
+
+	public void setItem(TextView view, int resId)
+		// Escreve o id em uma TextView para visualização do usuário.
+		

@@ -29,7 +29,7 @@ public class Evaluation extends Bean {
 	}
 
 	public Evaluation(int id) {
-		assert(id >= 0);
+		assert(id >= 0) : "id must never be negative";
 
 		this.id = id;
 		this.identifier = "evaluation";
@@ -38,7 +38,7 @@ public class Evaluation extends Bean {
 
 	@Override
 	public String get(String field) {
-		assert(field != null);
+		assert(field != null) : "field must never be null";
 
 		if (field.equals("_id")) {
 			return Integer.toString(this.getId());
@@ -75,8 +75,8 @@ public class Evaluation extends Bean {
 
 	@Override
 	public void set(String field, String data){
-		assert(field != null);
-		assert(data != null);
+		assert(field != null) : "field must never be null";
+		assert(data != null) : "data must never be null";
 
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
@@ -140,7 +140,7 @@ public class Evaluation extends Bean {
 	}
 
 	public static Evaluation get(int id) throws  SQLException {
-		assert(id >=0);
+		assert(id >=0) : "id must never be negative";
 
 		Evaluation result = new Evaluation(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -183,9 +183,9 @@ public class Evaluation extends Bean {
 
 	public static ArrayList<Evaluation> getWhere(String field, String value, boolean like) 
 			throws  SQLException {
-		assert(field != null);
-		assert(value != null);
-		assert(field != "");
+		assert(field != null) : "field must never be null";
+		assert(value != null) : "value must never be null";
+		assert(field != "") : "field must never be empty";
 
 		Evaluation type = new Evaluation();
 		ArrayList<Evaluation> result = new ArrayList<Evaluation>();
@@ -197,9 +197,9 @@ public class Evaluation extends Bean {
 	}
 	
 	public static Evaluation getFromRelation(int idInstitution, int idCourse, int year){
-		assert(idInstitution >= 0);
-		assert(idCourse >= 0);
-		assert(year > 2000);
+		assert(idInstitution >= 0) : "idInstitution must never be negative";
+		assert(idCourse >= 0) : "idCourse must never be negative";;
+		assert(year > 1990) : "year must never be smaller than 1990";
 
 		Evaluation result = new Evaluation();
 
@@ -240,7 +240,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setId(int id) {
-		assert(id >= 0);
+		assert(id >= 0) : "id must never be negative";
 		this.id = id;
 	}
 
@@ -249,7 +249,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdInstitution(int idInstitution) {
-		assert(idInstitution >= 0);
+		assert(idInstitution >= 0) : "idInstitution must never be negative";
 		this.idInstitution = idInstitution;
 	}
 
@@ -258,7 +258,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdCourse(int idCourse) {
-		assert(idCourse >= 0);
+		assert(idCourse >= 0) : "idCourse must never be negative";
 		this.idCourse = idCourse;
 	}
 
@@ -267,7 +267,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setYear(int year) {
-		assert(year > 2000);
+		assert(year > 2000) : "year must never be smaller than 1990";
 		this.year = year;
 	}
 
@@ -276,7 +276,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setModality(String modality) {
-		assert(modality != null);
+		assert(modality != null) : "modality must never be null";
 		this.modality = modality;
 	}
 
@@ -285,7 +285,9 @@ public class Evaluation extends Bean {
 	}
 
 	public void setMasterDegreeStartYear(int masterDegreeStartYear) {
-		// must be bigger than the minimun
+		assert(masterDegreeStartYear > 1900) : "masterDegreeStartYear must never be "
+		                                       +"bigger than 1990";
+
 		this.masterDegreeStartYear = masterDegreeStartYear;
 	}
 
@@ -294,7 +296,9 @@ public class Evaluation extends Bean {
 	}
 
 	public void setDoctorateStartYear(int doctorateStartYear) {
-		//must be bigger than the year
+		assert(doctorateStartYear > 1900) : "masterDegreeStartYear must never be "
+		                                       +"bigger than 1990";
+		
 		this.doctorateStartYear = doctorateStartYear;
 	}
 
@@ -303,7 +307,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setTriennialEvaluation(int triennialEvaluation) {
-		assert(triennialEvaluation >= 0);
+		assert(triennialEvaluation >= 0) : "triennialEvaluation must never be negative";
 
 		this.triennialEvaluation = triennialEvaluation;
 	}
@@ -313,7 +317,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setPermanentTeachers(int permanentTeachers) {
-		assert(permanentTeachers >= 0);
+		assert(permanentTeachers >= 0) : "permanentTeachers must never be negative";
 
 		this.permanentTeachers = permanentTeachers;
 	}
@@ -323,7 +327,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setTheses(int theses) {
-		assert(theses >= 0);
+		assert(theses >= 0) : "theses must never be negative";
 		
 		this.theses = theses;
 	}
@@ -333,7 +337,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setDissertations(int dissertations) {
-		assert(dissertations >= 0);
+		assert(dissertations >= 0) : "dissertations must never be negative";
 		
 		this.dissertations = dissertations;
 	}
@@ -343,7 +347,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdArticles(int idArticles) {
-		assert(idArticles >= 0);
+		assert(idArticles >= 0) : "idArticles must never be negative";
 		
 		this.idArticles = idArticles;
 	}
@@ -353,7 +357,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setIdBooks(int idBooks) {
-		assert(idBooks >= 0);
+		assert(idBooks >= 0) : "idBooks must never be negative";
 		
 		this.idBooks = idBooks;
 	}
@@ -363,7 +367,7 @@ public class Evaluation extends Bean {
 	}
 
 	public void setArtisticProduction(int artisticProduction) {
-		assert(artisticProduction >= 0);
+		assert(artisticProduction >= 0) : "artisticProduction must never be negative";
 
 		this.artisticProduction = artisticProduction;
 	}

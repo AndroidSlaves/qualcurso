@@ -28,7 +28,7 @@ public class HistoryFragment extends Fragment {
 
 	@Override
 	public void onAttach(Activity activity) {
-		assert(activity !=null);
+		assert(activity !=null) : "activity must never be null";
 		super.onAttach(activity);
 		try {
 			beanCallbacks = (BeanListCallbacks) activity;
@@ -75,7 +75,7 @@ public class HistoryFragment extends Fragment {
 	}
 
 	private void displayInstitutionList(Search search) {
-		assert(search != null);
+		assert(search != null) : "search must never be null";
 		
 		ArrayList<Institution> institutions = Institution.getInstitutionsByEvaluationFilter(search);
 
@@ -86,7 +86,7 @@ public class HistoryFragment extends Fragment {
 	}
 
 	private void displayCourseList(Search search) {
-		assert(search != null);
+		assert(search != null) : "search must never be null";
 		
 		ArrayList<Course> courses = Course.getCoursesByEvaluationFilter(search);
 
@@ -97,7 +97,7 @@ public class HistoryFragment extends Fragment {
 	}
 
 	private void displayToastMessage(String textMenssage) {
-		assert(textMenssage != null);
+		assert(textMenssage != null) : "textMenssage must never be null";
 
 		Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), textMenssage, Toast.LENGTH_LONG);
 		toast.show();

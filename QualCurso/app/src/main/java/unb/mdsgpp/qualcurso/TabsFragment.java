@@ -45,7 +45,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onAttach(Activity activity) {
-		assert(activity != null);
+		assert(activity != null) : "activity must never be null";
 
 		super.onAttach(activity);
 		try {
@@ -66,7 +66,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		assert(savedInstanceState != null);
+		assert(savedInstanceState != null) : "savedInstanceState must never be null";
 
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
@@ -94,8 +94,8 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onTabChanged(String tabId) {
-		assert(tabId != null);
-		assert(tabId != "");
+		assert(tabId != null) : "tabId must never be null";
+		assert(tabId != "") : "tabId must never be empty";
 
 		if (TAB_INSTITUTIONS.equals(tabId)) {
 			updateTab(tabId, R.id.tab_1);
@@ -111,8 +111,8 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		assert(menu != null);
-		assert(inflater != null);
+		assert(menu != null) : "menu must never be null";
+		assert(inflater != null) : "inflater must never be null";
 
 		inflater.inflate(R.menu.search_menu, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -122,14 +122,14 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	private void setupSearchView(MenuItem searchItem){
-		assert(searchItem != null);
+		assert(searchItem != null) : "searchItem must never be null";
 		searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM|MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		mSearchView.setOnQueryTextListener(this);
 	}
 
 	private void updateTab(String tabId, int placeholder) {
-		assert(tabId != null);
-		assert(placeholder != null);
+		assert(tabId != null) : "tabId must never be null";
+		assert(placeholder != null) : "placeholder must never be null";
 
 		FragmentManager fm = getFragmentManager();
 		if (fm.findFragmentByTag(tabId) == null) {

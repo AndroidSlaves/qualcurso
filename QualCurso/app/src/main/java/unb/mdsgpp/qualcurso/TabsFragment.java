@@ -45,7 +45,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onAttach(Activity activity) {
-		assert(activity != null) : "activity must never be null";
+		assert (activity != null) : "activity must never be null";
 
 		super.onAttach(activity);
 		try {
@@ -66,7 +66,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		assert(savedInstanceState != null) : "savedInstanceState must never be null";
+		assert (savedInstanceState != null) : "savedInstanceState must never be null";
 
 		super.onActivityCreated(savedInstanceState);
 		setRetainInstance(true);
@@ -94,8 +94,8 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public void onTabChanged(String tabId) {
-		assert(tabId != null) : "tabId must never be null";
-		assert(tabId != "") : "tabId must never be empty";
+		assert (tabId != null) : "tabId must never be null";
+		assert (tabId != "") : "tabId must never be empty";
 
 		if (TAB_INSTITUTIONS.equals(tabId)) {
 			updateTab(tabId, R.id.tab_1);
@@ -111,8 +111,8 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		assert(menu != null) : "menu must never be null";
-		assert(inflater != null) : "inflater must never be null";
+		assert (menu != null) : "menu must never be null";
+		assert (inflater != null) : "inflater must never be null";
 
 		inflater.inflate(R.menu.search_menu, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
@@ -122,14 +122,14 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	private void setupSearchView(MenuItem searchItem){
-		assert(searchItem != null) : "searchItem must never be null";
+		assert (searchItem != null) : "searchItem must never be null";
 		searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM|MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		mSearchView.setOnQueryTextListener(this);
 	}
 
 	private void updateTab(String tabId, int placeholder) {
-		assert(tabId != null) : "tabId must never be null";
-		assert(placeholder != null) : "placeholder must never be null";
+		assert (tabId != null) : "tabId must never be null";
+		assert (placeholder != null) : "placeholder must never be null";
 
 		FragmentManager fm = getFragmentManager();
 		if (fm.findFragmentByTag(tabId) == null) {
@@ -143,7 +143,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public boolean onQueryTextChange(String arg0) {
-		assert(arg0 != null);
+		assert (arg0 != null);
 
 		if(arg0.length()>=1){
 			if(mCurrentTab == 0){
@@ -164,7 +164,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	public ArrayList<Institution> castToInstitutions(ArrayList<Bean> beans){
-		assert(beans != null);
+		assert (beans != null);
 
 		ArrayList<Institution> institutions = new ArrayList<Institution>();
 		for(Bean b : beans){
@@ -174,7 +174,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	public ArrayList<Course> castToCourses(ArrayList<Bean> beans){
-		assert(beans != null);
+		assert (beans != null);
 
 		ArrayList<Course> courses = new ArrayList<Course>();
 		for(Bean b : beans){
@@ -184,9 +184,9 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 	}
 	
 	private ArrayList<Bean> getFilteredList(String filter, ArrayList<? extends Bean> list){
-		assert(filter != null);
-		assert(filter != "");
-		assert(list != null);
+		assert (filter != null);
+		assert (filter != "");
+		assert (list != null);
 
 		ArrayList<Bean> beans = new ArrayList<Bean>();
 		for(Bean b : list){
@@ -199,7 +199,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	@Override
 	public boolean onQueryTextSubmit(String arg0) {
-		assert(arg0 != null);
+		assert (arg0 != null);
 		return false;
 	}
 

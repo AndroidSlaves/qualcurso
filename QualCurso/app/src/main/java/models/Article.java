@@ -15,6 +15,8 @@ public class Article extends Bean {
 	}
 
 	public Article(Integer id) {
+		assert (id >= 0) : "id must be positive";
+
 		this.id = id;
 		this.identifier = "articles";
 		this.relationship = "";
@@ -25,6 +27,8 @@ public class Article extends Bean {
 	}
 
 	public void setId(int id) {
+		assert (id >= 0) : "id must be positive";
+
 		this.id = id;
 	}
 
@@ -33,6 +37,8 @@ public class Article extends Bean {
 	}
 
 	public void setPublishedJournals(int publishedJournals) {
+		assert (publishedJournals >= 0) : "publishedJournals must be positive";
+
 		this.publishedJournals = publishedJournals;
 	}
 
@@ -40,8 +46,10 @@ public class Article extends Bean {
 		return publishedConferenceProceedings;
 	}
 
-	public void setPublishedConferenceProceedings(
-			int publishedConferenceProceedings) {
+	public void setPublishedConferenceProceedings(int publishedConferenceProceedings) {
+		assert (publishedConferenceProceedings >= 0) : "publishedConferenceProceedings " +
+				"must be positive";
+
 		this.publishedConferenceProceedings = publishedConferenceProceedings;
 	}
 
@@ -55,14 +63,15 @@ public class Article extends Bean {
 	}
 
 	public static Article get(Integer id) throws  SQLException {
+		assert (id >= 0) : "id must be positive";
+
 		Article result = new Article(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Article) gDB.selectBean(result);
 		return result;
 	}
 
-	public static ArrayList<Article> getAll()
-			throws  SQLException {
+	public static ArrayList<Article> getAll() throws  SQLException {
 		Article type = new Article();
 		ArrayList<Article> result = new ArrayList<Article>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -96,6 +105,11 @@ public class Article extends Bean {
 
 	public static ArrayList<Article> getWhere(String field, String value, boolean like) 
 			throws  SQLException {
+		assert (field != null) : "field must never be null.";
+		assert (field.length() >= 1) : "field name must have at least one character.";
+		assert (value != null) : "value must never be null.";
+		assert (value.length() >= 1) : "value name must have at least one character.";
+
 		Article type = new Article();
 		ArrayList<Article> result = new ArrayList<Article>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -114,6 +128,9 @@ public class Article extends Bean {
 
 	@Override
 	public String get(String field) {
+		assert (field != null) : "field must never be null.";
+		assert (field.length() >= 1) : "field name must have at least one character.";
+
 		if(field.equals("_id")) {
 			return Integer.toString(this.getId());
 		}
@@ -133,6 +150,11 @@ public class Article extends Bean {
 
 	@Override
 	public void set(String field, String data) {
+		assert (field != null) : "field must never be null.";
+		assert (field.length() >= 1) : "field name must have at least one character.";
+		assert (data != null) : "data must never be null.";
+		assert (data.length() >= 1) : "data value must have at least one character.";
+
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
 		} 

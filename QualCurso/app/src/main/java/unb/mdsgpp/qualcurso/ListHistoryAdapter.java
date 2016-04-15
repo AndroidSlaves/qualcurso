@@ -16,6 +16,8 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 
 	public ListHistoryAdapter(Context context, int resource, List<Search> items) {
 		super(context, resource, items);
+		assert (context != null) : "Receive the null context of treatment";
+		assert (resource > 0) : "Treatment to lower value of resource";
 	}
 
 	TextView option = null;

@@ -14,7 +14,13 @@ public class Indicator {
 	
 	public static final String DEFAULT_INDICATOR = "defaultIndicator"; 
 
-	public Indicator(String name, String value) {		
+	public Indicator(String name, String value) {
+		assert (name != null) : "Receive a null tratment";
+		assert (name.length() > 1) : "Tratment to minor of character in a name ";
+		assert (name != "") : "Tratment empty name";
+        assert (value != null) : "Receive a null tratment";
+        assert (value.length() > 1) : "Tratment to minor of character in a value ";
+        assert (value != "") : "Tratment empty value";
 		this.name = name;
 		this.value = value;
 	}

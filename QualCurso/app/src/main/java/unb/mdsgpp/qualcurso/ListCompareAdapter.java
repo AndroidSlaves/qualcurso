@@ -30,6 +30,10 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements OnC
 	
 	public ListCompareAdapter(Context context, int resource, List<Institution> item, Fragment callingFragment) {
 		super(context, resource, item);
+		assert (context != null) : "Receive the null context of treatment";
+		assert (resource > 0) : "Treatment to lower value of resource";
+		assert (callingFragment != null) : "Receive the null treatment";
+
 		this.callingFragment = callingFragment;
 		checkedItems = new ArrayList<Boolean>();
 		for (int i = 0; i < this.getCount(); i++) {

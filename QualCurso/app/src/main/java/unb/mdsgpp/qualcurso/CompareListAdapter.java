@@ -21,11 +21,15 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 	public CompareListAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
+		assert (context != null) : "Receive the null context of treatment";
+		assert (textViewResourceId > 0) : "Treatment to lower value";
 	}
 
 	public CompareListAdapter(Context context, int resource,
 			List<HashMap<String, String>> items) {
 		super(context, resource, items);
+		assert (context != null) : "Receive the null context of treatment";
+		assert (resource > 0) : "Treatment to lower value of resource";
 	}
 
 	@Override

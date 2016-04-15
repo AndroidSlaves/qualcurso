@@ -17,14 +17,22 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 	public ListAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
+		assert (context != null) : "Receive the null context of treatment";
+		assert (textViewResourceId > 0) : "Treatment to lower value";
 	}
 
 	public ListAdapter(Context context, int resource, List<HashMap<String, String>> items) {
 		super(context, resource, items);
+
+		assert (context != null) : "Receive the null context of treatment";
+		assert (resource > 0) : "Treatment to lower value of resource";
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		assert (position >= 0) : "Treatment for lower position of an item in the list";
+		assert (parent != null) : "Receive the null treatment";
+
 		View v = convertView;
 
 		if (v == null) {
@@ -59,6 +67,8 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 	}
 	
 	public Drawable  getTrophyImage(int position) {
+		assert (position >= 1) : "Treatment for lower position of an item in the list";
+
 		Drawable trophy = null;
 
 		switch (position) {

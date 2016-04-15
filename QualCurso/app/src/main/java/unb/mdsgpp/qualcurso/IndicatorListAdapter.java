@@ -20,11 +20,18 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
 
 	public IndicatorListAdapter(Context context, int resource, List<HashMap<String,String>> items) {
 		super(context, resource, items);
-		this.itemLayout = resource;
+
+        assert (context != null) : "Receive the null context of treatment";
+        assert (resource > 0) : "Treatment to lower value of resource";
+
+        this.itemLayout = resource;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+        assert (position >= 0) : "Treatment for lower position of an item in the list";
+        assert (parent != null) : "Receive the null treatment";
+
 		View v = convertView;
 
 		if (v == null) {

@@ -3,6 +3,11 @@ package models;
 import android.database.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Class name: Book (.java)
+ *
+ * Purpose: Modeling characteristics from book and use methods to interacts with the database
+ */
 public class Book extends Bean {
 	private int id;
 	private int integralText;

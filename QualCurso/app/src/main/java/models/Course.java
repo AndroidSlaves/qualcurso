@@ -8,7 +8,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-
+/**
+ * Class name: Course (.java)
+ *
+ * Purpose: Modeling characteristics from Course and use methods to interacts with the database
+ */
 public class Course extends Bean implements Parcelable{
 	private int id;
 	private String name;

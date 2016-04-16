@@ -1,0 +1,26 @@
+Class: SearchListFragment
+
+Attributes:
+
+    // Global variable to show on screen the string year.
+	private static final String YEAR = "year"
+
+    // Global variable to show on screen the string field.
+    private static final String FIELD = "field"
+
+    // Global variable to show on screen the string rangeA.
+    private static final String RANGE_A = "rangeA"
+
+    // Global variable to show on screen the string rangeB.
+    private static final String RANGE_B = "rangeB"
+
+    // Global variable to show on screen the string beanList.
+    private static final String BEAN_LIST = "beanList"
+
+Methods:
+
+    // Empty constructor. Do nothing.
+    public SearchListFragment()
+
+	// Create a fragment container and show a table with year, field, value, list.
+	public static SearchListFragment newInstance(ArrayList<? extends Parcelable> list, Search search)

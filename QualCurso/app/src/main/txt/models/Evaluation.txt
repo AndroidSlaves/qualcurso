@@ -189,4 +189,4 @@ Methods:
 		 the institution. */
 
 	setArtisticProduction(int artisticProduction) 
-		// Set the number of artistic prodution financed and produced in the institution.
+		// Set the number of artistic prodution financed and produced in the institution.	

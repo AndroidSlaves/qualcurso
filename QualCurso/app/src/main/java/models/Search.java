@@ -31,6 +31,8 @@ public class Search extends Bean{
 	}
 
 	public Search(int id) {
+		assert (id >= 0) : "id must be positive integer.";
+
 		this.id = id;
 		this.identifier="search";
 		this.relationship="";
@@ -41,6 +43,10 @@ public class Search extends Bean{
 	}
 
 	public void setDate(Date date) {
+		assert (date.getDay() > 0 && date.getDay() < 32) : "Day value must be between 1 and 31";
+		assert (date.getMonth() > 0 && date.getMonth() < 13) : "Month value must be between 1 and 12";
+		assert (date.getYear() > 0 && date.getYear() < 3000) : "Year value must be between 0 and 3000";
+
 		this.date = date;
 	}
 
@@ -49,6 +55,8 @@ public class Search extends Bean{
 	}
 
 	public void setYear(int year) {
+		assert (year > 0 && year < 3000) : "Year value must be between 0 and 3000";
+
 		this.year = year;
 	}
 
@@ -57,6 +65,8 @@ public class Search extends Bean{
 	}
 
 	public void setOption(int option) {
+		assert (option >=0 && option <=1) : "Option is defined only for 0 and 1 values.";
+
 		this.option = option;
 	}
 
@@ -65,6 +75,8 @@ public class Search extends Bean{
 	}
 
 	public void setIndicator(Indicator indicator) {
+		assert (indicator != null) : "indicator can't be null";
+
 		this.indicator = indicator;
 	}
 
@@ -73,6 +85,8 @@ public class Search extends Bean{
 	}
 
 	public void setMinValue(int minValue) {
+		assert (minValue > 0) : "minimum value must be positive.";
+
 		this.minValue = minValue;
 	}
 
@@ -81,6 +95,8 @@ public class Search extends Bean{
 	}
 
 	public void setMaxValue(int maxValue) {
+		assert (maxValue > 0) : "maximum value must be positive.";
+
 		this.maxValue = maxValue;
 	}
 
@@ -99,6 +115,8 @@ public class Search extends Bean{
 	}
 
 	public static Search get(int id) throws SQLException {
+		assert (id > 0) : "id must be positive.";
+
 		Search result = new Search(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();	
 		result = (Search) gDB.selectBean(result);
@@ -136,6 +154,13 @@ public class Search extends Bean{
 	}
 
 	public static ArrayList<Search> getWhere(String field, String value, boolean like) throws  SQLException {
+		assert (field != null) : "field must never be null.";
+		assert (field != "") : "field name must not be empty.";
+		assert (field.length() >= 1) : "field name must have at least one character.";
+		assert (value != null) : "value must never be null.";
+		assert (value != "") : "value name must not be empty.";
+		assert (value.length() >= 1) : "value name must have at least one character.";
+
 		Search type = new Search();
 		ArrayList<Search> result = new ArrayList<Search>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -159,6 +184,10 @@ public class Search extends Bean{
 
 	@Override
 	public String get(String field) {
+		assert (field != null) : "field must never be null.";
+		assert (field != "") : "field name must not be empty.";
+		assert (field.length() >= 1) : "field name must have at least one character.";
+
 		if(field.equals("_id")) {
 			return Integer.toString(this.getId());
 		}
@@ -193,6 +222,13 @@ public class Search extends Bean{
 
 	@Override
 	public void set(String field, String data){
+		assert (field != null) : "field must never be null.";
+		assert (field != "") : "field name must not be empty.";
+		assert (field.length() >= 1) : "field name must have at least one character.";
+		assert (data != null) : "data must never be null.";
+		assert (data != "") : "data value must not be empty.";
+		assert (data.length() >= 1) : "data value must have at least one character.";
+
 		if(field.equals("_id")){
 			this.setId(Integer.parseInt(data));
 		}

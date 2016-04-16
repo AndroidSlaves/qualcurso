@@ -1,0 +1,177 @@
+Class Course: Extends Bean implements Parcelable
+	
+VARIABLES:
+
+*id: 
+	// Int type. Used to give an identifier number to each course.
+
+*name: 
+	// String type. Used to give a name to each course.
+
+******************************************************
+
+FUNCTIONS
+
+*Course(): 
+	/**
+	  *Default Constructor. Creates an instance of the Course with
+	  *id receiving 0, identifier receiving "course" and 
+          *relationship receiving the string "courses_institutions";
+	  */
+
+	
+*Course(int id): 
+	/**
+ 	  *Constructor with id initial value
+	  *id receiving id, identifier receiving "course" and
+	  *relationship receiving the string "courses_institutions".
+	  */
+	
+*getId(): 
+	// Int type function. Used to access return id value.
+	
+*setId(int id): 
+	/**
+	  *Void type. Used to access the access the variable id and 	      *store a value there.
+	  */
+
+*getName():
+	/**String type. Used to return name value.
+	
+*setName(String name): 
+	/**
+	  *Void type. Used to access the variable name and store a 	     *value there.
+	  */
+		
+*save(): 
+	/**
+	  *Boolean type and throws  SQLException.
+	  *Initing with a boolean variable called "result" that    		  *receive false. Instaciated a GenericBeanDAO called "gDB" 
+	  *result receive the method that insert the fields and set it
+	  * in id Course. In the end return result equals true.
+	  */
+	
+*addInstitution(Institution institution):
+	/**
+	  *Boolean type. Throws  SQLException. Initing with a boolean 		  *variable called "result" that receive false.
+	  *Instance GenericBeanDAO called "gDB". The "result" receive 		  *the method addBeanRelationship that add a list of fields in 		  *database and return the result true.
+	  */
+
+*get(int id): 
+	/**
+	  *Static Course type. Throws SQLException.
+	  *This function instaciated the Course(id) and select
+	  *one field returning true in the end.
+	  */
+	  
+*getAll(): 
+	/**
+	  *Static ArrayList<Course> type. Throws  SQLException.
+	  *Instanciated Course "type" and do an	ArrayList<Course> 		  *called "result". After that instance a GenericBeanDAO 		  *called "gDB". In the end uses an interactive for to 		  *select all the Courses take type and add the substituition  		  *for "name". Returning true.
+	  */	
+
+*count(): 
+	/**
+	  *Static int type. Throws  SQLException.
+	  *Count the GenericBeanDAO fields.
+	  */
+
+*first(): 
+	/**
+	  *Static Course type. Throws SQLException.
+	  *Move the Course to the first GenericBeanDAO field
+	  */
+
+*last(): 
+	/**
+	  *Static Course type. Throws SQLException.
+	  *Move the Course to the first GenericBeanDAO field
+	  */
+
+*getInstitutions(): 
+	/**
+	  *ArrayList<Institution> type. Throws SQLException.
+	  *Select one Institution added and return it.
+	  */	
+	
+*getInstitutions(int year): 
+	/**
+	  *ArrayList<Institution> type. Throws SQLException.
+	  *You put the year and it return institutions in the array 	      *with this same information.
+	  */
+
+*getWhere(String field, String value,boolean like):
+	/**
+	  *Static ArrayList<Course> type. Throws  SQLException.
+	  *When you are looking for a instutions about the State
+	  * you put the field and the string values
+	  */
+	
+*getCoursesByEvaluationFilter(Search search):
+	/**
+	  *Static ArrayList<Course> type. Throws  SQLException.
+	  *Filter the Courses about the evalutions and return an array 		  *of then
+	  */	
+
+*getInstitutionsByEvaluationFilter(int id_course, Search search):
+	/**
+	  *Static ArrayList<Institution> type. Throws  SQLException.
+	  *Filter the Courses about the evalutions and return an array 		  *of then
+	  */
+	
+
+*delete():
+	/**
+	  *Boolean type. Throws  SQLException
+	  *Delete one instituction
+	  */
+	
+	
+*get(String field):
+	/**
+	  *String type. @Override function.
+	  *Used to take the "id" number from the course or its "name"
+	  *and return a String with these one informations
+	  */
+	
+*set(String field, String data): 
+	/**
+	  *Void type. @Override function
+	  *Used to store data into the "id" number or the "name" course
+	  */
+		
+*fieldsList(): 
+	/**
+	  *ArrayList<String> type. @Override function.
+	  *Used to access a list of fields and add string "_id" and 	      *"name" on the fields
+	  */
+	
+*toString(): 
+	/**
+	  *String type. @Override function.
+	  *return the name value from the course
+	  */
+	
+	
+*Course(Parcel in): 
+	/**
+	  *Constructor.
+ 	  *Made like a parcelable container of Parcel to interface
+	  */
+
+*describeContents():
+	/**
+	  *Int type. @Override function.
+	  *TODO Auto-generated method stub, and return 0
+	  */
+
+*writeToParcel(Parcel dest, int flags): 
+	/**
+	  *Void type. @Override function
+	  *insert the values into the parcelable interface container
+	  */
+	
+*static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>():
+	// Used to create a list of Parcelables "containers" of courses
+
+

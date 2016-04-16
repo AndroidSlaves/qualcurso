@@ -37,6 +37,10 @@ public class EvaluationDetailFragment extends Fragment{
 	}
 	
 	public static EvaluationDetailFragment newInstance(int id_institution, int id_course,int year){
+		assert (id_institution >= 0) : "idInstitution must never be negative";
+		assert (id_course >= 0) : "idCourse must never be negative";
+		assert (year > 1990) : "year must never be smaller 1990";
+
 		EvaluationDetailFragment fragment = new EvaluationDetailFragment();
 		Bundle args = new Bundle();
 		args.putInt(ID_COURSE, id_course);
@@ -71,6 +75,10 @@ public class EvaluationDetailFragment extends Fragment{
 	}
 	
 	public ArrayList<HashMap<String, String>> getListItems(Evaluation evaluation){
+		assert (evaluation != null) : "evaluation must never be null";
+		assert (evaluation.getIdArticles >= 0) : "evaluation's idArticles must never be negative";
+		assert (evaluation.getIdBooks >= 0) : "evaluation's idBooks must never be negative";
+		
 		ArrayList<HashMap<String, String>> hashList = new ArrayList<HashMap<String,String>>();
 		ArrayList<Indicator> indicators = Indicator.getIndicators();
 		Book book = Book.get(evaluation.getIdBooks());
@@ -96,6 +104,8 @@ public class EvaluationDetailFragment extends Fragment{
 	
 	@Override
 	public void onAttach(Activity activity) {
+		assert (activity != null) : "activity must never be null";
+		
 		super.onAttach(activity);
 		try {
             beanCallbacks = (BeanListCallbacks) activity;

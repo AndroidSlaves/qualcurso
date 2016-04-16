@@ -1,0 +1,118 @@
+/**
+ * Search is a class that realize searches by some Indicators.
+ */
+Class: Search
+
+Attributes:
+
+    // Global variable used to filter search by courses.
+    public static int COURSE = 0
+
+    // Global variable used to filter search by institutions.
+    public static int INSTITUTION = 1
+
+
+    // Id is a unique sequential number used to store information on database.
+    private int id
+
+    // Stores the user search date.
+    private Date date
+
+    // Stores the Article publication year.
+    private int year
+
+    // Variable used to filter the search.
+    private int option
+
+    // Create an object to filter the search by indicators.
+    private Indicator indicator
+
+    // Store the minimum value of items listed.
+    private int minValue
+
+    // Store the maximum value of items listed.
+    private int maxValue
+
+Methods:
+
+    // Constructor, store id with 0, by default.
+	public Search()
+
+    // Constructor, store the id that come as parameter
+	public Search(int id)
+
+    // Get the date stored. Will be used on search.
+	public Date getDate()
+
+    // Store the date. Will be used on search.
+	public void setDate(Date date)
+
+    // Get the year stored. Will be used on search.
+	public int getYear()
+
+    // Store the year. Will be used on search.
+	public void setYear(int year)
+
+    // Get the search option user selects.
+	public int getOption()
+
+    // Stores the search option of user choice.
+	public void setOption(int option)
+
+    // Get the indicators
+	public Indicator getIndicator()
+
+    // Stores the search indicators.
+	public void setIndicator(Indicator indicator)
+
+    // Get the minimum value of items listed.
+	public int getMinValue()
+
+    // Set the minimum value of items listed.
+	public void setMinValue(int minValue)
+
+    // Get the maximum value of items listed.
+	public int getMaxValue()
+
+    // Set the maximum value of items listed.
+	public void setMaxValue(int maxValue)
+
+    // Verify if the data was saved.
+	public boolean save() throws  SQLException
+
+    // Search by id and return a generic bean.
+	public static Search get(int id) throws SQLException
+
+    // Return an list of searches made by user.
+	public static ArrayList<Search> getAll() throws  SQLException
+
+    // Count the number of beans generated.
+	public static int count() throws  SQLException
+
+    // Get the first bean created.
+	public static Search first() throws SQLException
+
+    // Get the last Bean created.
+	public static Search last() throws SQLException
+
+    // Generate a list with values of field, value, like. It's a kind of search.
+	public static ArrayList<Search> getWhere(String field, String value, boolean like) throws  SQLException
+
+    // Delete some bean on context.
+	public boolean delete() throws  SQLException
+
+    // Set the ID of search.
+	public void setId(int id)
+
+    // Get the ID of search.
+	public String get(String field)
+
+    // Set the ID of search by field and data.
+	public void set(String field, String data)
+
+    // Generate a list of fields of database
+	public ArrayList<String> fieldsList()
+
+    // Get the ID of search.
+	public int getId()
+    

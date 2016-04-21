@@ -80,8 +80,6 @@ public class GenericBeanDAO extends DataBase{
 			throws SQLException {		
 	    assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
-	    assert (table != null) : "table must never be null";
-	    assert (table != "") : "table must never be empty";
 	    assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
@@ -314,7 +312,7 @@ public class GenericBeanDAO extends DataBase{
 		assert (condition != null) : "condition must never be null";
 		assert (groupBy != null) : "groupBy must never be null";
 		assert (returnFields != null) : "returnFields must never be null";
-		assert (returnFields.length > 0) : "returnFields must never be empty";
+		assert (returnFields.size() > 0) : "returnFields must never be empty";
 
 		String fields = "";
 		for(String s : returnFields){

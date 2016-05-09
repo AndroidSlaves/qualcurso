@@ -1,10 +1,15 @@
+/*****************************
+ * Class name: Institution (.java)
+ *
+ * Purpose: Class that represents a generic institution entity with its attributes.
+ *****************************/
+
 package models;
 
 import android.database.SQLException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Institution extends Bean implements Parcelable {

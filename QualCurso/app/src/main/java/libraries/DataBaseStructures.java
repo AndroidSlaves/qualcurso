@@ -1,15 +1,21 @@
+/*****************************
+ * Class name: DataBaseStructures (.java)
+ *
+ * Purpose: This class is responsible for making all the operations with the database in regard of
+ *              the drugstore information.
+ *****************************/
+
 package libraries;
 
 import android.database.SQLException;
 
-public class DataBaseStructures extends DataBase{
+public class DataBaseStructures extends DataBase {
 	
-    public DataBaseStructures()  throws SQLException{
+    public DataBaseStructures() throws SQLException {
         super();
     }
-    
 
-    public void initDB() throws SQLException{
+    public void initDB() throws SQLException {
             this.openConnection();
             this.database.execSQL("CREATE TABLE IF NOT EXISTS 'android_metadata' (locale TEXT)");
             this.database.execSQL("INSERT INTO android_metadata VALUES ('pt_BR')");

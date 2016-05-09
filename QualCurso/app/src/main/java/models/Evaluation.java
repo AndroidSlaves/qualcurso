@@ -1,3 +1,9 @@
+/*****************************
+ * Class name: Evaluation (.java)
+ *
+ * Purpose: Class that represents a single generic evaluation, which holds all the data necessary.
+ *****************************/
+
 package models;
 
 import android.database.SQLException;
@@ -25,7 +31,6 @@ public class Evaluation extends Bean {
 		this.id = 0;
 		this.identifier = "evaluation";
 		this.relationship = "";
-
 	}
 
 	public Evaluation(int id) {
@@ -236,7 +241,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getId() {
-		return id;
+        return id;
 	}
 
 	public void setId(int id) {
@@ -245,7 +250,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getIdInstitution() {
-		return idInstitution;
+        return idInstitution;
 	}
 
 	public void setIdInstitution(int idInstitution) {
@@ -254,7 +259,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getIdCourse() {
-		return idCourse;
+        return idCourse;
 	}
 
 	public void setIdCourse(int idCourse) {
@@ -263,7 +268,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getYear() {
-		return year;
+        return year;
 	}
 
 	public void setYear(int year) {
@@ -272,7 +277,7 @@ public class Evaluation extends Bean {
 	}
 
 	public String getModality() {
-		return modality;
+        return modality;
 	}
 
 	public void setModality(String modality) {
@@ -281,7 +286,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getMasterDegreeStartYear() {
-		return masterDegreeStartYear;
+        return masterDegreeStartYear;
 	}
 
 	public void setMasterDegreeStartYear(int masterDegreeStartYear) {
@@ -292,7 +297,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getDoctorateStartYear() {
-		return doctorateStartYear;
+        return doctorateStartYear;
 	}
 
 	public void setDoctorateStartYear(int doctorateStartYear) {
@@ -303,7 +308,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getTriennialEvaluation() {
-		return triennialEvaluation;
+        return triennialEvaluation;
 	}
 
 	public void setTriennialEvaluation(int triennialEvaluation) {
@@ -313,7 +318,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getPermanentTeachers() {
-		return permanentTeachers;
+        return permanentTeachers;
 	}
 
 	public void setPermanentTeachers(int permanentTeachers) {
@@ -323,7 +328,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getTheses() {
-		return theses;
+        return theses;
 	}
 
 	public void setTheses(int theses) {
@@ -333,7 +338,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getDissertations() {
-		return dissertations;
+        return dissertations;
 	}
 
 	public void setDissertations(int dissertations) {
@@ -343,7 +348,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getIdArticles() {
-		return idArticles;
+        return idArticles;
 	}
 
 	public void setIdArticles(int idArticles) {
@@ -353,7 +358,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getIdBooks() {
-		return idBooks;
+        return idBooks;
 	}
 
 	public void setIdBooks(int idBooks) {
@@ -363,7 +368,7 @@ public class Evaluation extends Bean {
 	}
 
 	public int getArtisticProduction() {
-		return artisticProduction;
+        return artisticProduction;
 	}
 
 	public void setArtisticProduction(int artisticProduction) {

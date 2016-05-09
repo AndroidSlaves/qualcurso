@@ -149,10 +149,8 @@ public class Institution extends Bean implements Parcelable {
 
 	public static ArrayList<Institution> getInstitutionsByEvaluationFilter(Search search) throws  SQLException {
 		assert (search != null) : "search must never be null";
-		assert (search.getIndicator != null) : "search's indicator must never be null";
-		assert (search.getValue != null) : "search's value must never be null";
-		assert (search.getMaxValue != null) : "search's maxValue must never be null";
-		assert (search.getYear > 1990) : "search's year must never be smaller than 1990";
+		assert (search.getIndicator() != null) : "search's indicator must never be null";
+		assert (search.getYear() > 1990) : "search's year must never be smaller than 1990";
 		
 		ArrayList<Institution> result = new ArrayList<Institution>();
 		String sql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a, books AS b "+
@@ -180,10 +178,8 @@ public class Institution extends Bean implements Parcelable {
 
 	public static ArrayList<Course> getCoursesByEvaluationFilter(int id_institution, Search search) throws  SQLException {
 		assert (search != null) : "search must never be null";
-		assert (search.getIndicator != null) : "search's indicator must never be null";
-		assert (search.getValue != null) : "search's value must never be null";
-		assert (search.getMaxValue != null) : "search's maxValue must never be null";
-		assert (search.getYear > 1990) : "search's year must never be smaller than 1990";
+		assert (search.getIndicator() != null) : "search's indicator must never be null";
+		assert (search.getYear() > 1990) : "search's year must never be smaller than 1990";
 
 		ArrayList<Course> result = new ArrayList<Course>();
 		String sql = "SELECT c.* FROM course AS c, evaluation AS e, articles AS a, books AS b "+

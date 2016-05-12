@@ -71,9 +71,11 @@ public class Article extends Bean {
 	public boolean save() throws SQLException {
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		result = gDB.insertBean(this);
 		this.setId(Article.last().getId());
-		return result;
+
+        return result;
 	}
 
     /**
@@ -91,8 +93,10 @@ public class Article extends Bean {
 
 		Article result = new Article(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = (Article) gDB.selectBean(result);
-		return result;
+
+        result = (Article) gDB.selectBean(result);
+
+        return result;
 	}
 
     /**
@@ -215,22 +219,18 @@ public class Article extends Bean {
 		assert (field != null) : "field must never be null.";
 		assert (field.length() >= 1) : "field name must have at least one character.";
 
-		if(field.equals("_id")) {
-			return Integer.toString(this.getId());
-		}
-		
-		else if(field.equals("published_journals")) {
-			return Integer.toString(this.getPublishedJournals());
-		}
-		
-		else if (field.equals("published_conference_proceedings")) {
-			return Integer.toString(this.getPublishedConferenceProceedings());
-		}
-		
-		else {
-			return "";
-		}
-	}
+        String contentInField = "";
+
+        if(field.equals("_id")) {
+			contentInField = Integer.toString(this.getId());
+		}else if(field.equals("published_journals")) {
+			contentInField = Integer.toString(this.getPublishedJournals());
+		}else if (field.equals("published_conference_proceedings")) {
+			contentInField =Integer.toString(this.getPublishedConferenceProceedings());
+		}else {/*Nothing to do.*/}
+
+	    return contentInField;
+    }
 
 	@Override
 	public void set(String field, String data) {
@@ -241,19 +241,11 @@ public class Article extends Bean {
 
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
-		} 
-		
-		else if (field.equals("published_journals")) {
+		}else if (field.equals("published_journals")) {
 			this.setPublishedJournals(Integer.parseInt(data));
-		}
-		
-		else if (field.equals("published_conference_proceedings")) {
+		}else if (field.equals("published_conference_proceedings")) {
 			this.setPublishedConferenceProceedings(Integer.parseInt(data));
-		}
-		
-		else {
-
-		}
+		}else {/*Nothing to do.*/}
 		
 	}
 
@@ -265,9 +257,11 @@ public class Article extends Bean {
 	@Override
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
+
 		fields.add("_id");
 		fields.add("published_journals");
 		fields.add("published_conference_proceedings");
-		return fields;
+
+        return fields;
 	}
 }

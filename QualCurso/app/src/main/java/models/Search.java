@@ -120,6 +120,7 @@ public class Search extends Bean{
 		Search result = new Search(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();	
 		result = (Search) gDB.selectBean(result);
+
 		return result;
 	}
 
@@ -127,15 +128,18 @@ public class Search extends Bean{
 		Search type = new Search();
 		ArrayList<Search> result = new ArrayList<Search>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
-			for (Bean b : gDB.selectAllBeans(type,null)) {
-				result.add((Search) b);
-			}
-			return result;
+
+		for (Bean b : gDB.selectAllBeans(type,null)) {
+			result.add((Search) b);
+		}
+
+		return result;
 	}
 
 	public static int count() throws  SQLException {
 		Search type = new Search();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		return gDB.countBean(type);
 	}
 
@@ -143,6 +147,7 @@ public class Search extends Bean{
 		Search result = new Search();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Search) gDB.firstOrLastBean(result, false);
+
 		return result;
 	}
 
@@ -150,6 +155,7 @@ public class Search extends Bean{
 		Search result = new Search();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Search) gDB.firstOrLastBean(result, true);
+
 		return result;
 	}
 
@@ -164,6 +170,7 @@ public class Search extends Bean{
 		Search type = new Search();
 		ArrayList<Search> result = new ArrayList<Search>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		for (Bean b : gDB.selectBeanWhere(type, field, value, like,null)) {
 			result.add((Search) b);
 		}
@@ -174,6 +181,7 @@ public class Search extends Bean{
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = gDB.deleteBean(this);
+
 		return result;
 	}
 
@@ -188,36 +196,25 @@ public class Search extends Bean{
 		assert (field != "") : "field name must not be empty.";
 		assert (field.length() >= 1) : "field name must have at least one character.";
 
+		String contentFromFields = "";
+
 		if(field.equals("_id")) {
-			return Integer.toString(this.getId());
-		}
+			contentFromFields = Integer.toString(this.getId());
+		}else if(field.equals("date")) {
+			contentFromFields = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US).format(this.date);
+		}else if (field.equals("year")) {
+			contentFromFields = Integer.toString(this.getYear());
+		}else if(field.equals("option")) {
+			contentFromFields = Integer.toString(this.getOption());
+		}else if(field.equals("indicator")) {
+			contentFromFields = this.getIndicator().getValue();
+		}else if(field.equals("min_value")) {
+			contentFromFields = Integer.toString(this.getMinValue());
+		}else if(field.equals("max_value")) {
+			contentFromFields = Integer.toString(this.getMaxValue());
+		}else {/*Nothing to do*/}
 
-		else if(field.equals("date")) {
-			return new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US).format(this.date);
-		}
-		else if (field.equals("year")) {
-			return Integer.toString(this.getYear());
-		}
-
-		else if(field.equals("option")) {
-			return Integer.toString(this.getOption());
-		}
-
-		else if(field.equals("indicator")) {
-			return this.getIndicator().getValue();
-		}
-
-		else if(field.equals("min_value")) {
-			return Integer.toString(this.getMinValue());
-		}
-
-		else if(field.equals("max_value")) {
-			return Integer.toString(this.getMaxValue());
-		}
-
-		else {
-			return "";
-		}
+		return contentFromFields;
 	}
 
 	@Override
@@ -231,9 +228,7 @@ public class Search extends Bean{
 
 		if(field.equals("_id")){
 			this.setId(Integer.parseInt(data));
-		}
-
-		else if(field.equals("date")){
+		}else if(field.equals("date")){
 			Date dateData = null;
 			try {
 				dateData = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US).parse(data);
@@ -241,25 +236,15 @@ public class Search extends Bean{
 				e.printStackTrace();
 			}
 			this.setDate(dateData);
-		}
-
-		else if (field.equals("year")) {
+		}else if (field.equals("year")) {
 			this.setYear(Integer.parseInt(data));
-		}
-
-		else if (field.equals("option")) {
+		}else if (field.equals("option")) {
 			this.setOption(Integer.parseInt(data));
-		}
-
-		else if (field.equals("indicator")) {
+		}else if (field.equals("indicator")) {
 			this.setIndicator(Indicator.getIndicatorByValue(data));
-		}
-
-		else if (field.equals("min_value")) {
+		}else if (field.equals("min_value")) {
 			this.setMinValue(Integer.parseInt(data));
-		}
-
-		else if (field.equals("max_value")) {
+		}else if (field.equals("max_value")) {
 			this.setMaxValue(Integer.parseInt(data));
 		}
 
@@ -268,6 +253,7 @@ public class Search extends Bean{
 	@Override
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
+
 		fields.add("_id");
 		fields.add("date");
 		fields.add("year");
@@ -275,6 +261,7 @@ public class Search extends Bean{
 		fields.add("indicator");
 		fields.add("min_value");
 		fields.add("max_value");
+
 		return fields;
 	}
 

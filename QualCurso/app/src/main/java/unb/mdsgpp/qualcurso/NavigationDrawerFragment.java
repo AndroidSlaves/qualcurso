@@ -66,6 +66,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        assert (savedInstanceState != null) : "Receive a null tratment";
         super.onCreate(savedInstanceState);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
@@ -91,6 +92,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onActivityCreated (Bundle savedInstanceState) {
+        assert (savedInstanceState != null) : "Receive a null tratment";
         super.onActivityCreated(savedInstanceState);
         // Indicate that this fragment would like to influence the set of actions in the action bar.
         setHasOptionsMenu(true);
@@ -221,6 +223,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
+        assert (activity != null) : "Receive a null tratment";
         super.onAttach(activity);
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
@@ -237,6 +240,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        assert (outState != null) : "Receive a null tratment";
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
@@ -261,6 +265,8 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        assert (item != null) : "Receive a null tratment";
+
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }

@@ -14,6 +14,7 @@ public class QualCurso extends Application {
 	}
 	
 	public void setDatabaseName(String databaseName){
+		assert (databaseName != null) : "Receive a null tratment";
 		this.databaseName = databaseName;
 	}
 	

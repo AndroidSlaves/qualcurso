@@ -3,6 +3,11 @@ package models;
 import android.database.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Class name: Book (.java)
+ *
+ * Purpose: Modeling characteristics from book and use methods to interacts with the database
+ */
 public class Book extends Bean {
 	private int id;
 	private int integralText;
@@ -17,6 +22,7 @@ public class Book extends Bean {
 	}
 
 	public Book(int id) {
+		assert (id >= 0) : "Receive a negative tratment";
 		this.id = id;
 		this.identifier = "books";
 		this.relationship = "";
@@ -27,6 +33,7 @@ public class Book extends Bean {
 	}
 
 	public void setId(int id) {
+		assert (id >= 0) : "Receive a negative tratment";
 		this.id = id;
 	}
 
@@ -35,6 +42,7 @@ public class Book extends Bean {
 	}
 
 	public void setIntegralText(int integralText) {
+		assert (integralText >= 0) : "Receive a negative tratment";
 		this.integralText = integralText;
 	}
 
@@ -43,6 +51,7 @@ public class Book extends Bean {
 	}
 
 	public void setChapters(int chapters) {
+		assert (chapters >= 0) : "Receive a negative tratment";
 		this.chapters = chapters;
 	}
 
@@ -51,6 +60,7 @@ public class Book extends Bean {
 	}
 
 	public void setCollections(int collections) {
+		assert (collections >= 0) : "Receive a negative tratment";
 		this.collections = collections;
 	}
 
@@ -59,6 +69,7 @@ public class Book extends Bean {
 	}
 
 	public void setEntries(int entries) {
+		assert (entries >= 0) : "Receive a negative tratment";
 		this.entries = entries;
 	}
 
@@ -110,8 +121,11 @@ public class Book extends Bean {
 		return result;
 	}
 
-	public static ArrayList<Book> getWhere(String field, String value, boolean like) 
-			throws  SQLException {
+	public static ArrayList<Book> getWhere(String field, String value, boolean like) throws  SQLException {
+		assert (field != null) : "Receive a null tratment";
+		assert (field != "") : "Receive a empty tratment";
+		assert (value != null) : "Receive a null tratment";
+		assert (value != "") : "Receive a null tratment";
 		Book type = new Book();
 		ArrayList<Book> result = new ArrayList<Book>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -130,6 +144,8 @@ public class Book extends Bean {
 
 	@Override
 	public String get(String field) {
+		assert (field != null) : "Receive a null tratment";
+		assert (field != "") : "Receive a empty tratment";
 		if(field.equals("_id")) {
 			return Integer.toString(this.getId());
 		}
@@ -157,6 +173,10 @@ public class Book extends Bean {
 
 	@Override
 	public void set(String field, String data) {
+		assert (field != null) : "Receive a null tratment";
+		assert (field != "") : "Receive a empty tratment";
+		assert (data != null) : "Receive a null tratment";
+		assert (data != "") : "Receive a null tratment";
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
 		} 
@@ -178,7 +198,7 @@ public class Book extends Bean {
 		}
 		
 		else {
-
+			/* Nothing to do! */
 		}
 		
 	}

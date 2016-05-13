@@ -1,0 +1,27 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - java
+  fixme:
+    enabled: true
+    config:
+      strings:
+      - FIXME
+      - BUG
+      - CUSTOM
+  checkstyle:
+     enabled: true
+     config: 'config/checkstyle/checkstyle.xml'
+  pmd:
+     enabled: true
+     config: 'config/pmd/pmd.xml'
+ratings:
+  paths:
+  - QualCurso/app/**
+  - "**.java"
+  - "**.xml"
+exclude_paths:
+- QualCurso/gradle/**
+- QualCurso/build/**

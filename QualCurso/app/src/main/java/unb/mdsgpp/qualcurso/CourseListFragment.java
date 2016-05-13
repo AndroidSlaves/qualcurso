@@ -97,6 +97,7 @@ public class CourseListFragment extends ListFragment{
 	
 	@Override
 	public void onAttach(Activity activity) {
+		assert (activity != null) : "Receive a null tratment";
 		super.onAttach(activity);
 		try {
             beanCallbacks = (BeanListCallbacks) activity;

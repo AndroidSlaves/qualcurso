@@ -3,9 +3,9 @@ package unb.mdsgpp.qualcurso;
 import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +15,27 @@ import android.widget.TextView;
 
 public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
+	@SuppressLint("Assert")
 	public ListAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
+		assert (context != null) : "Receive the null context of treatment";
+		assert (textViewResourceId > 0) : "Treatment to lower value";
 	}
 
+	@SuppressLint("Assert")
 	public ListAdapter(Context context, int resource, List<HashMap<String, String>> items) {
 		super(context, resource, items);
+
+		assert (context != null) : "Receive the null context of treatment";
+		assert (resource > 0) : "Treatment to lower value of resource";
 	}
 
+	@SuppressLint({"Assert", "InflateParams"})
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		assert (position >= 0) : "Treatment for lower position of an item in the list";
+		assert (parent != null) : "Receive the null treatment";
+
 		View v = convertView;
 
 		if (v == null) {
@@ -58,7 +69,10 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
     	return v;
 	}
 	
+	@SuppressLint("Assert")
 	public Drawable  getTrophyImage(int position) {
+		assert (position >= 1) : "Treatment for lower position of an item in the list";
+
 		Drawable trophy = null;
 
 		switch (position) {

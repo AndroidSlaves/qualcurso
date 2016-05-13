@@ -4,8 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import models.Search;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,11 @@ import android.widget.TextView;
 
 public class ListHistoryAdapter extends ArrayAdapter<Search> {
 
+	@SuppressLint("Assert")
 	public ListHistoryAdapter(Context context, int resource, List<Search> items) {
 		super(context, resource, items);
+		assert (context != null) : "Receive the null context of treatment";
+		assert (resource > 0) : "Treatment to lower value of resource";
 	}
 
 	TextView option = null;
@@ -25,6 +29,7 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 	TextView secondValue = null;
 	TextView searchDate = null;
 
+	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View contextView, ViewGroup parent) {
 		View v = contextView;

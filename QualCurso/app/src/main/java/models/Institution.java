@@ -1,10 +1,15 @@
+/*****************************
+ * Class name: Institution (.java)
+ *
+ * Purpose: Class that represents a generic institution entity with its attributes.
+ *****************************/
+
 package models;
 
 import android.database.SQLException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Institution extends Bean implements Parcelable {
@@ -18,7 +23,7 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public Institution(int id) {
-		assert(id >=0) : "id must never be negative";
+		assert (id >=0) : "id must never be negative";
 
 		this.id = id;
 		this.identifier = "institution";
@@ -30,13 +35,13 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public void setAcronym(String acronym) {
-		assert(acronym != null) : "acronym must never be null";
+		assert (acronym != null) : "acronym must never be null";
 
 		this.acronym = acronym;
 	}
 
 	public void setId(int id) {
-		assert(id >=0) : "id must never be negative";
+		assert (id >=0) : "id must never be negative";
 
 		this.id = id;
 	}
@@ -54,7 +59,7 @@ public class Institution extends Bean implements Parcelable {
 	}
 	
 	public boolean addCourse(Course course) throws SQLException {
-		assert(course != null) : "course must never be null";
+		assert (course != null) : "course must never be null";
 
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -63,7 +68,7 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public static Institution get(int id) throws SQLException {
-		assert(id >= 0) : "id must never be negative";
+		assert (id >= 0) : "id must never be negative";
 
 		Institution result = new Institution(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -114,7 +119,7 @@ public class Institution extends Bean implements Parcelable {
 	
 	public ArrayList<Course> getCourses(int year) throws 
 			SQLException {
-		assert(year > 1990) : "year must never be bigger than 1990";
+		assert (year > 1990) : "year must never be bigger than 1990";
 
 		ArrayList<Course> courses = new ArrayList<Course>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -128,10 +133,10 @@ public class Institution extends Bean implements Parcelable {
 
 	public static ArrayList<Institution> getWhere(String field, String value,
 			boolean like) throws  SQLException {
-		assert(field != null) : "field must never be null";
-		assert(value != null) : "value must never be null";
-		assert(field != "") : "field must never be empty";
-		assert(value != "") : "value must never be null";
+		assert (field != null) : "field must never be null";
+		assert (value != null) : "value must never be null";
+		assert (field != "") : "field must never be empty";
+		assert (value != "") : "value must never be null";
 
 		Institution type = new Institution();
 		ArrayList<Institution> result = new ArrayList<Institution>();
@@ -143,10 +148,11 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public static ArrayList<Institution> getInstitutionsByEvaluationFilter(Search search) throws  SQLException {
-		assert(search != null) : "search must never be null";
-		assert(search.getIndicator() != null) : "search's indicator must never be null";
-		assert(search.getYear() > 1990) : "search's year must never be smaller than 1990";
-		
+
+		assert (search != null) : "search must never be null";
+		assert (search.getIndicator() != null) : "search's indicator must never be null";
+		assert (search.getYear() > 1990) : "search's year must never be smaller than 1990";
+
 		ArrayList<Institution> result = new ArrayList<Institution>();
 		String sql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a, books AS b "+
 					" WHERE year="+Integer.toString(search.getYear())+
@@ -172,9 +178,11 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public static ArrayList<Course> getCoursesByEvaluationFilter(int id_institution, Search search) throws  SQLException {
-		assert(search != null) : "search must never be null";
-		assert(search.getIndicator() != null) : "search's indicator must never be null";
+
 		assert(search.getYear() > 1990) : "search's year must never be smaller than 1990";
+		assert (search != null) : "search must never be null";
+		assert (search.getIndicator() != null) : "search's indicator must never be null";
+		assert (search.getYear() > 1990) : "search's year must never be smaller than 1990";
 
 		ArrayList<Course> result = new ArrayList<Course>();
 		String sql = "SELECT c.* FROM course AS c, evaluation AS e, articles AS a, books AS b "+
@@ -211,7 +219,7 @@ public class Institution extends Bean implements Parcelable {
 
 	@Override
 	public String get(String field) {
-		assert(field != null) : "field must never be null";
+		assert (field != null) : "field must never be null";
 
 		if (field.equals("_id")) {
 			return Integer.toString(this.getId());
@@ -224,8 +232,8 @@ public class Institution extends Bean implements Parcelable {
 
 	@Override
 	public void set(String field, String data) {
-		assert(field != null) : "field must never be null";
-		assert(data != null) : "data must never be null";
+		assert (field != null) : "field must never be null";
+		assert (data != null) : "data must never be null";
 		
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
@@ -249,7 +257,7 @@ public class Institution extends Bean implements Parcelable {
 	}
 	
 	private Institution(Parcel in){
-		assert(in != null) : "in must never be null";
+		assert (in != null) : "in must never be null";
 
 		this.id = in.readInt();
 		this.acronym = in.readString();
@@ -265,7 +273,7 @@ public class Institution extends Bean implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-		assert(dest != null) : "dest must never be null";
+		assert (dest != null) : "dest must never be null";
 
 		dest.writeInt(this.id);
 		dest.writeString(this.acronym);
@@ -278,7 +286,7 @@ public class Institution extends Bean implements Parcelable {
 
 		@Override
 		public Institution createFromParcel(Parcel source) {
-			assert(source != null)  : "source must never be null";
+			assert (source != null)  : "source must never be null";
 			return new Institution(source);
 		}
 

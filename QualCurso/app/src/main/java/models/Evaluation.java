@@ -1,3 +1,9 @@
+/*****************************
+ * Class name: Evaluation (.java)
+ *
+ * Purpose: Class that represents a single generic evaluation, which holds all the data necessary.
+ *****************************/
+
 package models;
 
 import android.database.SQLException;
@@ -25,11 +31,10 @@ public class Evaluation extends Bean {
 		this.id = 0;
 		this.identifier = "evaluation";
 		this.relationship = "";
-
 	}
 
 	public Evaluation(int id) {
-		assert(id >= 0) : "id must never be negative";
+		assert (id >= 0) : "id must never be negative";
 
 		this.id = id;
 		this.identifier = "evaluation";
@@ -38,7 +43,7 @@ public class Evaluation extends Bean {
 
 	@Override
 	public String get(String field) {
-		assert(field != null) : "field must never be null";
+		assert (field != null) : "field must never be null";
 
 		if (field.equals("_id")) {
 			return Integer.toString(this.getId());
@@ -75,8 +80,8 @@ public class Evaluation extends Bean {
 
 	@Override
 	public void set(String field, String data){
-		assert(field != null) : "field must never be null";
-		assert(data != null) : "data must never be null";
+		assert (field != null) : "field must never be null";
+		assert (data != null) : "data must never be null";
 
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
@@ -140,7 +145,7 @@ public class Evaluation extends Bean {
 	}
 
 	public static Evaluation get(int id) throws  SQLException {
-		assert(id >=0) : "id must never be negative";
+		assert (id >=0) : "id must never be negative";
 
 		Evaluation result = new Evaluation(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -183,9 +188,9 @@ public class Evaluation extends Bean {
 
 	public static ArrayList<Evaluation> getWhere(String field, String value, boolean like) 
 			throws  SQLException {
-		assert(field != null) : "field must never be null";
-		assert(value != null) : "value must never be null";
-		assert(field != "") : "field must never be empty";
+		assert (field != null) : "field must never be null";
+		assert (value != null) : "value must never be null";
+		assert (field != "") : "field must never be empty";
 
 		Evaluation type = new Evaluation();
 		ArrayList<Evaluation> result = new ArrayList<Evaluation>();
@@ -197,9 +202,9 @@ public class Evaluation extends Bean {
 	}
 	
 	public static Evaluation getFromRelation(int idInstitution, int idCourse, int year){
-		assert(idInstitution >= 0) : "idInstitution must never be negative";
-		assert(idCourse >= 0) : "idCourse must never be negative";;
-		assert(year > 1990) : "year must never be smaller than 1990";
+		assert (idInstitution >= 0) : "idInstitution must never be negative";
+		assert (idCourse >= 0) : "idCourse must never be negative";;
+		assert (year > 1990) : "year must never be smaller than 1990";
 
 		Evaluation result = new Evaluation();
 
@@ -236,138 +241,138 @@ public class Evaluation extends Bean {
 	}
 
 	public int getId() {
-		return id;
+        return id;
 	}
 
 	public void setId(int id) {
-		assert(id >= 0) : "id must never be negative";
+		assert (id >= 0) : "id must never be negative";
 		this.id = id;
 	}
 
 	public int getIdInstitution() {
-		return idInstitution;
+        return idInstitution;
 	}
 
 	public void setIdInstitution(int idInstitution) {
-		assert(idInstitution >= 0) : "idInstitution must never be negative";
+		assert (idInstitution >= 0) : "idInstitution must never be negative";
 		this.idInstitution = idInstitution;
 	}
 
 	public int getIdCourse() {
-		return idCourse;
+        return idCourse;
 	}
 
 	public void setIdCourse(int idCourse) {
-		assert(idCourse >= 0) : "idCourse must never be negative";
+		assert (idCourse >= 0) : "idCourse must never be negative";
 		this.idCourse = idCourse;
 	}
 
 	public int getYear() {
-		return year;
+        return year;
 	}
 
 	public void setYear(int year) {
-		assert(year > 2000) : "year must never be smaller than 1990";
+		assert (year > 2000) : "year must never be smaller than 1990";
 		this.year = year;
 	}
 
 	public String getModality() {
-		return modality;
+        return modality;
 	}
 
 	public void setModality(String modality) {
-		assert(modality != null) : "modality must never be null";
+		assert (modality != null) : "modality must never be null";
 		this.modality = modality;
 	}
 
 	public int getMasterDegreeStartYear() {
-		return masterDegreeStartYear;
+        return masterDegreeStartYear;
 	}
 
 	public void setMasterDegreeStartYear(int masterDegreeStartYear) {
-		assert(masterDegreeStartYear > 1900) : "masterDegreeStartYear must never be "
+		assert (masterDegreeStartYear > 1900) : "masterDegreeStartYear must never be "
 		                                       +"bigger than 1990";
 
 		this.masterDegreeStartYear = masterDegreeStartYear;
 	}
 
 	public int getDoctorateStartYear() {
-		return doctorateStartYear;
+        return doctorateStartYear;
 	}
 
 	public void setDoctorateStartYear(int doctorateStartYear) {
-		assert(doctorateStartYear > 1900) : "masterDegreeStartYear must never be "
+		assert (doctorateStartYear > 1900) : "masterDegreeStartYear must never be "
 		                                       +"bigger than 1990";
 		
 		this.doctorateStartYear = doctorateStartYear;
 	}
 
 	public int getTriennialEvaluation() {
-		return triennialEvaluation;
+        return triennialEvaluation;
 	}
 
 	public void setTriennialEvaluation(int triennialEvaluation) {
-		assert(triennialEvaluation >= 0) : "triennialEvaluation must never be negative";
+		assert (triennialEvaluation >= 0) : "triennialEvaluation must never be negative";
 
 		this.triennialEvaluation = triennialEvaluation;
 	}
 
 	public int getPermanentTeachers() {
-		return permanentTeachers;
+        return permanentTeachers;
 	}
 
 	public void setPermanentTeachers(int permanentTeachers) {
-		assert(permanentTeachers >= 0) : "permanentTeachers must never be negative";
+		assert (permanentTeachers >= 0) : "permanentTeachers must never be negative";
 
 		this.permanentTeachers = permanentTeachers;
 	}
 
 	public int getTheses() {
-		return theses;
+        return theses;
 	}
 
 	public void setTheses(int theses) {
-		assert(theses >= 0) : "theses must never be negative";
+		assert (theses >= 0) : "theses must never be negative";
 		
 		this.theses = theses;
 	}
 
 	public int getDissertations() {
-		return dissertations;
+        return dissertations;
 	}
 
 	public void setDissertations(int dissertations) {
-		assert(dissertations >= 0) : "dissertations must never be negative";
+		assert (dissertations >= 0) : "dissertations must never be negative";
 		
 		this.dissertations = dissertations;
 	}
 
 	public int getIdArticles() {
-		return idArticles;
+        return idArticles;
 	}
 
 	public void setIdArticles(int idArticles) {
-		assert(idArticles >= 0) : "idArticles must never be negative";
+		assert (idArticles >= 0) : "idArticles must never be negative";
 		
 		this.idArticles = idArticles;
 	}
 
 	public int getIdBooks() {
-		return idBooks;
+        return idBooks;
 	}
 
 	public void setIdBooks(int idBooks) {
-		assert(idBooks >= 0) : "idBooks must never be negative";
+		assert (idBooks >= 0) : "idBooks must never be negative";
 		
 		this.idBooks = idBooks;
 	}
 
 	public int getArtisticProduction() {
-		return artisticProduction;
+        return artisticProduction;
 	}
 
 	public void setArtisticProduction(int artisticProduction) {
-		assert(artisticProduction >= 0) : "artisticProduction must never be negative";
+		assert (artisticProduction >= 0) : "artisticProduction must never be negative";
 
 		this.artisticProduction = artisticProduction;
 	}

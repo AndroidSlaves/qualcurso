@@ -5,6 +5,7 @@ import helpers.Indicator;
 import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +19,22 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
 	public static String VALUE = "value";
 	private int itemLayout = 0;
 
+	@SuppressLint("Assert")
 	public IndicatorListAdapter(Context context, int resource, List<HashMap<String,String>> items) {
 		super(context, resource, items);
-		this.itemLayout = resource;
+
+        assert (context != null) : "Receive the null context of treatment";
+        assert (resource > 0) : "Treatment to lower value of resource";
+
+        this.itemLayout = resource;
 	}
 
+	@SuppressLint("Assert")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+        assert (position >= 0) : "Treatment for lower position of an item in the list";
+        assert (parent != null) : "Receive the null treatment";
+
 		View v = convertView;
 
 		if (v == null) {

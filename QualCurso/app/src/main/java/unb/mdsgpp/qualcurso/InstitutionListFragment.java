@@ -39,8 +39,8 @@ public class InstitutionListFragment extends ListFragment{
 
 
 	public static InstitutionListFragment newInstance(int id, int year){
-		assert(id >= 0) : "id must never be negative";
-		assert(year > 1990) : "year must never be smaller";
+		assert (id >= 0) : "id must never be negative";
+		assert (year > 1990) : "year must never be smaller";
 
 		InstitutionListFragment fragment = new InstitutionListFragment();
 		Bundle args = new Bundle();
@@ -51,9 +51,9 @@ public class InstitutionListFragment extends ListFragment{
 		return fragment;
 	}
 	public static InstitutionListFragment newInstance(int id, int year, ArrayList<Institution> institutions){
-		assert(id >= 0) : "id must never be negative";
-		assert(year > 1990) : "search must never be smaller than 1990";
-		assert(institutions != null) : "institutions must never be null";
+		assert (id >= 0) : "id must never be negative";
+		assert (year > 1990) : "search must never be smaller than 1990";
+		assert (institutions != null) : "institutions must never be null";
 
 		InstitutionListFragment fragment = new InstitutionListFragment();
 		Bundle args = new Bundle();
@@ -98,7 +98,7 @@ public class InstitutionListFragment extends ListFragment{
 
 	@Override
 	public void onAttach(Activity activity) {
-		assert(activity != null) : "activity must never be null";
+		assert (activity != null) : "activity must never be null";
 		super.onAttach(activity);
 		try {
             beanCallbacks = (BeanListCallbacks) activity;
@@ -115,10 +115,10 @@ public class InstitutionListFragment extends ListFragment{
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		assert(l != null) : "l must never be null";
-		assert(v != null) : "v must never be null";
-		assert(position >= 0) : "position must never be null";
-		assert(id >= 0) : "id must never be negative";
+		assert (l != null) : "l must never be null";
+		assert (v != null) : "v must never be null";
+		assert (position >= 0) : "position must never be null";
+		assert (id >= 0) : "id must never be negative";
 
 		if(getArguments().getInt(ID_COURSE)==0){
 			beanCallbacks.onBeanListItemSelected(CourseListFragment.newInstance(((Institution)l.getItemAtPosition(position)).getId(),getArguments().getInt(YEAR)));
@@ -129,7 +129,9 @@ public class InstitutionListFragment extends ListFragment{
 	}
 	
 	private static ArrayList<Institution> getInstitutionsList(int idCourse) throws SQLException{
-		assert(idCourse >= 0) : "id must never be negative";
+
+		assert (idCourse >= 0) : "id must never be negative";
+
 		if(idCourse == 0){
 			return Institution.getAll();
 		}else{

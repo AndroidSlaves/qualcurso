@@ -21,11 +21,11 @@ public class GenericBeanDAO extends DataBase{
 	
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, String orderField)
 			throws SQLException {
-	    assert(bean != null) : "bean must never be null";
-		assert(bean.identifier != null) : "bean's identifier must never be null";
-	    assert(table != null) : "table must never be null";
-	    assert(table != "") : "table must never be empty";
-	    assert(orderField != null) : "orderField must never be null";
+	    assert (bean != null) : "bean must never be null";
+		assert (bean.identifier != null) : "bean's identifier must never be null";
+	    assert (table != null) : "table must never be null";
+	    assert (table != "") : "table must never be empty";
+	    assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
@@ -49,12 +49,12 @@ public class GenericBeanDAO extends DataBase{
 	
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, int year, String orderField)
 			throws SQLException {
-	    assert(bean != null) : "bean must never be null";
-		assert(bean.identifier != null) : "bean's identifier must never be null";
-	    assert(table != null) : "table must never be null";
-	    assert(table != "") : "table must never be empty";
-	    assert(orderField != null) : "orderField must never be null";
-	    assert(year > 2000);
+	    assert (bean != null) : "bean must never be null";
+		assert (bean.identifier != null) : "bean's identifier must never be null";
+	    assert (table != null) : "table must never be null";
+	    assert (table != "") : "table must never be empty";
+	    assert (orderField != null) : "orderField must never be null";
+	    assert (year > 2000);
 
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
@@ -78,6 +78,7 @@ public class GenericBeanDAO extends DataBase{
 	
 	public ArrayList<Bean> selectFromFields(Bean bean, ArrayList<String> fields, String orderField)
 			throws SQLException {		
+
 	    assert(bean != null) : "bean must never be null";
 		assert(bean.identifier != null) : "bean's identifier must never be null";
 	    assert(fields != null) : "table must never be null";
@@ -116,8 +117,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public boolean insertBean(Bean bean) throws SQLException {
-		assert(bean != null) : "bean object must never be null";
-		assert(bean.identifier != null) : "bean's identifiers must never be null";
+		assert (bean != null) : "bean object must never be null";
+		assert (bean.identifier != null) : "bean's identifiers must never be null";
 
 		this.openConnection();
 		String replace = "";
@@ -145,11 +146,11 @@ public class GenericBeanDAO extends DataBase{
 
 	public boolean addBeanRelationship(Bean parentBean, Bean childBean)
 			throws SQLException {
-		assert(parentBean != null) : "parentBean must never be null";
-		assert(parentBean.identifier != null) : "parentBean's identifier must never be null";
-		assert(parentBean.relationship != null) : "parentBean's relationship must never be null";
-		assert(childBean != null) : "childBean must never be null";
-		assert(childBean.identifier != null) : "childBean' identifier must never be null";
+		assert (parentBean != null) : "parentBean must never be null";
+		assert (parentBean.identifier != null) : "parentBean's identifier must never be null";
+		assert (parentBean.relationship != null) : "parentBean's relationship must never be null";
+		assert (childBean != null) : "childBean must never be null";
+		assert (childBean.identifier != null) : "childBean' identifier must never be null";
 
 		this.openConnection();
 		String sql = "INSERT INTO " + parentBean.relationship + "(id_"
@@ -166,11 +167,11 @@ public class GenericBeanDAO extends DataBase{
 	
 	public boolean deleteBeanRelationship(Bean parentBean, Bean childBean)
 			throws SQLException {
-		assert(parentBean != null) : "parentBean must never be null";
-		assert(parentBean.identifier != null) : "parentBean's identifier must never be null";
-		assert(parentBean.relationship != null) : "parentBean's relationship must never be null";
-		assert(childBean != null) : "childBean must never be null";
-		assert(childBean.identifier != null) : "childBean' identifier must never be null";
+		assert (parentBean != null) : "parentBean must never be null";
+		assert (parentBean.identifier != null) : "parentBean's identifier must never be null";
+		assert (parentBean.relationship != null) : "parentBean's relationship must never be null";
+		assert (childBean != null) : "childBean must never be null";
+		assert (childBean.identifier != null) : "childBean' identifier must never be null";
 
 		this.openConnection();
 		String sql = "DELETE FROM " + parentBean.relationship + "  WHERE id_"
@@ -186,8 +187,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Bean selectBean(Bean bean) throws SQLException {
-		assert(bean != null) : "bean must never be null";
-		assert(bean.identifier != null) : "bean's identifier must never be null";
+		assert (bean != null) : "bean must never be null";
+		assert (bean.identifier != null) : "bean's identifier must never be null";
 
 		this.openConnection();
 		Bean result = null;
@@ -205,9 +206,9 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public ArrayList<Bean> selectAllBeans(Bean type, String orderField) throws SQLException {
-		assert(type != null) : "type must never be null";
-		assert(type.identifier != null) : "type's identifier must never be null";
-	    assert(orderField != null) : "orderField must never be null";
+		assert (type != null) : "type must never be null";
+		assert (type.identifier != null) : "type's identifier must never be null";
+	    assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
@@ -224,8 +225,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public ArrayList<String[]> runSql(String sql) throws SQLException {
-		assert(sql != null) : "sql must never be null";
-		assert(sql != "") : "sql must never be empty";
+		assert (sql != null) : "sql must never be null";
+		assert (sql != "") : "sql must never be empty";
 
 		this.openConnection();
 		ArrayList<String[]> result = new ArrayList<String[]>();
@@ -246,10 +247,10 @@ public class GenericBeanDAO extends DataBase{
 	
 	
 	public ArrayList<Bean> runSql(Bean type, String sql) throws SQLException {
-		assert(type != null) : "type must never be null";
-		assert(type.identifier != null) : "type's identifier must never be null";
-		assert(sql != null) : "sql must never be null";
-		assert(sql != "") : "sql must never be empty";
+		assert (type != null) : "type must never be null";
+		assert (type.identifier != null) : "type's identifier must never be null";
+		assert (sql != null) : "sql must never be null";
+		assert (sql != "") : "sql must never be empty";
 
 		this.openConnection();
 		ArrayList<Bean> result = new ArrayList<Bean>();
@@ -266,8 +267,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Integer countBean(Bean type) throws SQLException {
-		assert(type != null) : "type must never be null";
-		assert(type.identifier != null) : "type's identifier must never be null";
+		assert (type != null) : "type must never be null";
+		assert (type.identifier != null) : "type's identifier must never be null";
 
 		this.openConnection();
 		Integer count = 0;
@@ -280,8 +281,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Bean firstOrLastBean(Bean type, boolean last) throws SQLException {
-		assert(type != null) : "type must never be null";
-		assert(type.identifier != null) : "type's identifier must never be null";
+		assert (type != null) : "type must never be null";
+		assert (type.identifier != null) : "type's identifier must never be null";
 
 		Bean bean = null;
 		String sql = "SELECT * FROM " + type.identifier + " ORDER BY "
@@ -307,8 +308,10 @@ public class GenericBeanDAO extends DataBase{
 		return bean;
 	}
 	
-	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields, String orderedBy,
-															String condition, String groupBy, boolean desc){
+	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields,
+															String orderedBy, String condition,
+															String groupBy, boolean desc){
+
 		assert(orderedBy != null) : "orderedBy must never be null";
 		assert(condition != null) : "condition must never be null";
 		assert(groupBy != null) : "groupBy must never be null";
@@ -352,11 +355,11 @@ public class GenericBeanDAO extends DataBase{
 
 	public ArrayList<Bean> selectBeanWhere(Bean type, String field,
 			String value, boolean use_like, String orderField) throws SQLException {
-		assert(type != null) : "type must never be null";
-		assert(type.identifier != null) : "type's identifier must never be null";
-		assert(field != null) : "field must never be null";
-		assert(value != null) : "value must never be null";
-		assert(orderField != null) : "orderField must never be null";
+		assert (type != null) : "type must never be null";
+		assert (type.identifier != null) : "type's identifier must never be null";
+		assert (field != null) : "field must never be null";
+		assert (value != null) : "value must never be null";
+		assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
@@ -386,8 +389,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 	
 	public boolean deleteBean(Bean bean) throws SQLException {
-		assert(bean != null) : "bean must never be null";
-		assert(bean.identifier != null) : "bean's identifier must never be null";
+		assert (bean != null) : "bean must never be null";
+		assert (bean.identifier != null) : "bean's identifier must never be null";
 		this.openConnection();
 		String sql = "DELETE FROM "+bean.identifier+ " WHERE "+bean.fieldsList().get(0)+" = ?";
 		this.pst = this.database.compileStatement(sql);
@@ -399,7 +402,7 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	public Bean init(String beanIdentifier) {
-		assert(beanIdentifier != null) : "beanIdentifier must never be null";
+		assert (beanIdentifier != null) : "beanIdentifier must never be null";
 		
 		Bean object = null;
 		if (beanIdentifier.equals("institution")) {
@@ -428,5 +431,4 @@ public class GenericBeanDAO extends DataBase{
 
 		return object;
 	}
-
 }

@@ -129,7 +129,7 @@ public class TabsFragment extends Fragment implements OnTabChangeListener, OnQue
 
 	private void updateTab(String tabId, int placeholder) {
 		assert(tabId != null) : "tabId must never be null";
-		assert(placeholder != null) : "placeholder must never be null";
+		assert(placeholder < 0) : "placeholder must never be null";
 
 		FragmentManager fm = getFragmentManager();
 		if (fm.findFragmentByTag(tabId) == null) {

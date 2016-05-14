@@ -111,20 +111,6 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 		};
 	}
 
-    private void boundLayoutObjects(final View rootView){
-        assert(rootView != null): "rootView must never be null";
-
-        // bound variables with layout objects
-        int yearSpinnerId = R.id.compare_year;
-        this.yearSpinner = (Spinner) rootView.findViewById(yearSpinnerId);
-
-        int autoCompleteId = R.id.autoCompleteTextView;
-        this.autoCompleteField = (AutoCompleteTextView) rootView.findViewById(autoCompleteId);
-
-        int institutionListId = R.id.institutionList;
-        this.institutionList = (ListView) rootView.findViewById(institutionListId);
-    }
-
 	public void updateList() {
 		selectedInstitutions = new ArrayList<Institution>();
         final int selectedItemPosition = yearSpinner.getSelectedItemPosition();
@@ -191,7 +177,11 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 		} else {/*Nothing to do*/}
 	}
 
-	private void hideKeyboard(View view) {
+    public void setCurrentSelection(Course currentSelection) {
+        this.selectedCourse = currentSelection;
+    }
+
+    private void hideKeyboard(View view) {
 		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
 	}
@@ -210,7 +200,18 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
         this.autoCompleteField.setAdapter(autoCompleteAdapter);
     }
 
-    public void setCurrentSelection(Course currentSelection) {
-        this.selectedCourse = currentSelection;
+    private void boundLayoutObjects(final View rootView){
+        assert(rootView != null): "rootView must never be null";
+
+        // bound variables with layout objects
+        int yearSpinnerId = R.id.compare_year;
+        this.yearSpinner = (Spinner) rootView.findViewById(yearSpinnerId);
+
+        int autoCompleteId = R.id.autoCompleteTextView;
+        this.autoCompleteField = (AutoCompleteTextView) rootView.findViewById(autoCompleteId);
+
+        int institutionListId = R.id.institutionList;
+        this.institutionList = (ListView) rootView.findViewById(institutionListId);
     }
+
 }

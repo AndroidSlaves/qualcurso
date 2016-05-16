@@ -1,7 +1,7 @@
 /*****************************
  * Class name: Book (.java)
  *
- * Purpose: Modeling characteristics from book and use methods to interacts with the database
+ * Purpose: Modeling characteristics from book and use methods that interacts with the database
  ****************************/
 
 package models;

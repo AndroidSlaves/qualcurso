@@ -47,14 +47,16 @@ public class Institution extends Bean implements Parcelable {
 	}
 
 	public int getId() {
-		return id;
+        return id;
 	}
 
 	public boolean save() throws SQLException {
 		boolean result = false;
+
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = gDB.insertBean(this);
 		this.setId(Institution.last().getId());
+
 		return result;
 	}
 	

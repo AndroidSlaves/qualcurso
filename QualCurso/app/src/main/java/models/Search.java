@@ -1,14 +1,19 @@
+/*****************************
+ * Class name: Search (.java)
+ *
+ * Purpose:
+ *****************************/
+
 package models;
+
+import android.database.SQLException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
-import unb.mdsgpp.qualcurso.QualCurso;
-import android.database.SQLException;
-import android.text.format.DateFormat;
 import helpers.Indicator;
 
 public class Search extends Bean{
@@ -22,7 +27,6 @@ public class Search extends Bean{
 	private Indicator indicator;
 	private int minValue;
 	private int maxValue;
-
 
 	public Search() {
 		this.id = 0;

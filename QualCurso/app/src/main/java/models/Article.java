@@ -1,7 +1,7 @@
 /*****************************
  * Class name: Article (.java)
  *
- * Purpose: Article is a Class that represents informations about Articles, like, number of
+ * Purpose: Article is a Class that represents information about Articles, like, number of
  * published journals and conferences publications.
  *****************************/
 
@@ -30,30 +30,60 @@ public class Article extends Bean {
 		this.relationship = "";
 	}
 
+    /**
+     * Get the id of an Article. The id is unique for each Article.
+     *
+     * @return int
+     */
 	public int getId() {
 		return id;
 	}
 
+    /**
+     * Set the id of Article. This id will be used in Database as unique number.
+     * @param id
+     */
 	public void setId(int id) {
 		assert (id >= 0) : "id must be positive";
 
 		this.id = id;
 	}
 
+    /**
+     * Get the quantity of published journals by Article.
+     *
+     * @return int
+     *              Number of publications in journals.
+     */
 	public int getPublishedJournals() {
 		return publishedJournals;
 	}
 
+    /**
+     * Set the number of published journals.
+     *
+     * @param publishedJournals
+     */
 	public void setPublishedJournals(int publishedJournals) {
 		assert (publishedJournals >= 0) : "publishedJournals must be positive";
 
 		this.publishedJournals = publishedJournals;
 	}
 
+    /**
+     * Get the number of published conference journals to show on screen.
+     *
+     * @return int
+     */
 	public int getPublishedConferenceProceedings() {
 		return publishedConferenceProceedings;
 	}
 
+    /**
+     * Set the number (quantity) of published conference journals.
+     *
+     * @param publishedConferenceProceedings
+     */
 	public void setPublishedConferenceProceedings(int publishedConferenceProceedings) {
 		assert (publishedConferenceProceedings >= 0) : "publishedConferenceProceedings " +
 				"must be positive";
@@ -188,7 +218,7 @@ public class Article extends Bean {
         final GenericBeanDAO gDB = new GenericBeanDAO();
         ArrayList<Bean> listBeans = gDB.selectBeanWhere(type, field, value, like, null);
 
-		for (Bean bean : listBeans) {
+		for(Bean bean : listBeans) {
 			result.add((Article) bean);
 		}
 
@@ -210,28 +240,36 @@ public class Article extends Bean {
 		return result;
 	}
 
+    /**
+     * Returns corresponding number the field parameter.
+     * @param field
+     * @return String
+     *
+     */
 	@Override
 	public String get(String field) {
 		assert (field != null) : "field must never be null.";
 		assert (field.length() >= 1) : "field name must have at least one character.";
 
+        String number;
+
 		if(field.equals("_id")) {
-			return Integer.toString(this.getId());
+			number = Integer.toString(this.getId());
+		} else if(field.equals("published_journals")) {
+			number = Integer.toString(this.getPublishedJournals());
+		} else if(field.equals("published_conference_proceedings")) {
+			number = Integer.toString(this.getPublishedConferenceProceedings());
+		} else {
+			number = "";
 		}
-		
-		else if(field.equals("published_journals")) {
-			return Integer.toString(this.getPublishedJournals());
-		}
-		
-		else if (field.equals("published_conference_proceedings")) {
-			return Integer.toString(this.getPublishedConferenceProceedings());
-		}
-		
-		else {
-			return "";
-		}
+        return number;
 	}
 
+    /**
+     * Stores the number requested by parameter.
+     * @param field
+     * @param data
+     */
 	@Override
 	public void set(String field, String data) {
 		assert (field != null) : "field must never be null.";
@@ -239,20 +277,14 @@ public class Article extends Bean {
 		assert (data != null) : "data must never be null.";
 		assert (data.length() >= 1) : "data value must have at least one character.";
 
-		if (field.equals("_id")) {
+		if(field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
-		} 
-		
-		else if (field.equals("published_journals")) {
+		} else if(field.equals("published_journals")) {
 			this.setPublishedJournals(Integer.parseInt(data));
-		}
-		
-		else if (field.equals("published_conference_proceedings")) {
+		} else if(field.equals("published_conference_proceedings")) {
 			this.setPublishedConferenceProceedings(Integer.parseInt(data));
-		}
-		
-		else {
-
+		} else {
+            // Nothing to do.
 		}
 		
 	}

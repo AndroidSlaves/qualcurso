@@ -1,33 +1,42 @@
-Class: DataBaseStructures
-    // class that creates the database and its functions.
+/************************
+ * Class name: DataBaseStructures (.java)
+ *
+ * Purpose: This class is responsible for making all the operations with the database in regard of
+ *              the course information.
+ ***********************/
+
 Attributes:
     String sql
         // This String is the sql code line that will be executed by all the build methods.
+
+        
 Methods:
     initDB()
-        /* Opens the SQL connection and creates all the other tables by calling all the build
-        functions in this class */
+        /*
+         * Opens the SQL connection and creates all the other tables by calling all the build
+         * functions in this class
+         */
 
     dropDB()
-        // Destroy all the tables and close database connection with SQL.
+        // Destroy all the tables and close database connection with SQL. Throws SQLException.
 
     buildTableCourse()
-        // Creates database table for the courses and its attributes.
+        // Creates database table for the courses and its attributes. Throws SQLException.
 
     buildTableInstitution()
-        // Creates database table for the institution and its attributes.
+        // Creates database table for the institution and its attributes. Throws SQLException.
 
     buildTableCoursesInstitutions()
-        // Creates database table that relates intitution with its courses.
+        // Creates database table that relates intitution with its courses. Throws SQLException.
 
     buildTableArticles()
-        // Creates database table for the articles and its attributes.
+        // Creates database table for the articles and its attributes. Throws SQLException.
 
     buildTableBooks()
-        // Creates database table for the books and its attributes.
+        // Creates database table for the books and its attributes. Throws SQLException.
 
     buildTableEvaluation()
-        // Creates database table for the evaluations and its attributes.
+        // Creates database table for the evaluations and its attributes. Throws SQLException.
 
     buildTableSearch()
-        // Creates database table for the records of the searches.
+        // Creates database table for the records of the searches. Throws SQLException.

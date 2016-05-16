@@ -1,6 +1,7 @@
 Class Book: 
 	/**
-	  * Extends Bean implements Parcelable. Used to modeling the 		  * Book and and manipulate the informations storeds.
+	  * Extends Bean implements Parcelable. Used to modeling the
+	  * Book and and manipulate the informations storeds.
 	  */
 
 *********************************************************
@@ -17,7 +18,7 @@ VARIABLES:
 	// private int type. Receive an int to chapters
 
 *collections:
-	// private int type. Receive an int to colletions
+	// private int type. Receive an int to collections
 
 *entries: 
 	// private int type. Receive an int to entries 
@@ -45,7 +46,7 @@ FUNCTIONS
 	
 *setId(int id): 
 	/**
-	  * Void type. Used to access the variable id and 	      		  * store a value there.
+	  * Void type. Used to access the variable id and store a value there.
 	  */
 
 *getIntegralText():

@@ -78,9 +78,11 @@ public class GenericBeanDAO extends DataBase{
 	
 	public ArrayList<Bean> selectFromFields(Bean bean, ArrayList<String> fields, String orderField)
 			throws SQLException {		
-	    assert (bean != null) : "bean must never be null";
-		assert (bean.identifier != null) : "bean's identifier must never be null";
-	    assert (orderField != null) : "orderField must never be null";
+
+	    assert(bean != null) : "bean must never be null";
+		assert(bean.identifier != null) : "bean's identifier must never be null";
+	    assert(fields != null) : "table must never be null";
+	    assert(orderField != null) : "orderField must never be null";
 
 		this.openConnection();
 		ArrayList<Bean> beans = new ArrayList<Bean>();
@@ -306,13 +308,14 @@ public class GenericBeanDAO extends DataBase{
 		return bean;
 	}
 	
-	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields, String orderedBy,
-															String condition, String groupBy, boolean desc){
-		assert (orderedBy != null) : "orderedBy must never be null";
-		assert (condition != null) : "condition must never be null";
-		assert (groupBy != null) : "groupBy must never be null";
-		assert (returnFields != null) : "returnFields must never be null";
-		assert (returnFields.size() > 0) : "returnFields must never be empty";
+	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields,
+															String orderedBy, String condition,
+															String groupBy, boolean desc){
+
+		assert(orderedBy != null) : "orderedBy must never be null";
+		assert(condition != null) : "condition must never be null";
+		assert(groupBy != null) : "groupBy must never be null";
+		assert(returnFields != null) : "returnFields must never be null";
 
 		String fields = "";
 		for(String s : returnFields){
@@ -428,5 +431,4 @@ public class GenericBeanDAO extends DataBase{
 
 		return object;
 	}
-
 }

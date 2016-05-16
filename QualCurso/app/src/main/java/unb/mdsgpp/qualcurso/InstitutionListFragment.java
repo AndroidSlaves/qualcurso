@@ -129,7 +129,9 @@ public class InstitutionListFragment extends ListFragment{
 	}
 	
 	private static ArrayList<Institution> getInstitutionsList(int idCourse) throws SQLException{
+
 		assert (idCourse >= 0) : "id must never be negative";
+
 		if(idCourse == 0){
 			return Institution.getAll();
 		}else{

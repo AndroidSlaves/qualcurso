@@ -75,10 +75,11 @@ public class EvaluationDetailFragment extends Fragment{
 	}
 	
 	public ArrayList<HashMap<String, String>> getListItems(Evaluation evaluation){
-		assert (evaluation != null) : "evaluation must never be null";
-		assert (evaluation.getIdArticles() >= 0) : "evaluation's idArticles must never be negative";
-		assert (evaluation.getIdBooks() >= 0) : "evaluation's idBooks must never be negative";
-		
+
+		assert(evaluation != null) : "evaluation must never be null";
+		assert(evaluation.getIdArticles() >= 0) : "evaluation's idArticles must never be negative";
+		assert(evaluation.getIdBooks() >= 0) : "evaluation's idBooks must never be negative";
+
 		ArrayList<HashMap<String, String>> hashList = new ArrayList<HashMap<String,String>>();
 		ArrayList<Indicator> indicators = Indicator.getIndicators();
 		Book book = Book.get(evaluation.getIdBooks());

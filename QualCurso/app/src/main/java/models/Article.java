@@ -101,9 +101,11 @@ public class Article extends Bean {
 	public boolean save() throws SQLException {
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		result = gDB.insertBean(this);
 		this.setId(Article.last().getId());
-		return result;
+
+        return result;
 	}
 
     /**
@@ -121,8 +123,10 @@ public class Article extends Bean {
 
 		Article result = new Article(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = (Article) gDB.selectBean(result);
-		return result;
+
+        result = (Article) gDB.selectBean(result);
+
+        return result;
 	}
 
     /**
@@ -251,22 +255,25 @@ public class Article extends Bean {
 		assert (field != null) : "field must never be null.";
 		assert (field.length() >= 1) : "field name must have at least one character.";
 
-        String number;
+        String contentInField = "";
 
-		if(field.equals("_id")) {
-			number = Integer.toString(this.getId());
+        if(field.equals("_id")) {
+			contentInField = Integer.toString(this.getId());
 		} else if(field.equals("published_journals")) {
-			number = Integer.toString(this.getPublishedJournals());
+			contentInField = Integer.toString(this.getPublishedJournals());
 		} else if(field.equals("published_conference_proceedings")) {
-			number = Integer.toString(this.getPublishedConferenceProceedings());
+			contentInField =Integer.toString(this.getPublishedConferenceProceedings());
 		} else {
-			number = "";
-		}
-        return number;
-	}
+		    /*Nothing to do.*/
+        }
+
+	    return contentInField;
+    }
+
 
     /**
      * Stores the number requested by parameter.
+     *
      * @param field
      * @param data
      */
@@ -297,9 +304,11 @@ public class Article extends Bean {
 	@Override
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
+
 		fields.add("_id");
 		fields.add("published_journals");
 		fields.add("published_conference_proceedings");
-		return fields;
+
+        return fields;
 	}
 }

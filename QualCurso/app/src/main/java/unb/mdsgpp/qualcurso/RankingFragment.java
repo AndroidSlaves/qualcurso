@@ -28,6 +28,7 @@ public class RankingFragment extends Fragment {
 	BeanListCallbacks beanCallbacks;
 	private static final String COURSE = "course";
 	private static final String FILTER_FIELD = "filterField";
+	private final String CLASS_CAST_EXCEPTION_COMPLEMENT = "must implement BeanListCallbacks.";
 
 	public RankingFragment() {
 		super();
@@ -39,9 +40,10 @@ public class RankingFragment extends Fragment {
 		super.onAttach(activity);
 		try {
 			beanCallbacks = (BeanListCallbacks) activity;
+
 		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement BeanListCallbacks.");
+			String classCastException = activity.toString() + CLASS_CAST_EXCEPTION_COMPLEMENT;
+			throw new ClassCastException(classCastException);
 		}
 	}
 
@@ -61,13 +63,11 @@ public class RankingFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.ranking_fragment, container,
-				false);
+		int rankingFragmentId = R.layout.ranking_fragment;
+		View rootView = inflater.inflate(rankingFragmentId, container, false);
 		if (savedInstanceState != null) {
 			if (savedInstanceState.getParcelable(COURSE) != null) {
-				setCurrentSelection((Course) savedInstanceState
-						.getParcelable(COURSE));
-
+				setCurrentSelection((Course) savedInstanceState.getParcelable(COURSE));
 			}
 			if (savedInstanceState.getString(FILTER_FIELD) != null) {
 				setFilterField(savedInstanceState.getString(FILTER_FIELD));
@@ -94,7 +94,9 @@ public class RankingFragment extends Fragment {
 		}
 		return rootView;
 	}
+	private void setAutoCompleteArrayAdapter(){
 
+	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable(COURSE, this.currentSelection);

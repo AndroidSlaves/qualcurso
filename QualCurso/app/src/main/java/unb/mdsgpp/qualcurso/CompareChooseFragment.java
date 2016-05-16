@@ -11,31 +11,33 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class CompareChooseFragment extends Fragment implements CheckBoxListCallbacks{
-	BeanListCallbacks beanCallbacks;
+
+    private BeanListCallbacks beanCallbacks;
 	private static final String COURSE = "course";
+    private final String CLASS_CAST_EXCEPTION_COMPLEMENT = "must implement BeanListCallbacks.";
 
 	private Spinner yearSpinner = null;
 	private AutoCompleteTextView autoCompleteField = null;
 	private ListView institutionList = null;
 	private ListCompareAdapter compareAdapterList = null;
-	private int selectedYear;
-	private Course selectedCourse;
+	private int selectedYear = 2016;
+	private Course selectedCourse = null;
 	private ArrayList<Institution> selectedInstitutions = new ArrayList<Institution>();
 
 	public CompareChooseFragment() {
@@ -47,10 +49,11 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 		super.onAttach(activity);
 		try {
 			beanCallbacks = (BeanListCallbacks) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement BeanListCallbacks.");
-		}
+
+        } catch (ClassCastException e) {
+            String classCastException = activity.toString() + CLASS_CAST_EXCEPTION_COMPLEMENT;
+			throw new ClassCastException(classCastException);
+        }
 	}
 
 	@Override
@@ -62,26 +65,22 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState){
-		View rootView = inflater.inflate(R.layout.compare_choose_fragment, container,
-				false);
+		View rootView = inflater.inflate(R.layout.compare_choose_fragment, container, false);
 
 		if (savedInstanceState != null) {
 			if (savedInstanceState.getParcelable(COURSE) != null) {
-				setCurrentSelection((Course) savedInstanceState
-						.getParcelable(COURSE));
+				setCurrentSelection((Course) savedInstanceState.getParcelable(COURSE));
+			} else {/*Nothing to do*/}
+		} else {/*Nothing to do*/}
 
-			}
-		}
+        boundLayoutObjects(rootView);
 
-		// bound variables with layout objects
-		this.yearSpinner = (Spinner) rootView.findViewById(R.id.compare_year);
-		this.autoCompleteField = (AutoCompleteTextView) rootView.findViewById(R.id.autoCompleteTextView);
-		this.institutionList = (ListView) rootView.findViewById(R.id.institutionList);
+        setAutoCompleteArrayAdapter();
 
-		this.autoCompleteField.setAdapter(new ArrayAdapter<Course>(getActionBar().getThemedContext(), R.layout.custom_textview, Course.getAll()));
 		// Set objects events
 		this.yearSpinner.setOnItemSelectedListener(getYearSpinnerListener());
 		this.autoCompleteField.setOnItemClickListener(getAutoCompleteListener(rootView));
+
 		return rootView;
 	}
 	
@@ -112,46 +111,56 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 		};
 	}
 
-
-	public void setCurrentSelection(Course currentSelection) {
-		this.selectedCourse = currentSelection;
-	}
-
 	public void updateList() {
 		selectedInstitutions = new ArrayList<Institution>();
-		if (yearSpinner.getSelectedItemPosition() != 0) {
-			selectedYear = Integer.parseInt(yearSpinner.getSelectedItem()
-					.toString());
+        final int selectedItemPosition = yearSpinner.getSelectedItemPosition();
+
+		if (selectedItemPosition != 0) {
+			selectedYear = Integer.parseInt(yearSpinner.getSelectedItem().toString());
 		} else {
-			yearSpinner
-					.setSelection(yearSpinner.getAdapter().getCount() - 1);
-			selectedYear = Integer.parseInt(yearSpinner.getAdapter()
-					.getItem(yearSpinner.getAdapter().getCount() - 1)
-					.toString());
+            final int lastArrayPosition = yearSpinner.getAdapter().getCount() - 1;
+			yearSpinner.setSelection(lastArrayPosition);
+
+            /* If there is future problems, there was a command here:
+             * lastArrayPosition = yearSpinner.getAdapter().getCount() - 1;*/
+            Adapter listAdapter = yearSpinner.getAdapter();
+            String lastItem = listAdapter.getItem(lastArrayPosition).toString();
+			selectedYear = Integer.parseInt(lastItem);
 		}
 		if (this.selectedCourse != null) {
-			ArrayList<Institution> courseInstitutions = this.selectedCourse
-					.getInstitutions(selectedYear);
-			compareAdapterList = new ListCompareAdapter(getActionBar().getThemedContext(),
-					R.layout.compare_choose_list_item,courseInstitutions, this);
+			ArrayList<Institution> courseInstitutions = this.selectedCourse.getInstitutions(selectedYear);
+            Context themedView = getActionBar().getThemedContext();
+            int compareChooseListItemId = R.layout.compare_choose_list_item;
+
+			compareAdapterList = new ListCompareAdapter(themedView,compareChooseListItemId,courseInstitutions, this);
 
 			this.institutionList.setAdapter(compareAdapterList);
-		} 
+		} else {/*Nothing to do*/}
 	}
 
 	@Override
 	public void onCheckedItem(CheckBox checkBox) {
-		// TODO Auto-generated method stub
-		Institution institution = ((Institution)checkBox.getTag(ListCompareAdapter.INSTITUTION));
-		if(!selectedInstitutions.contains(institution)){
+
+        int institutionId = ListCompareAdapter.INSTITUTION;
+		Institution institution = ((Institution) checkBox.getTag(institutionId));
+        Boolean institutionExists = selectedInstitutions.contains(institution);
+
+		if(!institutionExists){
 			selectedInstitutions.add(institution);
+
 			if(selectedInstitutions.size() == 2){
-				System.out.println(Integer.toString(selectedYear));
-				Evaluation evaluationA = Evaluation.getFromRelation(selectedInstitutions.get(0).getId(), selectedCourse.getId(), selectedYear);
-				Evaluation evaluationB = Evaluation.getFromRelation(selectedInstitutions.get(1).getId(), selectedCourse.getId(), selectedYear);
-				beanCallbacks.onBeanListItemSelected(CompareShowFragment.newInstance(evaluationA.getId(), evaluationB.getId()));
-			}
-		}
+                Log.d("Selected year: ", Integer.toString(selectedYear));
+                final int firstSelectedInstitutionId = selectedInstitutions.get(0).getId();
+                final int secondSelectedInstitutionId = selectedInstitutions.get(1).getId();
+                final int courseId = selectedCourse.getId();
+
+				Evaluation evaluationA = Evaluation.getFromRelation(firstSelectedInstitutionId, courseId, selectedYear);
+                Evaluation evaluationB = Evaluation.getFromRelation(secondSelectedInstitutionId, courseId, selectedYear);
+
+                CompareShowFragment compareShowFragment =CompareShowFragment.newInstance(evaluationA.getId(), evaluationB.getId());
+                beanCallbacks.onBeanListItemSelected(compareShowFragment);
+			} else {/*Nothing to do*/}
+		} else {/*Nothing to do*/}
 	}
 	@Override
 	public void onPause() {
@@ -165,10 +174,14 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 		Institution institution = ((Institution)checkBox.getTag(ListCompareAdapter.INSTITUTION));
 		if(selectedInstitutions.contains(institution)){
 			selectedInstitutions.remove(institution);
-		}
+		} else {/*Nothing to do*/}
 	}
 
-	private void hideKeyboard(View view) {
+    public void setCurrentSelection(Course currentSelection) {
+        this.selectedCourse = currentSelection;
+    }
+
+    private void hideKeyboard(View view) {
 		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
 	}
@@ -176,4 +189,29 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 	private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
+
+    private void setAutoCompleteArrayAdapter(){
+        int customTextViewId = R.layout.custom_textview;
+        Context themedContext = getActionBar().getThemedContext();
+        ArrayList<Course> listOfCourses = Course.getAll();
+
+        ArrayAdapter autoCompleteAdapter = new ArrayAdapter<Course>(themedContext,customTextViewId,listOfCourses);
+
+        this.autoCompleteField.setAdapter(autoCompleteAdapter);
+    }
+
+    private void boundLayoutObjects(final View rootView){
+        assert(rootView != null): "rootView must never be null";
+
+        // bound variables with layout objects
+        int yearSpinnerId = R.id.compare_year;
+        this.yearSpinner = (Spinner) rootView.findViewById(yearSpinnerId);
+
+        int autoCompleteId = R.id.autoCompleteTextView;
+        this.autoCompleteField = (AutoCompleteTextView) rootView.findViewById(autoCompleteId);
+
+        int institutionListId = R.id.institutionList;
+        this.institutionList = (ListView) rootView.findViewById(institutionListId);
+    }
+
 }

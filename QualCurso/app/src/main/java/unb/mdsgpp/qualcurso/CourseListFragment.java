@@ -1,3 +1,9 @@
+/*****************************
+ * Class name: CourseListFragment (.java)
+ *
+ * Purpose: Fragment that shows the list of courses and with its functionalities.
+ ****************************/
+
 package unb.mdsgpp.qualcurso;
 
 import java.util.ArrayList;
@@ -23,8 +29,10 @@ public class CourseListFragment extends ListFragment{
 	private static final String YEAR = "year";
 	
 	BeanListCallbacks beanCallbacks;
-	
-	
+
+    /**
+     * Default constructor that sets the class variables.
+     */
 	public CourseListFragment() {
 		super();
 		Bundle args = new Bundle();
@@ -33,6 +41,18 @@ public class CourseListFragment extends ListFragment{
 		this.setArguments(args);
 	}
 
+    /**
+     * Creates a new instance of the list of courses based on the id and the year.
+     *
+     * @param id
+     *              identification number of the list of courses.
+     *
+     * @param year
+     *              selected year of the evaluation by the user.
+     *
+     * @return
+     *              return the fragment in which the list will be.
+     */
 	public static CourseListFragment newInstance(int id, int year){
 		CourseListFragment fragment = new CourseListFragment();
 		Bundle args = new Bundle();
@@ -42,7 +62,21 @@ public class CourseListFragment extends ListFragment{
 		fragment.setArguments(args);
 		return fragment;
 	}
-	
+
+    /**
+     * Creates a new instance of the list of courses based on the id and the year.
+     *
+     * @param id
+     *              identification number of the list of courses.
+     *
+     * @param year
+     *              selected year of the evaluation by the user.
+     *
+     * @param list
+     *              list of courses that should be listed.
+     * @return
+     *              return the fragment in which the list will be.
+     */
 	public static CourseListFragment newInstance(int id, int year, ArrayList<Course> list){
 		CourseListFragment fragment = new CourseListFragment();
 		Bundle args = new Bundle();
@@ -52,7 +86,7 @@ public class CourseListFragment extends ListFragment{
 		fragment.setArguments(args);
 		return fragment;
 	}
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -83,7 +117,23 @@ public class CourseListFragment extends ListFragment{
 		super.onSaveInstanceState(outState);
 		outState.putParcelableArrayList(IDS_COURSES, getArguments().getParcelableArrayList(IDS_COURSES));	
 	}
-	
+
+    /**
+     * Creates instance of a InstitutionList or a EvaluationDetailFragment based on what was selected by
+     * the user.
+     *
+     * @param l
+     *              listView which the user clicked.
+     *
+     * @param v
+     *              obligatory view parameter for original super class.
+     *
+     * @param position
+     *              position of the item clicked by the user.
+     *
+     * @param id
+     *              obligatory id parameter for original super class.
+     */
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		if(getArguments().getInt(ID_INSTITUTION) == 0){
@@ -97,7 +147,7 @@ public class CourseListFragment extends ListFragment{
 	
 	@Override
 	public void onAttach(Activity activity) {
-		assert (activity != null) : "Receive a null tratment";
+		assert (activity != null) : "Receive a null treatment";
 		super.onAttach(activity);
 		try {
             beanCallbacks = (BeanListCallbacks) activity;
@@ -111,7 +161,19 @@ public class CourseListFragment extends ListFragment{
         super.onDetach();
         beanCallbacks = null;
     }
-	
+
+    /**
+     * Get course list from course bean database.
+     *
+     * @param idInstitution
+     *              Institution from where this course is from.
+     *
+     * @return
+     *              the list with all the institutions.
+     *
+     * @throws SQLException
+     *              there maybe a problem accessing the database.
+     */
 	private static ArrayList<Course> getCoursesList(int idInstitution) throws SQLException{
 		if(idInstitution == 0){
 			return Course.getAll();
@@ -119,7 +181,11 @@ public class CourseListFragment extends ListFragment{
 			return Institution.get(idInstitution).getCourses();
 		}
 	}
-	
+
+    /**
+     *
+     * @return the action bar with the menus for the user.
+     */
 	private ActionBar getActionBar() {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }

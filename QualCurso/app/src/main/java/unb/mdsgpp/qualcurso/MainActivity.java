@@ -1,7 +1,8 @@
 /*****************************
- * Class name: QualCurso (.java)
+ * Class name: MainActivity (.java)
  *
- * Purpose: Basic application that supports information about database and fragment connection.
+ * Purpose: First and primary activity that connects with the other screens and the rest of the
+ * components.
  ****************************/
 package unb.mdsgpp.qualcurso;
 

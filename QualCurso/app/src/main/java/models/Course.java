@@ -1,3 +1,9 @@
+/**
+ * Class name: Course (.java)
+ *
+ * Purpose: Modeling characteristics from Course and use methods to interacts with the database
+ */
+
 package models;
 
 import android.database.SQLException;
@@ -8,48 +14,83 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Class name: Course (.java)
- *
- * Purpose: Modeling characteristics from Course and use methods to interacts with the database
- */
+
 public class Course extends Bean implements Parcelable{
 	private int id;
 	private String name;
 
+	/**
+	 * Default constructor that first setUp class attributes.
+	 */
 	public Course() {
 		this.id = 0;
 		this.identifier= "course";
 		this.relationship = "courses_institutions";
 	}
-	
+
+	/**
+	 * Default constructor that first setUp class attributes with given id.
+	 *
+	 * @param id
+	 * 				identifier for this course that will be set.
+	 */
 	public Course(int id){
-		assert (id >= 0) : "Receive a negative tratment";
+		assert (id >= 0) : "Receive a negative treatment";
 		this.id = id;
 		this.identifier= "course";
 		this.relationship = "courses_institutions";
 	}
-	
+
+	/**
+	 *
+	 * @return
+	 * 				the saved identification number.
+	 */
 	public int getId() {
 		return id;
 	}
-	
+
+	/**
+	 *
+	 * @param id
+	 * 				identification number to be saved.
+	 */
 	public void setId(int id) {
-		assert (id >= 0) : "Receive a negative tratment";
+		assert (id >= 0) : "Receive a negative treatment";
 		this.id = id;
 	}
-	
+
+	/**
+	 *
+	 * @return
+	 * 				the name of the course.
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 *
+	 * @param name
+	 * 				the name of the course to be saved.
+	 */
 	public void setName(String name) {
-		assert (name != null) : "Receive a null tratment";
-		assert (name != "") : "Receive a empty tratment";
-		assert (name.length() > 1) : "Receive a size tratment";
+		assert (name != null) : "Receive a null treatment";
+		assert (name != "") : "Receive a empty treatment";
+		assert (name.length() > 1) : "Receive a size treatment";
+
 		this.name = name;
 	}
-	
+
+	/**
+	 * Saves this course in the bean database.
+	 *
+	 * @return
+	 * 				the result coming from data base saying if it successful saved.
+	 *
+	 * @throws SQLException
+	 * 				there maybe a problem inserting.
+	 */
 	public boolean save() throws  SQLException {
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();

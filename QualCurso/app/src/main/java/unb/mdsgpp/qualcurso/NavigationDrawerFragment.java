@@ -1,3 +1,11 @@
+/*****************************
+ * Class name: NavigationDrawerFragment (.java)
+ *
+ * Purpose: Fragment used for managing interactions for and presentation of a navigation drawer.
+ * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
+ * design guidelines</a> for a complete explanation of the behaviors implemented here.
+ ****************************/
+
 package unb.mdsgpp.qualcurso;
 
 import android.support.v7.app.ActionBarActivity;
@@ -25,11 +33,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-/**
- * Fragment used for managing interactions for and presentation of a navigation drawer.
- * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
- * design guidelines</a> for a complete explanation of the behaviors implemented here.
- */
 public class NavigationDrawerFragment extends Fragment {
 
     /**
@@ -66,11 +69,11 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        assert (savedInstanceState != null) : "Receive a null tratment";
+        assert (savedInstanceState != null) : "Receive a null treatment";
         super.onCreate(savedInstanceState);
 
-        // Read in the flag indicating whether or not the user has demonstrated awareness of the
-        // drawer. See PREF_USER_LEARNED_DRAWER for details.
+        /* Read in the flag indicating whether or not the user has demonstrated awareness of the
+         drawer. See PREF_USER_LEARNED_DRAWER for details. */
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
         boolean changed = true;
@@ -131,8 +134,10 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
      *
-     * @param fragmentId   The android:id of this fragment in its activity's layout.
-     * @param drawerLayout The DrawerLayout containing this fragment's UI.
+     * @param fragmentId
+     *              The android:id of this fragment in its activity's layout.
+     * @param drawerLayout
+     *              The DrawerLayout containing this fragment's UI.
      */
     public void setUp(int fragmentId, DrawerLayout drawerLayout) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
@@ -223,7 +228,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
-        assert (activity != null) : "Receive a null tratment";
+        assert (activity != null) : "Receive a null treatment";
         super.onAttach(activity);
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
@@ -240,7 +245,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        assert (outState != null) : "Receive a null tratment";
+        assert (outState != null) : "Receive a null treatment";
         super.onSaveInstanceState(outState);
         outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
     }
@@ -265,7 +270,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        assert (item != null) : "Receive a null tratment";
+        assert (item != null) : "Receive a null treatment";
 
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;

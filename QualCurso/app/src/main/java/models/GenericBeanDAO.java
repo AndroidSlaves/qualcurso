@@ -1,3 +1,9 @@
+/*****************************
+ * Class name: GenericBeanDAO (.java)
+ *
+ * Purpose: Generic Dao class that connects to the SQL database by executing generic SQL commands.
+ *****************************/
+
 package models;
 
 
@@ -12,34 +18,53 @@ import libraries.DataBase;
 
 public class GenericBeanDAO extends DataBase{
 
+	/*
+	 * Represents a statement that can be executed against a database. The statement cannot return
+	 * multiple rows or columns, but a single value.
+	 */
 	private SQLiteStatement pst;
-	
+
+	// Contructor which instatiate an object GenericBeanDAO
 	public GenericBeanDAO() throws SQLException {
 		super();
-		
 	}
-	
+
+	/**
+	 * Method that opens a connection with the database and executes SQL code to get ordered table
+	 * of values.
+	 * @param bean
+	 * @param table
+	 * @param orderField
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, String orderField)
 			throws SQLException {
-	    assert (bean != null) : "bean must never be null";
+		assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
 	    assert (table != null) : "table must never be null";
 	    assert (table != "") : "table must never be empty";
 	    assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
+
+		// Represents the objects Beans to get from the database.
 		ArrayList<Bean> beans = new ArrayList<Bean>();
-		String sql = "SELECT c.* FROM " + table + " as c, " + bean.relationship
-				+ " as ci " + "WHERE ci.id_" + bean.identifier + "= ? "
-				+ "AND ci.id_" + table + " = c._id GROUP BY c._id";
+
+		//It is the sql command line to be executed in the database.
+		String sql = "SELECT c.* FROM " + table + " as c, " + bean.relationship +
+				     " as ci " + "WHERE ci.id_" + bean.identifier + "= ? " +
+				     "AND ci.id_" + table + " = c._id GROUP BY c._id";
 		if(orderField != null){
 			sql+=" ORDER BY "+orderField;
 		}
-		Cursor cs = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList().get(0))});
-		while (cs.moveToNext()) {
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList().get(0))});
+		while (cursor.moveToNext()) {
 			Bean object = init(table);
 			for (String s : object.fieldsList()) {
-				object.set(s, cs.getString(cs.getColumnIndex(s)));
+				object.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			beans.add(object);
 		}

@@ -54,6 +54,8 @@ public class Indicator {
 	 * 				Name of indicator.
 	 */
 	public String getName() {
+
+		assert (name != null) : "name must never be null";
 		return name;
 	}
 
@@ -72,6 +74,7 @@ public class Indicator {
 	 * 				Value of Indicator.
 	 */
 	public String getValue() {
+        assert (value != null) : "value must never be null";
 		return value;
 	}
 
@@ -92,8 +95,11 @@ public class Indicator {
 	 */
 	@Override
 	public String toString() {
-		return this.getName();
-	}
+        String name = this.getName();
+
+        assert (name != null) : "name must never be null";
+		return name;
+	} 
 
 	/**
 	 * Get all the indicators assigned to evaluation, book and article and places on a list.
@@ -137,6 +143,13 @@ public class Indicator {
 		result.add(new Indicator(indicatorList[numberArticles], new Article().fieldsList().get(1)));
 		result.add(new Indicator(indicatorList[numberWork], new Article().fieldsList().get(2)));
 
+        assert (result != null) : "this list must never be null";
+
+        final int FIRST = 0;
+        final int LAST = numberWork;
+
+        assert (result.get(FIRST) != null) : "should have first element";
+        assert (result.get(LAST) != null) : "should have last element";
 		return result;
 	}
 
@@ -159,6 +172,7 @@ public class Indicator {
 			}
 		}
 
+        assert (indicator != null) : "indicator must not be null";
 		return indicator;
 	}
 }

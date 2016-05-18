@@ -84,6 +84,7 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
         	}
     	}
 
+		assert (v != null) : "view should never be null";
     	return v;
 	}
 }

@@ -1,3 +1,9 @@
+/************************
+ * Class name: IndicatorListAdapter (.java)
+ *
+ * Purpose: Indicator allows an object to use services of other View objects.
+ ************************/
+
 package unb.mdsgpp.qualcurso;
 
 import helpers.Indicator;
@@ -14,11 +20,20 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
-	
+
 	public static String INDICATOR_VALUE = "indicatorValue";
 	public static String VALUE = "value";
 	private int itemLayout = 0;
 
+	/**
+	 * Method that builds objects with attributes deriving from the parent class.
+	 * @param context
+	 *				View context where adapter is instantiated.
+	 * @param resource
+	 * 				Numerical value to list index.
+	 * @param items
+	 * 				List of items.
+	 */
 	@SuppressLint("Assert")
 	public IndicatorListAdapter(Context context, int resource, List<HashMap<String,String>> items) {
 		super(context, resource, items);
@@ -29,6 +44,18 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
         this.itemLayout = resource;
 	}
 
+	/**
+	 * Responsible for inflating the screen to the user identifying the items ids by returning the
+	 * screen.
+	 * @param position
+	 * 				Position of arraylist.
+	 * @param convertView
+	 * 				The new layout of screen.
+	 * @param parent
+	 * 				The modeling view.
+	 * @return
+	 * 				The new defined view.
+	 */
 	@SuppressLint("Assert")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {

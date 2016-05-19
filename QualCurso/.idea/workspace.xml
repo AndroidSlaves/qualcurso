@@ -26,28 +26,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TabsFragment.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/TabsFragment.txt">
+      <file leaf-file-name="HistoryFragment.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/HistoryFragment.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.275862">
-              <caret line="79" column="25" selection-start-line="79" selection-start-column="11" selection-end-line="79" selection-end-column="25" />
+            <state vertical-scroll-proportion="-14.206897">
+              <caret line="40" column="89" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="89" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TabsFragment.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/TabsFragment.java">
+      <file leaf-file-name="HistoryFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/HistoryFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.9270463">
-              <caret line="3" column="72" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="72" />
+            <state vertical-scroll-proportion="0.73843414">
+              <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3539#3576#0" expanded="true" />
-                <element signature="e#3667#3694#0" expanded="true" />
-                <element signature="e#7787#7800#0" expanded="true" />
-                <element signature="e#8285#8293#0" expanded="true" />
-                <element signature="e#8864#8870#0" expanded="true" />
+                <element signature="e#0#195#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1512,6 +1507,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/InstitutionListFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/txt/qualcurso/TabsFragment.txt" />
         <option value="$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/TabsFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/txt/qualcurso/HistoryFragment.txt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/HistoryFragment.java" />
       </list>
     </option>
   </component>
@@ -2193,14 +2190,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/InstitutionListFragment.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.6014235">
-          <caret line="60" column="59" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/models/Institution.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2227,10 +2216,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/InstitutionListFragment.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="59" selection-start-line="60" selection-start-column="11" selection-end-line="60" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/TabsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.9270463">
-          <caret line="3" column="72" selection-start-line="3" selection-start-column="72" selection-end-line="3" selection-end-column="72" />
+        <state vertical-scroll-proportion="-0.51724136">
+          <caret line="1" column="35" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3539#3576#0" expanded="true" />
@@ -2238,6 +2235,24 @@
             <element signature="e#7787#7800#0" expanded="true" />
             <element signature="e#8285#8293#0" expanded="true" />
             <element signature="e#8864#8870#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/HistoryFragment.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.206897">
+          <caret line="40" column="89" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/HistoryFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73843414">
+          <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#195#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -1,66 +1,80 @@
-Class: TabsFragment
+/*****************************
+ * Class name: TabsFragment (.java)
+ *
+ * Purpose: Fragment screen.
+ *****************************/
+
 Attributes:
-	BeanListCallbacks beanCallbacks // Generic entity that will connect with the database.
-	String TAG // Represent the name of the tab object.
-	String TAB_INSTITUTIONS // Represent the name "institutions" shown in the tab to the user.
-	String TAB_COURSES // Represent the name "courses" shown in the tab to the user.
-	View mRoot // The container view that holds the tabs.
-	TabHost mTabHost 
-	int mCurrentTab // Represents the tab that the user is seeing at that momment.
-	SearchView mSearchView // View on the screen to search for institution or courses.
-	ArrayList<Course> allCourses // List of all courses to be listed when clicking the tabs.
-	ArrayList<Institution> allInstitutions /* List of all courses to be listed when clicking
-											 the tabs.*/ 
+	/* BeanListCallbacks beanCallbacks: Generic entity that will connect with the database.
+	 * String TAG: Represent the name of the tab object.
+	 * String TAB_INSTITUTIONS: Represent the name "institutions" shown in the tab to the user.
+	 * String TAB_COURSES: Represent the name "courses" shown in the tab to the user.
+	 * View mRoot: The container view that holds the tabs.
+	 * TabHost mTabHost
+	 * int mCurrentTab: Represents the tab that the user is seeing at that momment.
+	 * SearchView mSearchView: View on the screen to search for institution or courses.
+	 * ArrayList<Course> allCourses: List of all courses to be listed when clicking the tabs.
+	 * ArrayList<Institution> allInstitutions: List of all courses to be listed when clicking
+	 * the tabs.
+	 */
+
 Methods:
 	onAttach(Activity activity) 
 		// Catches the exceptions possible from the BenListCallBacks. 
 	
-	onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) 
+	onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 		// Inflates the fragments with the tabs. 	
 
 	onActivityCreated(Bundle savedInstanceState) 
 		// Saves instance of the activity in order to not lose information.
 
 	setupTabs() 
-	  	// create the initial values for the tabs with its views.
-		Attributes: TabWidget widget // Area where the itens will be inserted.
-				    View v // Generic view that will inflate the widget.
-				    TextView tv /* Text returned from the view in order to check if there
-				    			 is something inside. */
+	  	/* Create the initial values for the tabs with its views.
+		 * Attributes: TabWidget widget: Area where the itens will be inserted.
+		 * View view: Generic view that will inflate the widget.
+		 * TextView textView Text returned from the view in order to check if there is something inside.
+		 */
 
 	onTabChanged(String tabId) 
-		//update the view when chaging tabs.
+		// Update the view when chaging tabs.
 		
 	onCreateOptionsMenu(Menu menu, MenuInflater inflater) 
-		// Setup basic information when creating optionsMenu.
-		Attributes: MenuItem searchItem // Represents search choice selected on the option menu.
-					mSearchView // Represents the view where the user can search in the options menu.
+		/* Setup basic information when creating optionsMenu.
+		 * Attributes: MenuItem searchItem: Represents search choice selected on the option menu.
+		 * mSearchView: Represents the view where the user can search in the options menu.
+		 */
 	
 	setupSearchView(MenuItem searchItem)
-	  	/* Set basic values of view for the search views, where the user can choose an option
-	  	for filter. */
+	  	/*
+	  	 * Set basic values of view for the search views, where the user can choose an option
+	  	 * for filter.
+	  	 */
 
 	updateTab(String tabId, int placeholder) 
-		/* Update the tabs with the specified values (TabId =  the identification of the
-		selected tab. placeholder: Where the user is.) */
+		/*
+		 * Update the tabs with the specified values (TabId =  the identification of the
+		 * selected tab. placeholder: Where the user is.)
+		 */
 
 	onQueryTextChange(String arg0) 
-		// Typing text in the search view, it searches for the 
+		// Typing text in the search view, it searches for
 	
 	castToInstitutions(ArrayList<Bean> beans)
-		// Converts a list of bens (generic objects)to a list of institutions.
-		Attributes: ArrayList<Institution> institutions /* The list of institutions to be populated
-			 				with beans data converted. */
-	
-	
+		/* Converts a list of bens (generic objects)to a list of institutions.
+		 * Attributes: ArrayList<Institution> institutions: The list of institutions to be populated
+		 * with beans data converted.
+		 */
+
 	castToCourses(ArrayList<Bean> beans)
-		// Converts a list of beans ( generic objects)  to a list of courses with its data..
-		Attributes: ArrayList<Course> courses /* List of courses that will be populated with the 
-							converted beans. */
+		/* Converts a list of beans ( generic objects)  to a list of courses with its data..
+		 * Attributes: ArrayList<Course> courses: List of courses that will be populated with the
+		 * converted beans.
+		 */
+
 	getFilteredList(String filter, ArrayList<? extends Bean> list)
-		// Get the list of beans filtered a String (factor). 
-		ArrayList<Bean> beans // List of beans to be sorted and returned.
+		/* Get the list of beans filtered a String (factor).
+		 * ArrayList<Bean> beans: List of beans to be sorted and returned.
+		 */
 
 	onQueryTextSubmit(String arg0) 
 		// returns false.

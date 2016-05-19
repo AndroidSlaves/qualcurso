@@ -99,6 +99,7 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
         	}
     	}
 
+		assert (v != null) : "view should not be null";
     	return v;
 	}
 

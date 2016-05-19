@@ -1,3 +1,9 @@
+/*****************************
+ * Class name: GenericBeanDAO (.java)
+ *
+ * Purpose: Generic Dao class that connects to the SQL database by executing generic SQL commands.
+ *****************************/
+
 package models;
 
 
@@ -12,43 +18,75 @@ import libraries.DataBase;
 
 public class GenericBeanDAO extends DataBase{
 
+	/*
+	 * Represents a statement that can be executed against a database. The statement cannot return
+	 * multiple rows or columns, but a single value.
+	 */
 	private SQLiteStatement pst;
-	
+
+	// Contructor which instatiate an object GenericBeanDAO
 	public GenericBeanDAO() throws SQLException {
 		super();
-		
 	}
-	
+
+	/**
+	 * Method that opens a connection with the database and executes SQL code to get ordered table
+	 * of values.
+	 *
+	 * @param bean
+	 * @param table
+	 * @param orderField
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, String orderField)
 			throws SQLException {
-	    assert (bean != null) : "bean must never be null";
+		assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
 	    assert (table != null) : "table must never be null";
 	    assert (table != "") : "table must never be empty";
 	    assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
+
+		// Represents the objects Beans to get from the database.
 		ArrayList<Bean> beans = new ArrayList<Bean>();
-		String sql = "SELECT c.* FROM " + table + " as c, " + bean.relationship
-				+ " as ci " + "WHERE ci.id_" + bean.identifier + "= ? "
-				+ "AND ci.id_" + table + " = c._id GROUP BY c._id";
+
+		//It is the sql command line to be executed in the database.
+		String sql = "SELECT c.* FROM " + table + " as c, " + bean.relationship +
+				     " as ci " + "WHERE ci.id_" + bean.identifier + "= ? " +
+				     "AND ci.id_" + table + " = c._id GROUP BY c._id";
 		if(orderField != null){
 			sql+=" ORDER BY "+orderField;
 		}
-		Cursor cs = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList().get(0))});
-		while (cs.moveToNext()) {
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList()
+				.get(0))});
+		while (cursor.moveToNext()) {
 			Bean object = init(table);
 			for (String s : object.fieldsList()) {
-				object.set(s, cs.getString(cs.getColumnIndex(s)));
+				object.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			beans.add(object);
 		}
 		this.closeConnection();
 		return beans;
 	}
-	
-	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, int year, String orderField)
-			throws SQLException {
+
+	/**
+	 * Method that opens a connection with the database and executes SQL code to get ordered  table
+	 * of values, but this time with the year.
+	 *
+	 * @param bean
+	 * @param table
+	 * @param year
+	 * @param orderField
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, int year,
+												  String orderField) throws SQLException {
 	    assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
 	    assert (table != null) : "table must never be null";
@@ -64,18 +102,28 @@ public class GenericBeanDAO extends DataBase{
 		if(orderField != null){
 			sql+=" ORDER BY "+orderField;
 		}
-		Cursor cs = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList().get(0)),Integer.toString(year)});
-		while (cs.moveToNext()) {
+		Cursor cursor = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList().get(0)),
+				                               Integer.toString(year)});
+		while (cursor.moveToNext()) {
 			Bean object = init(table);
 			for (String s : object.fieldsList()) {
-				object.set(s, cs.getString(cs.getColumnIndex(s)));
+				object.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			beans.add(object);
 		}
 		this.closeConnection();
 		return beans;
 	}
-	
+
+	/**
+	 * Method that opens connection with the database and select objects according to their fields.
+	 *
+	 * @param bean
+	 * @param fields
+	 * @param orderField
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<Bean> selectFromFields(Bean bean, ArrayList<String> fields, String orderField)
 			throws SQLException {		
 
@@ -85,30 +133,38 @@ public class GenericBeanDAO extends DataBase{
 	    assert(orderField != null) : "orderField must never be null";
 
 		this.openConnection();
+
+		// Array list with all the values to be used in the connection with the database.
 		ArrayList<Bean> beans = new ArrayList<Bean>();
+
+		// Represents the objects Beans to get from the database.
 		ArrayList<String> values = new ArrayList<String>();
-		//String sql = "SELECT * FROM " + bean.identifier + " WHERE ";
+
+		//  It is the sql command line to be executed in the database.
 		String sql ="";
+
 		for(String s : fields){
 			sql+=" "+s+" = ? AND";
 			values.add(bean.get(s));
 		}
+
 		sql = sql.substring(0, sql.length() - 3);
+
 		if(orderField != null){
 			sql+=" ORDER BY "+orderField;
 		}
 		String[] strings = new String[values.size()];
 		strings = values.toArray(strings);
-		Cursor cs;//= this.database.rawQuery(sql,strings);
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor;
 		
-		cs =this.database.query(bean.identifier, null, 
-				sql,
-				strings,
-				null, null, null);
-		while (cs.moveToNext()) {
+		cursor = this.database.query(bean.identifier, null, sql, strings, null, null, null);
+
+		while (cursor.moveToNext()) {
 			Bean object = init(bean.identifier);
 			for (String s : object.fieldsList()) {
-				object.set(s, cs.getString(cs.getColumnIndex(s)));
+				object.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			beans.add(object);
 		}
@@ -116,20 +172,37 @@ public class GenericBeanDAO extends DataBase{
 		return beans;
 	}
 
+	/**
+	 * Takes a bean object, treat it and insert in the database.
+	 *
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean insertBean(Bean bean) throws SQLException {
 		assert (bean != null) : "bean object must never be null";
 		assert (bean.identifier != null) : "bean's identifiers must never be null";
 
 		this.openConnection();
+
+		// Temporary string used to mount sql command line.
 		String replace = "";
+
+		// index variable used in the bindString method.
 		int i = 1;
+
+		// List of field strings that will be changed to insert the bean.
 		ArrayList<String> notPrimaryFields = bean.fieldsList();
 		notPrimaryFields.remove(0);
+
+		// It is the sql command line to be executed in the database to insert the bean.
 		String sql = "INSERT INTO " + bean.identifier + "(";
+
 		for (String s : notPrimaryFields) {
 			sql += s + ",";
 			replace += "?,";
 		}
+
 		sql = sql.substring(0, sql.length() - 1);
 		replace = replace.substring(0, replace.length() - 1);
 		sql += ") VALUES(" + replace + ")";
@@ -138,14 +211,23 @@ public class GenericBeanDAO extends DataBase{
 			this.pst.bindString(i, bean.get(s));
 			i++;
 		}
+
+		// Result that will be returned in the end.
 		long result = this.pst.executeInsert();
 		this.pst.clearBindings();
 		this.closeConnection();
 		return (result != -1) ? true : false;
 	}
 
-	public boolean addBeanRelationship(Bean parentBean, Bean childBean)
-			throws SQLException {
+	/**
+	 * Method that creates a relationship between beans.
+	 *
+	 * @param parentBean
+	 * @param childBean
+	 * @return
+	 * @throws SQLException
+	 */
+	public boolean addBeanRelationship(Bean parentBean, Bean childBean) throws SQLException {
 		assert (parentBean != null) : "parentBean must never be null";
 		assert (parentBean.identifier != null) : "parentBean's identifier must never be null";
 		assert (parentBean.relationship != null) : "parentBean's relationship must never be null";
@@ -153,9 +235,10 @@ public class GenericBeanDAO extends DataBase{
 		assert (childBean.identifier != null) : "childBean' identifier must never be null";
 
 		this.openConnection();
-		String sql = "INSERT INTO " + parentBean.relationship + "(id_"
-				+ parentBean.identifier + ",id_" + childBean.identifier
-				+ ") VALUES(?,?)";
+
+		// It is the sql command line to be executed in the database to insert a relationship.
+		String sql = "INSERT INTO " + parentBean.relationship + "(id_" + parentBean.identifier +
+				     ",id_" + childBean.identifier + ") VALUES(?,?)";
 		this.pst = this.database.compileStatement(sql);
 		this.pst.bindString(1, parentBean.get(parentBean.fieldsList().get(0)));
 		this.pst.bindString(2, childBean.get(childBean.fieldsList().get(0)));
@@ -164,7 +247,15 @@ public class GenericBeanDAO extends DataBase{
 		this.closeConnection();
 		return (result != -1) ? true : false;
 	}
-	
+
+	/**
+	 * Delete relationship between two beans
+	 *
+	 * @param parentBean
+	 * @param childBean
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean deleteBeanRelationship(Bean parentBean, Bean childBean)
 			throws SQLException {
 		assert (parentBean != null) : "parentBean must never be null";
@@ -174,9 +265,10 @@ public class GenericBeanDAO extends DataBase{
 		assert (childBean.identifier != null) : "childBean' identifier must never be null";
 
 		this.openConnection();
+
+		// It is the sql command line to be executed in the database.
 		String sql = "DELETE FROM " + parentBean.relationship + "  WHERE id_"
-				+ parentBean.identifier + " = ? AND id_" + childBean.identifier
-				+ " = ?";
+				     + parentBean.identifier + " = ? AND id_" + childBean.identifier + " = ?";
 		this.pst = this.database.compileStatement(sql);
 		this.pst.bindString(1, parentBean.get(parentBean.fieldsList().get(0)));
 		this.pst.bindString(2, childBean.get(childBean.fieldsList().get(0)));
@@ -186,37 +278,68 @@ public class GenericBeanDAO extends DataBase{
 		return (result == 1) ? true : false;
 	}
 
+	/**
+	 * Method that gets a bean from the database tables.
+	 *
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
 	public Bean selectBean(Bean bean) throws SQLException {
 		assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
 
 		this.openConnection();
+
+		// receives the value to be returned in the end of the function.
 		Bean result = null;
+
+		// It is the sql command line that will execute the select command.
 		String sql = "SELECT * FROM " + bean.identifier + " WHERE "
-				+ bean.fieldsList().get(0) + " = ?";
-		Cursor cs = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList().get(0))});
-		if (cs.moveToFirst()) {
+				     + bean.fieldsList().get(0) + " = ?";
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor = this.database.rawQuery(sql, new String[]{bean.get(bean.fieldsList()
+				.get(0))});
+		if (cursor.moveToFirst()) {
 			result = init(bean.identifier);
 			for (String s : bean.fieldsList()) {
-				result.set(s, cs.getString(cs.getColumnIndex(s)));
+				result.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 		}
+
 		this.closeConnection();
 		return result;
 	}
 
+	/**
+	 * Retrieves all beans from database by an specified order.
+	 *
+	 * @param type
+	 * @param orderField
+	 * @return
+	 * @throws SQLException
+	 */
 	public ArrayList<Bean> selectAllBeans(Bean type, String orderField) throws SQLException {
 		assert (type != null) : "type must never be null";
 		assert (type.identifier != null) : "type's identifier must never be null";
 	    assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
+
+		// List of beans to be returned in the end.
 		ArrayList<Bean> beans = new ArrayList<Bean>();
-		Cursor cs = this.database.query(type.identifier, null, null, null, null, null, orderField);
-		while (cs.moveToNext()) {
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor = this.database.query(type.identifier, null, null, null, null, null,
+				orderField);
+		while (cursor.moveToNext()) {
+
+			// Represent an temporary Bean object that will be added to the Arraylist beans
 			Bean bean = init(type.identifier);
+
 			for (String s : type.fieldsList()) {
-				bean.set(s, cs.getString(cs.getColumnIndex(s)));
+				bean.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			beans.add(bean);
 		}
@@ -235,8 +358,9 @@ public class GenericBeanDAO extends DataBase{
 		while (cs.moveToNext()) {
 			String [] data = new String[cs.getColumnCount()];
 
-			for(int i = 0; i < cs.getColumnCount(); i++)
+			for(int i = 0; i < cs.getColumnCount(); i++) {
 				data[i] = cs.getString(i);
+			}
 			
 			result.add(data);
 		}
@@ -266,48 +390,86 @@ public class GenericBeanDAO extends DataBase{
 		return result;
 	}
 
+	/**
+	 *
+	 * @param type
+	 * @return
+	 * 				the number of beans present in the database.
+	 * @throws SQLException
+	 */
 	public Integer countBean(Bean type) throws SQLException {
 		assert (type != null) : "type must never be null";
 		assert (type.identifier != null) : "type's identifier must never be null";
 
 		this.openConnection();
+
+		// Integer count: Contains the number of beans.
 		Integer count = 0;
+
+		// It is the sql command line that will execute the select command.
 		String sql = "SELECT * FROM " + type.identifier;
-		Cursor cs = this.database.rawQuery(sql, null);
-		if (cs.moveToFirst())
-			count = cs.getCount();
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor = this.database.rawQuery(sql, null);
+
+		if (cursor.moveToFirst()) {
+			count = cursor.getCount();
+		}
+
 		this.closeConnection();
 		return count;
 	}
 
+	/**
+	 * @param type
+	 * @param last
+	 * @return
+	 * 				first or the last bean dependending on the boolean parameter `last`.
+	 * @throws SQLException
+	 */
 	public Bean firstOrLastBean(Bean type, boolean last) throws SQLException {
 		assert (type != null) : "type must never be null";
 		assert (type.identifier != null) : "type's identifier must never be null";
 
+		// receives the value to be returned in the end of the function.
 		Bean bean = null;
-		String sql = "SELECT * FROM " + type.identifier + " ORDER BY "
-				+ type.fieldsList().get(0);
 
-		if (!last)
+		// It is the sql command line that will execute the select command.
+		String sql = "SELECT * FROM " + type.identifier + " ORDER BY "
+				     + type.fieldsList().get(0);
+
+		if (!last) {
 			sql += " LIMIT 1";
-		else
+		}else {
 			sql += " DESC LIMIT 1";
+		}
 
 		this.openConnection();
-		Cursor cs = this.database.rawQuery(sql,null);
 
-		if (cs.moveToFirst()) {
+		// Represents the interator for the database table being accessed.
+		Cursor cursor = this.database.rawQuery(sql,null);
+
+		if (cursor.moveToFirst()) {
 			bean = init(type.identifier);
-
 			for (String s : type.fieldsList()) {
-				bean.set(s, cs.getString(cs.getColumnIndex(s)));
+				bean.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 		}
 		this.closeConnection();
 
 		return bean;
 	}
-	
+
+	/**
+	 * Method that get beans by selected fields, order type and characteristics.
+	 *
+	 * @param returnFields
+	 * @param orderedBy
+	 * @param condition
+	 * @param groupBy
+	 * @param desc
+	 * @return
+	 */
 	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields,
 															String orderedBy, String condition,
 															String groupBy, boolean desc){
@@ -317,13 +479,17 @@ public class GenericBeanDAO extends DataBase{
 		assert(groupBy != null) : "groupBy must never be null";
 		assert(returnFields != null) : "returnFields must never be null";
 
+		// String with all the fields to do the select.
 		String fields = "";
 		for(String s : returnFields){
 			fields+=s+",";
 		}
 		fields = fields.substring(0, fields.length()-1);
-		String sql = "SELECT "+ fields +" FROM course AS c,institution AS i , evaluation AS e, articles AS a, books AS b"
-				+ " WHERE id_institution = i._id AND id_course = c._id AND id_articles = a._id AND id_books = b._id ";
+
+		// It is the sql command line that will execute the select command.
+		String sql = "SELECT "+ fields + " FROM course AS c,institution AS i , evaluation AS e, " +
+				     "articles AS a, books AS b" + " WHERE id_institution = i._id " +
+				     "AND id_course = c._id AND id_articles = a._id AND id_books = b._id ";
 		if(condition != null){
 			sql+="AND "+condition+" ";
 		}
@@ -338,13 +504,17 @@ public class GenericBeanDAO extends DataBase{
 		} else {
 			sql+=" ASC";
 		}
+
+		// Hash map with the value from the retreived from the database.
 		ArrayList<HashMap<String, String>> values = new ArrayList<HashMap<String, String>>();
 		this.openConnection();
-		Cursor cs = this.database.rawQuery(sql,null);
-		while (cs.moveToNext()) {
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor = this.database.rawQuery(sql,null);
+		while (cursor.moveToNext()) {
 			HashMap<String, String> hash = new HashMap<String, String>();
 			for(String s : returnFields){
-				hash.put(s, cs.getString(cs.getColumnIndex(s)));
+				hash.put(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			hash.put("order_field", orderedBy);
 			values.add(hash);
@@ -353,8 +523,19 @@ public class GenericBeanDAO extends DataBase{
 		return values;
 	}
 
-	public ArrayList<Bean> selectBeanWhere(Bean type, String field,
-			String value, boolean use_like, String orderField) throws SQLException {
+	/**
+	 * Method that selects bean according to a field.
+	 *
+	 * @param type
+	 * @param field
+	 * @param value
+	 * @param use_like
+	 * @param orderField
+	 * @return
+	 * @throws SQLException
+	 */
+	public ArrayList<Bean> selectBeanWhere(Bean type, String field, String value, boolean use_like,
+										   String orderField) throws SQLException {
 		assert (type != null) : "type must never be null";
 		assert (type.identifier != null) : "type's identifier must never be null";
 		assert (field != null) : "field must never be null";
@@ -362,24 +543,30 @@ public class GenericBeanDAO extends DataBase{
 		assert (orderField != null) : "orderField must never be null";
 
 		this.openConnection();
+
+		// Array of beans to be selected according to the condition.
 		ArrayList<Bean> beans = new ArrayList<Bean>();
+
+		// It is the sql command line that will execute the select command.
 		String sql = "SELECT * FROM " + type.identifier + " WHERE ";
-		Cursor cs;
-		if (!use_like)
-			cs =this.database.query(type.identifier, null, 
-					field+" = ?",
+
+		// Represents the interator for the database table being accessed.
+		Cursor cursor;
+		if (!use_like) {
+			cursor = this.database.query(type.identifier, null,
+					field + " = ?",
 					new String[]{value},
 					null, null, orderField);
-		else
-			cs =this.database.query(type.identifier, null, 
-					field+" LIKE ?",
-					new String[]{"%"+value+"%"},
+		}else {
+			cursor = this.database.query(type.identifier, null,
+					field + " LIKE ?",
+					new String[]{"%" + value + "%"},
 					null, null, orderField);
-
-		while (cs.moveToNext()) {
+		}
+		while (cursor.moveToNext()) {
 			Bean bean = init(type.identifier);
 			for (String s : type.fieldsList()) {
-				bean.set(s, cs.getString(cs.getColumnIndex(s)));
+				bean.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			beans.add(bean);
 		}
@@ -387,11 +574,20 @@ public class GenericBeanDAO extends DataBase{
 
 		return beans;
 	}
-	
+
+	/**
+	 * Delete a selected bean from the database.
+	 *
+	 * @param bean
+	 * @return
+	 * @throws SQLException
+	 */
 	public boolean deleteBean(Bean bean) throws SQLException {
 		assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
 		this.openConnection();
+
+		// It is the sql command line that will execute the select command.
 		String sql = "DELETE FROM "+bean.identifier+ " WHERE "+bean.fieldsList().get(0)+" = ?";
 		this.pst = this.database.compileStatement(sql);
 		this.pst.bindString(1, bean.get(bean.fieldsList().get(0)));
@@ -401,10 +597,18 @@ public class GenericBeanDAO extends DataBase{
 		return (result == 1) ? true : false;
 	}
 
+	/**
+	 * Starts the BeanIdentifier by creating a new model object.
+	 *
+	 * @param beanIdentifier
+	 * @return
+	 */
 	public Bean init(String beanIdentifier) {
 		assert (beanIdentifier != null) : "beanIdentifier must never be null";
-		
+
+		// Object that will be instantiated.
 		Bean object = null;
+
 		if (beanIdentifier.equals("institution")) {
 			object = new Institution();
 		} 

@@ -9,6 +9,7 @@ import models.Course;
 import models.Institution;
 import models.Search;
 import android.app.Activity;
+import android.content.Context;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -28,21 +29,25 @@ public class SearchListFragment extends ListFragment{
 	private static final String RANGE_A = "rangeA";
 	private static final String RANGE_B = "rangeB";
 	private static final String BEAN_LIST = "beanList";
-	
+	private final String CLASS_CAST_EXCEPTION_COMPLEMENT = "must implement BeanListCallbacks.";
+
 	BeanListCallbacks beanCallbacks;
 	
 	public SearchListFragment() {
 	}
 	
-	public static SearchListFragment newInstance(ArrayList<? extends Parcelable> list, Search search){
+	public static SearchListFragment newInstance(final ArrayList<? extends Parcelable> LIST_OF_PARCELABLES, Search search){
 		SearchListFragment fragment = new SearchListFragment();
 		Bundle args = new Bundle();
+
+		//set arguments.
 		args.putInt(YEAR, search.getYear());
 		args.putString(FIELD, search.getIndicator().getValue());
 		args.putInt(RANGE_A, search.getMinValue());
 		args.putInt(RANGE_B, search.getMaxValue());
-		args.putParcelableArrayList(BEAN_LIST,list);
+		args.putParcelableArrayList(BEAN_LIST,LIST_OF_PARCELABLES);
 		fragment.setArguments(args);
+
 		return fragment;
 	}
 	
@@ -52,7 +57,7 @@ public class SearchListFragment extends ListFragment{
 		try {
             beanCallbacks = (BeanListCallbacks) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()+" must implement BeanListCallbacks.");
+            throw new ClassCastException(activity.toString()+ CLASS_CAST_EXCEPTION_COMPLEMENT);
         }
 	}
 	
@@ -65,24 +70,28 @@ public class SearchListFragment extends ListFragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
+		// Get arguments for the generic element bean.
 		ArrayList<Parcelable> list;
 		if(getArguments().getParcelableArrayList(BEAN_LIST) != null){
 			list = getArguments().getParcelableArrayList(BEAN_LIST);
 		}else{
 			list = savedInstanceState.getParcelableArrayList(BEAN_LIST);
 		}
-		
-		ListView rootView = (ListView) inflater.inflate(R.layout.fragment_list, container,
-				false);
+
+		//try to set the listAdapter with the list of search list.
+		ListView rootView = (ListView) inflater.inflate(R.layout.fragment_list, container, false);
 		rootView = (ListView) rootView.findViewById(android.R.id.list);
 		try {
-			
-				rootView.setAdapter(new ArrayAdapter<Parcelable>(
-						getActionBar().getThemedContext(),
-						R.layout.custom_textview, list));
+			Context context = getActionBar().getThemedContext();
+			int customViewId = R.layout.custom_textview;
+			ArrayAdapter arrayAdapter = new ArrayAdapter<Parcelable>(context,customViewId, list);
+			rootView.setAdapter(arrayAdapter);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return rootView;
 	}
 	
@@ -93,28 +102,41 @@ public class SearchListFragment extends ListFragment{
 	}
 	
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		Parcelable bean = (Parcelable)l.getItemAtPosition(position);
-		Indicator i = Indicator.getIndicatorByValue(getArguments().getString(FIELD));
-		int year = getArguments().getInt(YEAR);
-		int rangeA = getArguments().getInt(RANGE_A);
-		int rangeB = getArguments().getInt(RANGE_B);
+	public void onListItemClick(ListView listView, View view,final int LIST_ITEM_POSITION,final long ID) {
+		// Get indicator based on the clicked item.
+		Parcelable bean = (Parcelable)listView.getItemAtPosition(LIST_ITEM_POSITION);
+		String arguments = getArguments().getString(FIELD);
+		Indicator indicator = Indicator.getIndicatorByValue(arguments);
+
+		// Get constants for year and ranges.
+		final int YEAR = getArguments().getInt(SearchListFragment.YEAR);
+		final int RANGEA = getArguments().getInt(RANGE_A);
+		final int RANGEB = getArguments().getInt(RANGE_B);
+
+		// Create a search with this indicator and year.
 		Search search = new Search();
-		search.setIndicator(i);
-		search.setYear(year);
+		search.setIndicator(indicator);
+		search.setYear(YEAR);
+
+		// Select of option for search based on click
 		if(bean instanceof Institution){
 			search.setOption(Search.INSTITUTION);
 		}else if(bean instanceof Course){
 			search.setOption(Search.COURSE);
 		}
-		search.setMinValue(rangeA);
-		search.setMaxValue(rangeB);
+
+		// Make search based on the ranges and set the selected institutions or courses.
+		search.setMinValue(RANGEA);
+		search.setMaxValue(RANGEB);
 		beanCallbacks.onSearchBeanSelected(search, bean);
-		super.onListItemClick(l, v, position, id);
+
+		super.onListItemClick(listView, view, LIST_ITEM_POSITION, ID);
 	}
 	
 	private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+		ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+
+        return actionBar;
     }
 
 }

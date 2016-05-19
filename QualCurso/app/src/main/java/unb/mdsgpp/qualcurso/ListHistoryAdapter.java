@@ -48,6 +48,8 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 			searchDate = (TextView) v.findViewById(R.id.searchDate);
 			setListRow(s);
 		}
+
+		assert (v != null) : "this view should never be null";
 		return v;
 	}
 

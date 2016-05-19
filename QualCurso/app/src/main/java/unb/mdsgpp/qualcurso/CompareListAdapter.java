@@ -117,6 +117,7 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 			// Nothing to do
 		}
 
+		assert (v != null) : "this view should never be null";
 		return v;
 	}
 

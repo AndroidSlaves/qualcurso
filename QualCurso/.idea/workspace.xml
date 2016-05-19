@@ -29,21 +29,41 @@
       <file leaf-file-name="HistoryFragment.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/HistoryFragment.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.206897">
+            <state vertical-scroll-proportion="-20.689655">
               <caret line="40" column="89" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="89" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HistoryFragment.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HistoryFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/HistoryFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.73843414">
-              <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="31" />
               <folding>
                 <element signature="e#0#195#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EvaluationDetailFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/EvaluationDetailFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EvaluationDetailFragment.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/EvaluationDetailFragment.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.053380784">
+              <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1509,6 +1529,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/TabsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/txt/qualcurso/HistoryFragment.txt" />
         <option value="$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/HistoryFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/txt/qualcurso/EvaluationDetailFragment.txt" />
       </list>
     </option>
   </component>
@@ -2172,14 +2193,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/EvaluationDetailFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/InstitutionListFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-34.896553">
@@ -2239,9 +2252,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/EvaluationDetailFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/HistoryFragment.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.206897">
+        <state vertical-scroll-proportion="-20.689655">
           <caret line="40" column="89" selection-start-line="40" selection-start-column="35" selection-end-line="40" selection-end-column="89" />
           <folding />
         </state>
@@ -2249,11 +2270,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/HistoryFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.73843414">
-          <caret line="76" column="39" selection-start-line="76" selection-start-column="39" selection-end-line="76" selection-end-column="39" />
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="31" />
           <folding>
             <element signature="e#0#195#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/txt/qualcurso/EvaluationDetailFragment.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.053380784">
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>

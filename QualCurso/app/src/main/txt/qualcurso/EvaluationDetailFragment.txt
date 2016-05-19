@@ -1,5 +1,8 @@
-Class: EvaluationDetailFragment
-//
+/*****************************
+ * Class name: EvaluationDetailFragment (.java)
+ * Purpose: Class that shows a fragment.
+ *****************************/
+
 Attributes:
 	String ID_COURSE = "idCourse"
 		// Represents the unic identification number field of the course.
@@ -9,32 +12,37 @@ Attributes:
 		// Represents field year of the evaluated institution
 	BeanListCallbacks beanCallbacks
 		// Object that connects with the database.
+
+Methods:
 	EvaluationDetailFragment() 
-		// Method that instatiate the evaluationDetailFragment, an contructor.
-		Attributes: Bundle args /* Represents the object that will initiate the argument with the 
-								evaluation fileds. */
+		/*Method that instatiate the evaluationDetailFragment, an contructor.
+		 * Attributes: Bundle args: Represents the object that will initiate the argument with the
+		 * evaluation fileds.
+		 */
 	 
 	newInstance(int id_institution, int id_course,int year)
-		//creates a new instance of the EvaluationDetailFragmentObject.
-		Attributes: Bundle args /* Represents the object that will initiate the argument with the 
-								evaluation fileds. */
-	 				EvaluationDetailFragment fragment //object to receive the initial value.
+		/* Creates a new instance of the EvaluationDetailFragmentObject.
+		 * Attributes: Bundle args: Represents the object that will initiate the argument with the
+		 * evaluation fileds.
+	 	 * EvaluationDetailFragment fragment: object to receive the initial value.
+	 	 */
 	
 	onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
-		//android default method  for fragment
-		Attributes: View rootView //View containing the main screen to be shown to the user.
-					TextView textView1 // Area of text to be filled with the acronym of the institution.
-					Evaluation evaluation // Information of the institution that was evaluated.
-					TextView textView2 /* Area of text that will be filled with all the evaluation
-										 information. */
-					ListView indicatorList // List that indicates the institution evaluation.
+		/* Android default method  for fragment
+		 * Attributes: View rootView: View containing the main screen to be shown to the user.
+		 * TextView textView1: Area of text to be filled with the acronym of the institution.
+		 * Evaluation evaluation: Information of the institution that was evaluated.
+		 * TextView textView2: Area of text that will be filled with all the evaluation information.
+         * ListView indicatorList // List that indicates the institution evaluation.
+         */
 	
 	getListItems(Evaluation evaluation)
-		Attributes: ArrayList<HashMap<String, String>> hashList /* List of Hashes list of strings with
-																with the information. */
-					ArrayList<Indicator> indicators /* List of indicator calculated from the evaluations*/
-					Book book // Book object with the books id present in the evaluation.
-					Article article // Book object with the books id present in the evaluation.
-					Bean bean // Generic object that connects to the database.
-					HashMap<String, String> hashMap /* Hash map containing all assets from the evaluated
-													intitution, like books and articles. */
+		/* Attributes: ArrayList<HashMap<String, String>> hashList: List of Hashes list of strings
+		 * with the information.
+		 * ArrayList<Indicator> indicators: List of indicator calculated from the evaluations
+		 * Book book: Book object with the books id present in the evaluation.
+		 * Article article: Book object with the books id present in the evaluation.
+		 * Bean bean: Generic object that connects to the database.
+		 * HashMap<String, String> hashMap: Hash map containing all assets from the evaluated
+		 * intitution, like books and articles.
+		 */

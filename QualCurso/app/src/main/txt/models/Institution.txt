@@ -1,5 +1,9 @@
-Class: Institution
-	// Class that represents a generic institution entity with its attributes.
+/*****************************
+ * Class name: Institution (.java)
+ *
+ * Purpose: Class that represents a generic institution entity with its attributes.
+ *****************************/
+
 Attributes:
 	 int id
 	 	// Unic number that identifies the institution.

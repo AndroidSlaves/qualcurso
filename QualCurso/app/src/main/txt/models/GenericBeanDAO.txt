@@ -1,6 +1,9 @@
-class: GenericBeanDAO
-	/* Generic Dao class that connects to the SQL database by executing generic SQL commands. */
-
+/*****************************
+ * Class name: GenericBeanDAO (.java)
+ *
+ * Purpose: Generic Dao class that connects to the SQL database by executing generic SQL commands.
+ *****************************/
+ 
 Attributes:
 	SQLiteStatement pst
 		/*
@@ -17,7 +20,7 @@ Methods:
 	     * table of values.
 	     * Attributes: ArrayList<Bean> beans represents the objects Beans to get from the database.
 	     * String sql: It is the sql command line to be executed in the database.
-	     * Cursor cs: Represents the interator for the database table being accessed.
+	     * Cursor cursor: Represents the interator for the database table being accessed.
 	     * Bean object: Represent an temporary Bean object that will be added to the
 	     * Arraylist beans
 	     */
@@ -27,7 +30,7 @@ Methods:
 	     * table of values, but this time with the year.
 		 * Attributes: ArrayList<Bean> beans Represents the objects Beans to get from the database.
 	     * String sql: It is the sql command line to be executed in the database.
-	     * Cursor cs: Represents the interator for the database table being accessed.
+	     * Cursor cursor: Represents the interator for the database table being accessed.
 	     * Bean object: Represent an temporary Bean object that will be added to the
 	     * Arraylist beans
 	     */
@@ -39,7 +42,7 @@ Methods:
 		 * connection with the database.
 		 * ArrayList<Bean> beans: Represents the objects Beans to get from the database.
 	     * String sql: It is the sql command line to be executed in the database.
-	     * Cursor cs: Represents the interator for the database table being accessed.
+	     * Cursor cursor: Represents the interator for the database table being accessed.
 	     * Bean object:  Represent an temporary Bean object that will be added to the
 	     * Arraylist beans
 	     */
@@ -68,14 +71,14 @@ Methods:
 		/* Method that gets a bean from the database tables.
 		 * Attributes: Bean result: receives the value to be returned in the end of the function.
 		 * String sql: It is the sql command line that will execute the select command.
-	 	 * Cursor cs: Represents the interator for the database table being accessed.
+	 	 * Cursor cursor: Represents the interator for the database table being accessed.
 	     */
 
 	selectAllBeans(Bean type, String orderField)
 		/* Retrieves all beans from database by an specified order.
 		 * Attributes: ArrayList<Bean> beans: list of beans to be returned in the end.
-		 * Cursor cs: Represents the interator for the database table being accessed.
-	     * Bean object: Represent an temporary Bean object that will be added to the
+		 * Cursor cursor: Represents the interator for the database table being accessed.
+	     * Bean bean: Represent an temporary Bean object that will be added to the
 	     * Arraylist beans
 	     */
 	
@@ -89,14 +92,14 @@ Methods:
 		/* Return the number of beans present in the database.
 		 * Attributes: Integer count: Contains the number of beans.
 		 * String sql: It is the sql command line that will execute the select command.
-		 * Cursor cs: Represents the interator for the database table being accessed.
+		 * Cursor cursor: Represents the interator for the database table being accessed.
 		 */
 	     			
 	firstOrLastBean(Bean type, boolean last)
 		/* Returns first or the last bean dependending on the boolean parameter `last`.
 		 * Attributes: Bean bean: receives the value to be returned in the end of the function.
 		 * String sql: It is the sql command line that will execute the select command.
-		 * Cursor cs: Represents the interator for the database table being accessed.
+		 * Cursor cursor: Represents the interator for the database table being accessed.
 		 */
 	     			
 	selectOrdered(ArrayList<String> returnFields, String orderedBy, String condition,
@@ -106,7 +109,7 @@ Methods:
 		 * String sql: It is the sql command line that will execute the select command.
 		 * ArrayList<HashMap<String, String>> values: Hash map with the value from the
 		 * retreived from the database.
-		 * Cursor cs: Represents the interator for the database table being accessed.
+		 * Cursor cursor: Represents the interator for the database table being accessed.
 	     * HashMap<String, String> hash: HashMap that will populate the ArrayList of Hashmaps.
 	     */
     
@@ -115,7 +118,7 @@ Methods:
     	/* Method that selects bean according to a field.
     	 * Attributes: ArrayList<Bean> beans: Array of beans to be selected according to the condition.
 		 * String sql: It is the sql command line that will execute the select command.
-		 * Cursor cs: Represents the interator for the database table being accessed.
+		 * Cursor cursor: Represents the interator for the database table being accessed.
 		 */
 
 	deleteBean(Bean bean)

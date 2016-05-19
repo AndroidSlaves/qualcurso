@@ -15,7 +15,7 @@ Attributes:
 
 Methods:
 	EvaluationDetailFragment() 
-		/*Method that instatiate the evaluationDetailFragment, an contructor.
+		/* Method that instatiate the evaluationDetailFragment, an contructor.
 		 * Attributes: Bundle args: Represents the object that will initiate the argument with the
 		 * evaluation fileds.
 		 */
@@ -33,7 +33,7 @@ Methods:
 		 * TextView textView1: Area of text to be filled with the acronym of the institution.
 		 * Evaluation evaluation: Information of the institution that was evaluated.
 		 * TextView textView2: Area of text that will be filled with all the evaluation information.
-         * ListView indicatorList // List that indicates the institution evaluation.
+         * ListView indicatorList: List that indicates the institution evaluation.
          */
 	
 	getListItems(Evaluation evaluation)

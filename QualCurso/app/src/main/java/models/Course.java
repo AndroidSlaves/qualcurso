@@ -95,7 +95,9 @@ public class Course extends Bean implements Parcelable{
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = gDB.insertBean(this);
+
 		this.setId(Course.last().getId());
+
 		return result;
 	}
 
@@ -117,6 +119,7 @@ public class Course extends Bean implements Parcelable{
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = gDB.addBeanRelationship(this, institution);
+
 		return result;
 	}
 
@@ -138,6 +141,7 @@ public class Course extends Bean implements Parcelable{
 		Course result = new Course(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Course) gDB.selectBean(result);
+
 		return result;
 	}
 
@@ -154,9 +158,11 @@ public class Course extends Bean implements Parcelable{
 		Course type = new Course();
 		ArrayList<Course> result = new ArrayList<Course>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		for (Bean b : gDB.selectAllBeans(type,"name")) {
 			result.add((Course) b);
 		}
+
 		return result;
 	}
 
@@ -172,6 +178,7 @@ public class Course extends Bean implements Parcelable{
 	public static int count() throws SQLException {
 		Course type = new Course();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		return gDB.countBean(type);
 	}
 
@@ -188,6 +195,7 @@ public class Course extends Bean implements Parcelable{
 		Course result = new Course();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Course) gDB.firstOrLastBean(result, false);
+
 		return result;
 	}
 
@@ -204,6 +212,7 @@ public class Course extends Bean implements Parcelable{
 		Course result = new Course();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Course) gDB.firstOrLastBean(result, true);
+
 		return result;
 	}
 
@@ -219,9 +228,11 @@ public class Course extends Bean implements Parcelable{
 	public ArrayList<Institution> getInstitutions() throws SQLException {
 		ArrayList<Institution> institutions = new ArrayList<Institution>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		for (Bean b : gDB.selectBeanRelationship(this, "institution", "acronym")) {
 			institutions.add((Institution) b);
 		}
+
 		return institutions;
 	}
 
@@ -245,11 +256,13 @@ public class Course extends Bean implements Parcelable{
 
 		ArrayList<Institution> institutions = new ArrayList<Institution>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		for (Bean b : gDB.selectBeanRelationship(this, "institution",year,"acronym")) {
 			institutions.add((Institution) b);
 		}
+
 		return institutions;
-}
+	}
 
 	/**
 	 * Returns all the courses that a specified field corresponds to the specified string value.
@@ -278,9 +291,11 @@ public class Course extends Bean implements Parcelable{
 		Course type = new Course();
 		ArrayList<Course> result = new ArrayList<Course>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		for (Bean b : gDB.selectBeanWhere(type, field, value, like,"name")) {
 			result.add((Course) b);
 		}
+
 		return result;
 	}
 
@@ -300,18 +315,19 @@ public class Course extends Bean implements Parcelable{
 		assert (search != null) : "Receive a null tratment";
 		ArrayList<Course> result = new ArrayList<Course>();
 		String sql = "SELECT c.* FROM course AS c, evaluation AS e, articles AS a, books AS b "+
-					" WHERE year="+Integer.toString(search.getYear())+
-					" AND e.id_course = c._id"+
-					" AND e.id_articles = a._id"+
-					" AND e.id_books = b._id"+
-					" AND "+search.getIndicator().getValue();
+					" WHERE year=" + Integer.toString(search.getYear()) +
+					" AND e.id_course = c._id" +
+					" AND e.id_articles = a._id" +
+					" AND e.id_books = b._id" +
+					" AND " + search.getIndicator().getValue();
 
 		if(search.getMaxValue() == -1){
-			sql+=" >= "+Integer.toString(search.getMinValue());
-		}else{
-			sql+=" BETWEEN "+Integer.toString(search.getMinValue())+" AND "+Integer.toString(search.getMaxValue());
+			sql += " >= " + Integer.toString(search.getMinValue());
+		} else{
+			sql += " BETWEEN " + Integer.toString(search.getMinValue()) + " AND " +
+					Integer.toString(search.getMaxValue());
 		}
-		sql+=" GROUP BY c._id";
+		sql += " GROUP BY c._id";
 		GenericBeanDAO
 		gDB = new GenericBeanDAO();
 
@@ -342,24 +358,26 @@ public class Course extends Bean implements Parcelable{
 
 		ArrayList<Institution> result = new ArrayList<Institution>();
 		String sql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a, books AS b "+
-					" WHERE e.id_course="+Integer.toString(id_course)+
-					" AND e.id_institution = i._id"+
-					" AND e.id_articles = a._id"+
-					" AND e.id_books = b._id"+
-					" AND year="+Integer.toString(search.getYear())+
-					" AND "+search.getIndicator().getValue();
+					" WHERE e.id_course=" + Integer.toString(id_course) +
+					" AND e.id_institution = i._id" +
+					" AND e.id_articles = a._id" +
+					" AND e.id_books = b._id" +
+					" AND year=" + Integer.toString(search.getYear())+
+					" AND " + search.getIndicator().getValue();
 
 		if(search.getMaxValue() == -1){
-			sql+=" >= "+search.getMinValue();
+			sql += " >= " + search.getMinValue();
 		}else{
-			sql+=" BETWEEN "+Integer.toString(search.getMinValue())+" AND "+Integer.toString(search.getMaxValue());
+			sql += " BETWEEN " + Integer.toString(search.getMinValue()) + " AND " +
+					Integer.toString(search.getMaxValue());
 		}
-		sql+=" GROUP BY i._id";
+		sql += " GROUP BY i._id";
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
 		for (Bean b : gDB.runSql(new Institution(), sql)){
 			result.add((Institution) b);
 		}
+
 		return result;
 	}
 
@@ -373,13 +391,15 @@ public class Course extends Bean implements Parcelable{
      *              there maybe a problem accessing database.
      */
 	public boolean delete() throws  SQLException {
-		boolean result = false;
-		GenericBeanDAO gDB = new GenericBeanDAO();
+		boolean isBeanDeleted = false;
+		GenericBeanDAO genericBeanDao = new GenericBeanDAO();
+
 		for(Institution i : this.getInstitutions()){
-			gDB.deleteBeanRelationship(this, i);
+			genericBeanDao.deleteBeanRelationship(this, i);
 		}
-		result = gDB.deleteBean(this);
-		return result;
+		isBeanDeleted = genericBeanDao.deleteBean(this);
+
+		return isBeanDeleted;
 	}
 
     /**
@@ -395,13 +415,18 @@ public class Course extends Bean implements Parcelable{
 	public String get(String field) {
 		assert (field != null) : "Receive a null treatment";
 		assert (field != "") : "Receive a empty treatment";
-		if(field.equals("_id")){
-			return Integer.toString(this.getId());
-		}else if(field.equals("name")){
-			return this.getName();
-		}else {
-		return "";
+
+		String selectedField = "";
+
+		if (field.equals("_id")){
+			selectedField = Integer.toString(this.getId());
+		} else if(field.equals("name")){
+			selectedField = this.getName();
+		} else {
+			selectedField = "";
 		}
+
+		return selectedField;
 	}
 
     /**
@@ -438,8 +463,10 @@ public class Course extends Bean implements Parcelable{
 	@Override
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
+
 		fields.add("_id");
 		fields.add("name");
+
 		return fields;
 	}
 

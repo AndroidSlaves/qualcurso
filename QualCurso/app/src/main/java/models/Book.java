@@ -10,14 +10,20 @@ import android.database.SQLException;
 import java.util.ArrayList;
 
 public class Book extends Bean {
+	// Unique identifier of the book.
 	private int id;
+	// Name title text of the book.
 	private int integralText;
+	// Number of chapter of the book.
 	private int chapters;
+	// Number of collections containing this book.
 	private int collections;
+	// Number of entries of the same book.
 	private int entries;
-
+	// Constant with fields names.
+	final String FIELDS_NAMES[] = {"_id","integral_text","chapters","collections","entries"};
 	/**
-	 * Empty constructor for the Book.
+	 * Empty constructor for the Book. Set basic default information about the book.
 	 */
 	public Book() {
 		this.id = 0;
@@ -153,13 +159,13 @@ public class Book extends Bean {
      *              there maybe a problem saving book in the database.
 	 */
 	public boolean save() throws  SQLException {
-		boolean result = false;
+		boolean saveResult = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		result = gDB.insertBean(this);
+		saveResult = gDB.insertBean(this);
 		this.setId(Book.last().getId());
 
-		return result;
+		return saveResult;
 	}
 
 	/**
@@ -175,12 +181,12 @@ public class Book extends Bean {
      *              there maybe a problem getting book from database.
 	 */
 	public static Book get(int id) throws  SQLException {
-		Book result = new Book(id);
+		Book bookById = new Book(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		result = (Book) gDB.selectBean(result);
+		bookById = (Book) gDB.selectBean(bookById);
 
-		return result;
+		return bookById;
 	}
 
 	/**
@@ -194,14 +200,14 @@ public class Book extends Bean {
 	 */
 	public static ArrayList<Book> getAll() throws  SQLException {
 		Book type = new Book();
-		ArrayList<Book> result = new ArrayList<Book>();
+		ArrayList<Book> listOfAllBooks = new ArrayList<Book>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
 		for (Bean b : gDB.selectAllBeans(type,null)) {
-			result.add((Book) b);
+			listOfAllBooks.add((Book) b);
 		}
 
-		return result;
+		return listOfAllBooks;
 	}
 
 	/**
@@ -230,12 +236,12 @@ public class Book extends Bean {
      *              there maybe a problem accessing database.
 	 */
 	public static Book first() throws SQLException {
-		Book result = new Book();
+		Book firstBook = new Book();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		result = (Book) gDB.firstOrLastBean(result, false);
+		firstBook = (Book) gDB.firstOrLastBean(firstBook, false);
 
-		return result;
+		return firstBook;
 	}
 
 	/**
@@ -248,12 +254,12 @@ public class Book extends Bean {
      *              there maybe a problem accessing database.
 	 */
 	public static Book last() throws SQLException {
-		Book result = new Book();
+		Book lastBook = new Book();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		result = (Book) gDB.firstOrLastBean(result, true);
+		lastBook = (Book) gDB.firstOrLastBean(lastBook, true);
 
-		return result;
+		return lastBook;
 	}
 
     /**
@@ -282,14 +288,14 @@ public class Book extends Bean {
 		assert (value != "") : "Receive a null treatment";
 
 		Book type = new Book();
-		ArrayList<Book> result = new ArrayList<Book>();
+		ArrayList<Book> foundBooks = new ArrayList<Book>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
 		for (Bean b : gDB.selectBeanWhere(type, field, value, like, null)) {
-			result.add((Book) b);
+			foundBooks.add((Book) b);
 		}
 
-		return result;
+		return foundBooks;
 	}
 
     /**
@@ -302,12 +308,12 @@ public class Book extends Bean {
      *              there maybe a problem accessing database.
      */
 	public boolean delete() throws  SQLException {
-		boolean result = false;
+		boolean deleteResult = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		result = gDB.deleteBean(this);
+		deleteResult = gDB.deleteBean(this);
 
-		return result;
+		return deleteResult;
 	}
 
     /**
@@ -326,15 +332,15 @@ public class Book extends Bean {
 
 		String selectedField = "";
 
-		if(field.equals("_id")) {
+		if(field.equals(FIELDS_NAMES[0])) {
 			selectedField = Integer.toString(this.getId());
-		} else if(field.equals("integral_text")) {
+		} else if(field.equals(FIELDS_NAMES[1])) {
 			selectedField = Integer.toString(this.getIntegralText());
-		} else if (field.equals("chapters")) {
+		} else if (field.equals(FIELDS_NAMES[2])) {
 			selectedField = Integer.toString(this.getChapters());
-		} else if(field.equals("collections")) {
+		} else if(field.equals(FIELDS_NAMES[3])) {
 			selectedField =  Integer.toString(this.getCollections());
-		} else if(field.equals("entries")) {
+		} else if(field.equals(FIELDS_NAMES[4])) {
 			selectedField = Integer.toString(this.getEntries());
 		} else {
 			selectedField = "";
@@ -359,15 +365,17 @@ public class Book extends Bean {
 		assert (data != null) : "Receive a null treatment";
 		assert (data != "") : "Receive a null treatment";
 
-		if (field.equals("_id")) {
+
+
+		if (field.equals(FIELDS_NAMES[0])) {
 			this.setId(Integer.parseInt(data));
-		} else if (field.equals("integral_text")) {
+		} else if (field.equals(FIELDS_NAMES[1])) {
 			this.setIntegralText(Integer.parseInt(data));
-		} else if (field.equals("chapters")) {
+		} else if (field.equals(FIELDS_NAMES[2])) {
 			this.setChapters(Integer.parseInt(data));
-		} else if (field.equals("collections")) {
+		} else if (field.equals(FIELDS_NAMES[3])) {
 			this.setCollections(Integer.parseInt(data));
-		} else if (field.equals("entries")) {
+		} else if (field.equals(FIELDS_NAMES[4])) {
 			this.setEntries(Integer.parseInt(data));
 		} else {
 			/* Nothing to do! */
@@ -391,11 +399,12 @@ public class Book extends Bean {
 	}
 
 	private ArrayList<String> addFields (ArrayList<String> fields){
-		fields.add("_id");
-		fields.add("integral_text");
-		fields.add("chapters");
-		fields.add("collections");
-		fields.add("entries");
+
+		fields.add(FIELDS_NAMES[0]);
+		fields.add(FIELDS_NAMES[1]);
+		fields.add(FIELDS_NAMES[2]);
+		fields.add(FIELDS_NAMES[3]);
+		fields.add(FIELDS_NAMES[4]);
 
 		return fields;
 	}

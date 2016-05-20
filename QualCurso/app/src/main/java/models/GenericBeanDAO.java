@@ -62,7 +62,7 @@ public class GenericBeanDAO extends DataBase{
 				     " as ci " + "WHERE ci.id_" + bean.identifier + "= ? " +
 				     "AND ci.id_" + table + " = c._id GROUP BY c._id";
 		if(orderField != null){
-			sql+=" ORDER BY "+orderField;
+			sql += " ORDER BY " + orderField;
 		}
 
 		// Represents the interator for the database table being accessed.

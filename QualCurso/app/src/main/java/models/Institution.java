@@ -298,9 +298,4 @@ public class Institution extends Bean implements Parcelable {
 			return new Institution[size];
 		}
 	};
-	
-	
-	
-	
-
 }

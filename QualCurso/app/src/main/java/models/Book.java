@@ -155,8 +155,10 @@ public class Book extends Bean {
 	public boolean save() throws  SQLException {
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		result = gDB.insertBean(this);
 		this.setId(Book.last().getId());
+
 		return result;
 	}
 
@@ -175,7 +177,9 @@ public class Book extends Bean {
 	public static Book get(int id) throws  SQLException {
 		Book result = new Book(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		result = (Book) gDB.selectBean(result);
+
 		return result;
 	}
 
@@ -192,9 +196,11 @@ public class Book extends Bean {
 		Book type = new Book();
 		ArrayList<Book> result = new ArrayList<Book>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		for (Bean b : gDB.selectAllBeans(type,null)) {
 			result.add((Book) b);
 		}
+
 		return result;
 	}
 
@@ -210,6 +216,7 @@ public class Book extends Bean {
 	public static int count() throws  SQLException {
 		Book type = new Book();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		return gDB.countBean(type);
 	}
 
@@ -225,7 +232,9 @@ public class Book extends Bean {
 	public static Book first() throws SQLException {
 		Book result = new Book();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		result = (Book) gDB.firstOrLastBean(result, false);
+
 		return result;
 	}
 
@@ -241,7 +250,9 @@ public class Book extends Bean {
 	public static Book last() throws SQLException {
 		Book result = new Book();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		result = (Book) gDB.firstOrLastBean(result, true);
+
 		return result;
 	}
 
@@ -273,9 +284,11 @@ public class Book extends Bean {
 		Book type = new Book();
 		ArrayList<Book> result = new ArrayList<Book>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		for (Bean b : gDB.selectBeanWhere(type, field, value, like, null)) {
 			result.add((Book) b);
 		}
+
 		return result;
 	}
 
@@ -291,7 +304,9 @@ public class Book extends Bean {
 	public boolean delete() throws  SQLException {
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
+
 		result = gDB.deleteBean(this);
+
 		return result;
 	}
 
@@ -308,27 +323,18 @@ public class Book extends Bean {
 	public String get(String field) {
 		assert (field != null) : "Receive a null treatment";
 		assert (field != "") : "Receive a empty treatment";
+
 		if(field.equals("_id")) {
 			return Integer.toString(this.getId());
-		}
-
-		else if(field.equals("integral_text")) {
+		} else if(field.equals("integral_text")) {
 			return Integer.toString(this.getIntegralText());
-		}
-
-		else if (field.equals("chapters")) {
+		} else if (field.equals("chapters")) {
 			return Integer.toString(this.getChapters());
-		}
-
-		else if(field.equals("collections")) {
+		} else if(field.equals("collections")) {
 			return Integer.toString(this.getCollections());
-		}
-
-		else if(field.equals("entries")) {
+		} else if(field.equals("entries")) {
 			return Integer.toString(this.getEntries());
-		}
-
-		else {
+		} else {
 			return "";
 		}
 	}
@@ -348,27 +354,18 @@ public class Book extends Bean {
 		assert (field != "") : "Receive a empty treatment";
 		assert (data != null) : "Receive a null treatment";
 		assert (data != "") : "Receive a null treatment";
+
 		if (field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
-		}
-
-		else if (field.equals("integral_text")) {
+		} else if (field.equals("integral_text")) {
 			this.setIntegralText(Integer.parseInt(data));
-		}
-
-		else if (field.equals("chapters")) {
+		} else if (field.equals("chapters")) {
 			this.setChapters(Integer.parseInt(data));
-		}
-
-		else if (field.equals("collections")) {
+		} else if (field.equals("collections")) {
 			this.setCollections(Integer.parseInt(data));
-		}
-
-		else if (field.equals("entries")) {
+		} else if (field.equals("entries")) {
 			this.setEntries(Integer.parseInt(data));
-		}
-
-		else {
+		} else {
 			/* Nothing to do! */
 		}
 
@@ -383,11 +380,13 @@ public class Book extends Bean {
 	@Override
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
+
 		fields.add("_id");
 		fields.add("integral_text");
 		fields.add("chapters");
 		fields.add("collections");
 		fields.add("entries");
+
 		return fields;
 	}
 }

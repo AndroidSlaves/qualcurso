@@ -25,8 +25,10 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/models/Search.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="308" column="1" selection-start-line="308" selection-start-column="1" selection-end-line="308" selection-end-column="1" />
-              <folding />
+              <caret line="514" column="0" selection-start-line="514" selection-start-column="0" selection-end-line="514" selection-end-column="0" />
+              <folding>
+                <marker date="1463745715762" expanded="false" signature="0:75" placeholder="/**...*/" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -41,11 +43,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Article.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/models/Article.java">
+      <file leaf-file-name="Bean.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/models/Bean.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="6.663717">
-              <caret line="322" column="61" selection-start-line="322" selection-start-column="61" selection-end-line="322" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SearchByIndicatorFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/SearchByIndicatorFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6017699">
+              <caret line="216" column="66" selection-start-line="216" selection-start-column="66" selection-end-line="216" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -1500,6 +1512,7 @@
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/models/Search.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/models/Article.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/SearchByIndicatorFragment.java" />
       </list>
     </option>
   </component>
@@ -1839,8 +1852,10 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/models/Search.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="308" column="1" selection-start-line="308" selection-start-column="1" selection-end-line="308" selection-end-column="1" />
-          <folding />
+          <caret line="514" column="0" selection-start-line="514" selection-start-column="0" selection-end-line="514" selection-end-column="0" />
+          <folding>
+            <marker date="1463745715762" expanded="false" signature="0:75" placeholder="/**...*/" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1854,8 +1869,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/models/Article.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.663717">
+        <state vertical-scroll-proportion="-77.89655">
           <caret line="322" column="61" selection-start-line="322" selection-start-column="61" selection-end-line="322" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/models/Bean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/unb/mdsgpp/qualcurso/SearchByIndicatorFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6017699">
+          <caret line="216" column="66" selection-start-line="216" selection-start-column="66" selection-end-line="216" selection-end-column="66" />
           <folding />
         </state>
       </provider>

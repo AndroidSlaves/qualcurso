@@ -13,7 +13,11 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Institution extends Bean implements Parcelable {
+
+	// Unic number that identifies the institution.
 	private int id;
+
+	// String that complements the institution.
 	private String acronym;
 
 	public Institution() {
@@ -22,6 +26,7 @@ public class Institution extends Bean implements Parcelable {
 		this.relationship = "courses_institutions";
 	}
 
+	// Method contructor that instantiate the object with the given id attribute.
 	public Institution(int id) {
 		assert (id >=0) : "id must never be negative";
 
@@ -30,26 +35,43 @@ public class Institution extends Bean implements Parcelable {
 		this.relationship = "courses_institutions";
 	}
 
+	/**
+	 * @return
+	 * 				The institution acronym.
+	 */
 	public String getAcronym() {
 		return acronym;
 	}
 
+	/**
+	 * @param acronym
+	 * 				Method that sets the institution acronym attribute.
+	 */
 	public void setAcronym(String acronym) {
 		assert (acronym != null) : "acronym must never be null";
 
 		this.acronym = acronym;
 	}
 
+	/**
+	 * @param id
+	 * 				Method that sets the institution id with a given value.
+	 */
 	public void setId(int id) {
 		assert (id >=0) : "id must never be negative";
 
 		this.id = id;
 	}
 
+	/**
+	 * @return
+	 * 				Method that returns the intitution Id.
+	 */
 	public int getId() {
         return id;
 	}
 
+	// Saves the institution entity with its data in the database.
 	public boolean save() throws SQLException {
 		boolean result = false;
 
@@ -59,7 +81,8 @@ public class Institution extends Bean implements Parcelable {
 
 		return result;
 	}
-	
+
+	// Method that adds a relationship between institution and course in the database.
 	public boolean addCourse(Course course) throws SQLException {
 		assert (course != null) : "course must never be null";
 
@@ -69,6 +92,7 @@ public class Institution extends Bean implements Parcelable {
 		return result;
 	}
 
+	// Method that get an institution entity from the database by the given ID.
 	public static Institution get(int id) throws SQLException {
 		assert (id >= 0) : "id must never be negative";
 
@@ -78,6 +102,7 @@ public class Institution extends Bean implements Parcelable {
 		return result;
 	}
 
+	// Selects and returns all the institution entities from the database.
 	public static ArrayList<Institution> getAll() throws SQLException {
 		Institution type = new Institution();
 		ArrayList<Institution> result = new ArrayList<Institution>();
@@ -88,12 +113,14 @@ public class Institution extends Bean implements Parcelable {
 		return result;
 	}
 
+	// Returns the number of institutions in the database.
 	public static int count() throws SQLException {
 		Institution type = new Institution();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		return gDB.countBean(type);
 	}
 
+	// Method that gets and returns the first institution of the list.
 	public static Institution first() throws SQLException {
 		Institution result = new Institution();
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -101,6 +128,7 @@ public class Institution extends Bean implements Parcelable {
 		return result;
 	}
 
+	// Method that gets and returns the last institution of the list.
 	public static Institution last() throws 
 			SQLException {
 		Institution result = new Institution();
@@ -109,6 +137,7 @@ public class Institution extends Bean implements Parcelable {
 		return result;
 	}
 
+	// Method that returns all the courses relatade to this one institution.
 	public ArrayList<Course> getCourses() throws 
 			SQLException {
 		ArrayList<Course> courses = new ArrayList<Course>();
@@ -118,7 +147,8 @@ public class Institution extends Bean implements Parcelable {
 		}
 		return courses;
 	}
-	
+
+	// Method that returns all the courses relatade to this one institution on a single year.
 	public ArrayList<Course> getCourses(int year) throws 
 			SQLException {
 		assert (year > 1990) : "year must never be bigger than 1990";
@@ -130,9 +160,8 @@ public class Institution extends Bean implements Parcelable {
 		}
 		return courses;
 	}
-	
-	
 
+	// Method that select Institutions by the acronym and return it.
 	public static ArrayList<Institution> getWhere(String field, String value,
 			boolean like) throws  SQLException {
 		assert (field != null) : "field must never be null";
@@ -149,37 +178,39 @@ public class Institution extends Bean implements Parcelable {
 		return result;
 	}
 
-	public static ArrayList<Institution> getInstitutionsByEvaluationFilter(Search search) throws  SQLException {
+	// Get and returns a list of institutions filtered by a given type of search.
+	public static ArrayList<Institution> getInstitutionsByEvaluationFilter(Search search)
+			throws  SQLException {
 
 		assert (search != null) : "search must never be null";
 		assert (search.getIndicator() != null) : "search's indicator must never be null";
 		assert (search.getYear() > 1990) : "search's year must never be smaller than 1990";
 
 		ArrayList<Institution> result = new ArrayList<Institution>();
-		String sql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a, books AS b "+
-					" WHERE year="+Integer.toString(search.getYear())+
-					" AND e.id_institution = i._id"+
-					" AND e.id_articles = a._id"+
-					" AND e.id_books = b._id"+
-					" AND "+search.getIndicator().getValue();
+		String sql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a," +
+				     " books AS b " + " WHERE year=" + Integer.toString(search.getYear()) +
+					 " AND e.id_institution = i._id" + " AND e.id_articles = a._id" +
+					 " AND e.id_books = b._id" + " AND " + search.getIndicator().getValue();
 
 		if(search.getMaxValue() == -1){
-			sql+=" >= "+Integer.toString(search.getMinValue());
+			sql += " >= " + Integer.toString(search.getMinValue());
 		}else{
-			sql+=" BETWEEN "+Integer.toString(search.getMinValue())+" AND "+Integer.toString(search.getMaxValue());
+			sql += " BETWEEN " + Integer.toString(search.getMinValue()) +
+			       " AND " + Integer.toString(search.getMaxValue());
 		}
-		sql+=" GROUP BY i._id";
+		sql += " GROUP BY i._id";
 		GenericBeanDAO
 		gDB = new GenericBeanDAO();
 
 		for (Bean b : gDB.runSql(new Institution(), sql)){
 			result.add((Institution)b);
 		}
-
 		return result;
 	}
 
-	public static ArrayList<Course> getCoursesByEvaluationFilter(int id_institution, Search search) throws  SQLException {
+	// Get and returns a list of institutions filtered by a given type of search and its ID.
+	public static ArrayList<Course> getCoursesByEvaluationFilter(int id_institution, Search search)
+			throws  SQLException {
 
 		assert(search.getYear() > 1990) : "search's year must never be smaller than 1990";
 		assert (search != null) : "search must never be null";
@@ -187,20 +218,17 @@ public class Institution extends Bean implements Parcelable {
 		assert (search.getYear() > 1990) : "search's year must never be smaller than 1990";
 
 		ArrayList<Course> result = new ArrayList<Course>();
-		String sql = "SELECT c.* FROM course AS c, evaluation AS e, articles AS a, books AS b "+
-					" WHERE e.id_institution="+id_institution+
-					" AND e.id_course = c._id"+
-					" AND e.id_articles = a._id"+
-					" AND e.id_books = b._id"+
-					" AND year="+search.getYear()+
-					" AND "+search.getIndicator().getValue();
+		String sql = "SELECT c.* FROM course AS c, evaluation AS e, articles AS a, books AS b " +
+					 " WHERE e.id_institution=" + id_institution + " AND e.id_course = c._id" +
+					 " AND e.id_articles = a._id" + " AND e.id_books = b._id" +
+					 " AND year="+search.getYear() + " AND "+search.getIndicator().getValue();
 		
 		if(search.getMaxValue() == -1){
-			sql+=" >= "+search.getMinValue();
+			sql += " >= " + search.getMinValue();
 		}else{
-			sql+=" BETWEEN "+search.getMinValue()+" AND "+search.getMaxValue();
+			sql += " BETWEEN " + search.getMinValue() + " AND " + search.getMaxValue();
 		}
-		sql+=" GROUP BY c._id";
+		sql += " GROUP BY c._id";
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
 		for (Bean b : gDB.runSql(new Course(), sql)){
@@ -208,7 +236,8 @@ public class Institution extends Bean implements Parcelable {
 		}
 		return result;
 	}
-	
+
+	// Delete this institution entity with its data in the database.
 	public boolean delete() throws  SQLException {
 		boolean result = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
@@ -219,6 +248,7 @@ public class Institution extends Bean implements Parcelable {
 		return result;
 	}
 
+	// Gets and returns the data according to the specified field.
 	@Override
 	public String get(String field) {
 		assert (field != null) : "field must never be null";
@@ -232,6 +262,7 @@ public class Institution extends Bean implements Parcelable {
 		}
 	}
 
+	// Sets the the specified data to the specified field in the institution entity.
 	@Override
 	public void set(String field, String data) {
 		assert (field != null) : "field must never be null";
@@ -245,6 +276,7 @@ public class Institution extends Bean implements Parcelable {
 
 	}
 
+	// Return the list of strings corresponding to attributes of the institituton class.
 	@Override
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
@@ -253,11 +285,13 @@ public class Institution extends Bean implements Parcelable {
 		return fields;
 	}
 
+	// Returns the acronym attribute of the institution entity.
 	@Override
 	public String toString() {
 		return getAcronym();
 	}
-	
+
+	// Instintution contructor method that instatiate the entity from an input archive.
 	private Institution(Parcel in){
 		assert (in != null) : "in must never be null";
 
@@ -267,12 +301,14 @@ public class Institution extends Bean implements Parcelable {
 		this.relationship = in.readString();
 	}
 
+	// returns 0, doing nothing.
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	// Method that writes data to specified parcel.
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		assert (dest != null) : "dest must never be null";
@@ -284,7 +320,8 @@ public class Institution extends Bean implements Parcelable {
 		
 	}
 	
-	public static final Parcelable.Creator<Institution> CREATOR = new Parcelable.Creator<Institution>() {
+	public static final Parcelable.Creator<Institution> CREATOR = new Parcelable
+			                            							  .Creator<Institution>() {
 
 		@Override
 		public Institution createFromParcel(Parcel source) {
@@ -298,9 +335,5 @@ public class Institution extends Bean implements Parcelable {
 			return new Institution[size];
 		}
 	};
-	
-	
-	
-	
 
 }

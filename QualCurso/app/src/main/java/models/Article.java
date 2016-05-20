@@ -36,6 +36,7 @@ public class Article extends Bean {
      * @return int
      */
 	public int getId() {
+		assert (id >= 0) : "id must be positive";
 		return id;
 	}
 
@@ -56,6 +57,7 @@ public class Article extends Bean {
      *              Number of publications in journals.
      */
 	public int getPublishedJournals() {
+		assert (publishedJournals >= 0) : "publishedJournals must be positive";
 		return publishedJournals;
 	}
 
@@ -76,6 +78,8 @@ public class Article extends Bean {
      * @return int
      */
 	public int getPublishedConferenceProceedings() {
+		assert (publishedConferenceProceedings >= 0) : "publishedConferenceProceedings " +
+				"must be positive";
 		return publishedConferenceProceedings;
 	}
 
@@ -126,6 +130,7 @@ public class Article extends Bean {
 
         retrievedArticle = (Article) gDB.selectBean(retrievedArticle);
 
+		assert (retrievedArticle != null):"Receive a null treatment";
         return retrievedArticle;
 	}
 
@@ -146,6 +151,8 @@ public class Article extends Bean {
 			listArticles.add((Article) bean);
 		}
 
+		assert (listArticles != null) : "Receive a null treatment";
+		assert (listArticles.size() > 0) : "Receive a size treatment";
 		return listArticles;
 	}
 
@@ -162,6 +169,7 @@ public class Article extends Bean {
 
         int countArticles = gDB.countBean(type);
 
+		assert (countArticles > 0) : "Receive a negative tratment";
 		return countArticles;
 	}
 
@@ -178,6 +186,7 @@ public class Article extends Bean {
 
 		resultFirstArticle = (Article) gDB.firstOrLastBean(resultFirstArticle, false);
 
+		assert (resultFirstArticle != null) : "Receive a null treatment";
 		return resultFirstArticle;
 	}
 
@@ -194,6 +203,7 @@ public class Article extends Bean {
 
 		resultLastArticle = (Article) gDB.firstOrLastBean(resultLastArticle, true);
 
+		assert (resultLastArticle != null) : "Receive a null treatment";
 		return resultLastArticle;
 	}
 
@@ -248,9 +258,10 @@ public class Article extends Bean {
 
     /**
      * Returns corresponding number the field parameter.
+	 *
      * @param field
+	 *
      * @return String
-     *
      */
 	@Override
 	public String get(String field) {
@@ -268,16 +279,17 @@ public class Article extends Bean {
 		} else {
 		    /*Nothing to do.*/
         }
-
+		assert (contentInField != null) : "Receive a null treatment";
 	    return contentInField;
     }
-
 
     /**
      * Stores the number requested by parameter.
      *
      * @param field
+	 * 				Object field
      * @param data
+	 * 				Object data
      */
 	@Override
 	public void set(String field, String data) {
@@ -292,10 +304,7 @@ public class Article extends Bean {
 			this.setPublishedJournals(Integer.parseInt(data));
 		} else if(field.equals("published_conference_proceedings")) {
 			this.setPublishedConferenceProceedings(Integer.parseInt(data));
-		} else {
-            // Nothing to do.
-		}
-		
+		} else {/*Nothing to do.*/}
 	}
 
     /**
@@ -311,6 +320,7 @@ public class Article extends Bean {
 		fields.add("published_journals");
 		fields.add("published_conference_proceedings");
 
+		assert (fields != null) : "Receive a null treatment";
         return fields;
 	}
 }

@@ -1,6 +1,5 @@
 package models;
 
-
 import android.database.SQLException;
 
 import java.util.ArrayList;
@@ -11,12 +10,14 @@ import android.database.sqlite.SQLiteStatement;
 import libraries.DataBase;
 
 public class GenericBeanDAO extends DataBase{
-
 	private SQLiteStatement pst;
-	
+
+    private enum DatabaseTablesNames {
+        institution, course, books, articles, evaluation, search
+    }
+
 	public GenericBeanDAO() throws SQLException {
 		super();
-		
 	}
 	
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, String orderField)
@@ -391,6 +392,7 @@ public class GenericBeanDAO extends DataBase{
 	public boolean deleteBean(Bean bean) throws SQLException {
 		assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
+
 		this.openConnection();
 		String sql = "DELETE FROM "+bean.identifier+ " WHERE "+bean.fieldsList().get(0)+" = ?";
 		this.pst = this.database.compileStatement(sql);
@@ -398,37 +400,39 @@ public class GenericBeanDAO extends DataBase{
 		int result = this.pst.executeUpdateDelete();
 		this.pst.clearBindings();
 		this.closeConnection();
+
 		return (result == 1) ? true : false;
 	}
 
+    /**
+     * Starts the BeanIdentifier by creating a new model object.
+     *
+     * @param beanIdentifier
+     * @return Bean
+     */
 	public Bean init(String beanIdentifier) {
 		assert (beanIdentifier != null) : "beanIdentifier must never be null";
-		
-		Bean object = null;
-		if (beanIdentifier.equals("institution")) {
-			object = new Institution();
-		} 
-		
-		else if (beanIdentifier.equals("course")) {
-			object = new Course();
-		}
-		
-		else if (beanIdentifier.equals("books")) {
-			object = new Book();
-		}
-		
-		else if (beanIdentifier.equals("articles")) {
-			object = new Article();
-		}
-		
-		else if (beanIdentifier.equals("evaluation")) {
-			object = new Evaluation();
-		}
+        assert (beanIdentifier.length() >= 0) : "beanIdentifier can't be blank";
 
-		else if (beanIdentifier.equals("search")) {
-			object = new Search();
-		}
+        final DatabaseTablesNames tableName = DatabaseTablesNames.valueOf(beanIdentifier);
+        Bean modelInstanceAsBean = null;
 
-		return object;
+        switch(tableName) {
+            case institution: modelInstanceAsBean = new Institution();
+                break;
+            case course: modelInstanceAsBean = new Course();
+                break;
+            case books: modelInstanceAsBean = new Book();
+                break;
+            case articles: modelInstanceAsBean = new Article();
+                break;
+            case evaluation: modelInstanceAsBean = new Evaluation();
+                break;
+            case search: modelInstanceAsBean = new Search();
+                break;
+            default://Nothing to do.
+        }
+
+		return modelInstanceAsBean;
 	}
 }

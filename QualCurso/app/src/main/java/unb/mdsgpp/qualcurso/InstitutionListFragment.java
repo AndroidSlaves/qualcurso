@@ -48,7 +48,7 @@ public class InstitutionListFragment extends ListFragment{
 	}
 
 	/**
-	 * Creates a new instance of the InstitutionListFragment with a diferent year.
+	 * Creates a new instance of the InstitutionListFragment with a different year.
 	 *
 	 * @param id
 	 * 				Object id.

@@ -1,12 +1,13 @@
 /*****************************
  * Class name: Book (.java)
  *
- * Purpose: Modeling characteristics from book and use methods that interacts with the database
+ * Purpose: Modeling characteristics from book and use methods that interacts with the database.
  ****************************/
 
 package models;
 
 import android.database.SQLException;
+
 import java.util.ArrayList;
 
 public class Book extends Bean {
@@ -21,7 +22,8 @@ public class Book extends Bean {
 	// Number of entries of the same book.
 	private int entries = 0;
 	// Constant with fields names.
-	final String FIELDS_NAMES[] = {"_id","integral_text","chapters","collections","entries"};
+	final String FIELDS_NAMES[] = {"_id", "integral_text", "chapters", "collections", "entries"};
+
 	/**
 	 * Empty constructor for the Book. Set basic default information about the book.
 	 */
@@ -38,7 +40,7 @@ public class Book extends Bean {
 	 *              Identification number of the book that will be set at initialization.
 	 */
 	public Book(int id) {
-		assert (id >= 0) : "Receive a negative treatment";
+		assert (id <= 0) : "Receive a negative treatment";
 		this.id = id;
 		this.identifier = "books";
 		this.relationship = "";
@@ -51,7 +53,8 @@ public class Book extends Bean {
      *              the book unique identifier.
 	 */
 	public int getId() {
-		return id;
+        assert (id <= 0) : "Receive a negative treatment";
+        return id;
 	}
 
 	/**
@@ -61,7 +64,7 @@ public class Book extends Bean {
 	 *              identification number of the book.
 	 */
 	public void setId(int id) {
-		assert (id >= 0) : "Receive a negative treatment";
+		assert (id <= 0) : "Receive a negative treatment";
 		this.id = id;
 	}
 
@@ -82,7 +85,7 @@ public class Book extends Bean {
 	 *              the text name of the book.
 	 */
 	public void setIntegralText(int integralText) {
-		assert (integralText >= 0) : "Receive a negative treatment";
+		assert (integralText <= 0) : "Receive a negative treatment";
 		this.integralText = integralText;
 	}
 
@@ -93,7 +96,8 @@ public class Book extends Bean {
      *              the number of chapters in the book.
 	 */
 	public int getChapters() {
-		return chapters;
+        assert (chapters <= 0) : "Receive a negative treatment";
+        return chapters;
 	}
 
 	/**
@@ -103,7 +107,7 @@ public class Book extends Bean {
 	 *              the number of chapters of the book.
 	 */
 	public void setChapters(int chapters) {
-		assert (chapters >= 0) : "Receive a negative treatment";
+		assert (chapters <= 0) : "Receive a negative treatment";
 		this.chapters = chapters;
 	}
 
@@ -114,7 +118,8 @@ public class Book extends Bean {
      *              the number of collections of this book.
 	 */
 	public int getCollections() {
-		return collections;
+        assert (collections <= 0) : "Receive a negative treatment";
+        return collections;
 	}
 
 	/**
@@ -124,7 +129,7 @@ public class Book extends Bean {
 	 *              the number of collections of the book.
 	 */
 	public void setCollections(int collections) {
-		assert (collections >= 0) : "Receive a negative treatment";
+		assert (collections <= 0) : "Receive a negative treatment";
 		this.collections = collections;
 	}
 
@@ -135,7 +140,8 @@ public class Book extends Bean {
      *              the number of entries of the same book.
 	 */
 	public int getEntries() {
-		return entries;
+        assert (entries <= 0) : "Receive a negative treatment";
+        return entries;
 	}
 
 	/**
@@ -145,7 +151,7 @@ public class Book extends Bean {
 	 *              the number of entries of the same book.
 	 */
 	public void setEntries(int entries) {
-		assert (entries >= 0) : "Receive a negative treatment";
+		assert (entries <= 0) : "Receive a negative treatment";
 		this.entries = entries;
 	}
 
@@ -186,6 +192,7 @@ public class Book extends Bean {
 
 		bookById = (Book) gDB.selectBean(bookById);
 
+        assert (bookById != null) : "bookById never be null";
 		return bookById;
 	}
 
@@ -207,6 +214,7 @@ public class Book extends Bean {
 			listOfAllBooks.add((Book) b);
 		}
 
+        assert (listOfAllBooks != null) : "listOfAllBooks never be null";
 		return listOfAllBooks;
 	}
 
@@ -222,8 +230,10 @@ public class Book extends Bean {
 	public static int count() throws  SQLException {
 		Book type = new Book();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+        int count = gDB.countBean(type);
 
-		return gDB.countBean(type);
+        assert (count >= 0):"Receive a negative treatment";
+		return count;
 	}
 
 	/**

@@ -92,6 +92,7 @@ public class SearchByIndicatorFragment extends Fragment {
 			}
 		});
 
+		assert (rootView != null) : "Receive a null treatment";
 		return rootView;
 	}
 	
@@ -120,7 +121,8 @@ public class SearchByIndicatorFragment extends Fragment {
 				if( yearSpinner.getSelectedItemPosition() != 0 ) {
 					year = Integer.parseInt(yearSpinner.getSelectedItem().toString());
 				} else {
-					year = Integer.parseInt(yearSpinner.getAdapter().getItem(yearSpinner.getAdapter().getCount()-1).toString());
+					year = Integer.parseInt(yearSpinner.getAdapter().getItem(yearSpinner
+										   .getAdapter().getCount()-1).toString());
 				}
 
 				if(maximum.isChecked()){
@@ -133,20 +135,24 @@ public class SearchByIndicatorFragment extends Fragment {
 				secondNumber.clearFocus();
 				hideKeyboard(arg0);
 
-				updateSearchList(number1, max, year, listSelectionPosition, ((Indicator)filterFieldSpinner.getItemAtPosition(filterFieldSpinner.getSelectedItemPosition())));
+				updateSearchList(number1, max, year, listSelectionPosition,
+						        ((Indicator)filterFieldSpinner.getItemAtPosition(filterFieldSpinner
+								.getSelectedItemPosition())));
 			}
 		};
 	}
 
 	private void hideKeyboard(View view) {
-		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context
+								  .INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager
+								    .RESULT_UNCHANGED_SHOWN);
 	}
 
 	private void callInstitutionList(int min, int max, int year, Indicator filterField){
-		Calendar c = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 		Search search = new Search();
-		search.setDate(new Date(c.getTime().getTime()));
+		search.setDate(new Date(calendar.getTime().getTime()));
 		search.setYear(year);
 		search.setOption(1);
 		search.setIndicator(filterField);
@@ -154,13 +160,14 @@ public class SearchByIndicatorFragment extends Fragment {
 		search.setMaxValue(max);
 		search.save();
 		ArrayList<Institution> beanList = Institution.getInstitutionsByEvaluationFilter(search);
-		beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(beanList,search), R.id.search_list);
+		beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(beanList,search),
+											 R.id.search_list);
 	}
 
 	private void callCourseList(int min, int max, int year, Indicator filterField){
-		Calendar c = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance();
 		Search search = new Search();
-		search.setDate(new Date(c.getTime().getTime()));
+		search.setDate(new Date(calendar.getTime().getTime()));
 		search.setYear(year);
 		search.setOption(0);
 		search.setIndicator(filterField);
@@ -168,15 +175,17 @@ public class SearchByIndicatorFragment extends Fragment {
 		search.setMaxValue(max);
 		search.save();
 		ArrayList<Course> beanList = Course.getCoursesByEvaluationFilter(search);
-		beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(beanList,search), R.id.search_list);
+		beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(beanList,search),
+				                             R.id.search_list);
 	}
 	
-	private void updateSearchList(int min, int max, int year, int listSelectionPosition, Indicator filterField) {
+	private void updateSearchList(int min, int max, int year, int listSelectionPosition,
+								  Indicator filterField) {
 		if(filterField.getValue() == Indicator.DEFAULT_INDICATOR) {
-			Context c = QualCurso.getInstance();
+			Context context = QualCurso.getInstance();
 			String emptySearchFilter = getResources().getString(R.string.empty_search_filter);
 
-			Toast toast = Toast.makeText(c, emptySearchFilter, Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, emptySearchFilter, Toast.LENGTH_SHORT);
 			toast.show();
 		} else {
 				switch (listSelectionPosition) {
@@ -203,6 +212,9 @@ public class SearchByIndicatorFragment extends Fragment {
 	}
 	
 	private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+		ActionBar myActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+
+		assert (myActionBar != null) : "Receive a null treatment";
+        return myActionBar;
     }
 }

@@ -49,22 +49,23 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * A pointer to the current callbacks instance (the Activity).
      */
-    private NavigationDrawerCallbacks mCallbacks;
+    private NavigationDrawerCallbacks mCallbacks = null;
 
     /**
      * Helper component that ties the action bar to the navigation drawer.
      */
-    private ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle = null;
 
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerListView;
-    private View mFragmentContainerView;
+    private DrawerLayout mDrawerLayout = null;
+    private ListView mDrawerListView = null;
+    private View mFragmentContainerView = null;
 
     private int mCurrentSelectedPosition = 0;
-    private boolean mFromSavedInstanceState;
-    private boolean mUserLearnedDrawer;
+    private boolean mFromSavedInstanceState = false;
+    private boolean mUserLearnedDrawer = false;
 
     public NavigationDrawerFragment() {
+
     }
 
     @Override
@@ -128,7 +129,14 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     public boolean isDrawerOpen() {
-        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView);
+        boolean isOpen = false;
+
+        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView)){
+            isOpen = true;
+        } else {
+            isOpen = false;
+        }
+        return isOpen;
     }
 
     /**
@@ -163,11 +171,13 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                if (!isAdded()) {
-                    return;
+
+                if (isAdded()) {
+                    getActivity().supportInvalidateOptionsMenu();
+                } else {
+                    /* Nothing to Do. */
                 }
 
-                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
             @Override
@@ -272,11 +282,14 @@ public class NavigationDrawerFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         assert (item != null) : "Receive a null treatment";
 
+        boolean isItemSelected = false;
         if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
+            isItemSelected = true;
+        } else {
+            isItemSelected = super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+        return isItemSelected;
     }
 
     /**
@@ -292,11 +305,16 @@ public class NavigationDrawerFragment extends Fragment {
     
     public CharSequence getFormatedTitle(CharSequence s){
 		int actionBarTitleColor = getResources().getColor(R.color.actionbar_title_color);
-		return Html.fromHtml("<font color='#"+Integer.toHexString(actionBarTitleColor).substring(2)+"'><b>"+s+"</b></font>");
+        final CharSequence FORMATED_TITLE = Html.fromHtml("<font color='#" +
+                Integer.toHexString(actionBarTitleColor).substring(2) + "'><b>" + s + "</b></font>");
+
+		return FORMATED_TITLE;
 	}
 
     private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+        ActionBar supportActionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+
+        return supportActionBar;
     }
 
     /**

@@ -4,7 +4,6 @@ import helpers.Indicator;
 
 import java.util.ArrayList;
 
-import models.Bean;
 import models.Course;
 import models.Institution;
 import models.Search;
@@ -48,6 +47,7 @@ public class SearchListFragment extends ListFragment{
 		args.putParcelableArrayList(BEAN_LIST,LIST_OF_PARCELABLES);
 		fragment.setArguments(args);
 
+		assert (fragment != null) : "Receive a null treatment";
 		return fragment;
 	}
 	
@@ -92,6 +92,7 @@ public class SearchListFragment extends ListFragment{
 			e.printStackTrace();
 		}
 
+		assert (rootView != null) : "Receive a null treatment";
 		return rootView;
 	}
 	
@@ -136,6 +137,7 @@ public class SearchListFragment extends ListFragment{
 	private ActionBar getActionBar() {
 		ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
 
+		assert (actionBar != null) : "Receive a null treatment";
         return actionBar;
     }
 

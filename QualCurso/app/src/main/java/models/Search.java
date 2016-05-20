@@ -22,25 +22,39 @@ public class Search extends Bean{
 	public static final int INSTITUTION = 1;
     public static final int MAX_SEARCHES_SAVE = 10;
 
+	// Unique identification number for search.
 	private int id = 0;
+	// Date of the search.
 	private Date date = null;
+	// Year of the evaluation searched.
 	private int year = 0;
+	// Types of search.
 	private int option = 0;
+	// Indicator related to search.
 	private Indicator indicator = null;
+	// Min value for search list.
 	private int minValue = 0;
+	// Max value for search list.
 	private int maxValue = 0;
 
     // Each value of enum represents a table field from Course
     private enum SearchFields {
         _id, date, year, option, indicator, min_value, max_value
     }
-
+	/**
+	 * Empty constructor for the Search. Set basic default information about the search.
+	 */
 	public Search() {
 		this.id = 0;
 		this.identifier = "search";
 		this.relationship = "";
 	}
-
+	/**
+	 * Construct the Search with defined id.
+	 *
+	 * @param id
+	 *              Identification number of the search that will be set at initialization.
+	 */
 	public Search(int id) {
 		assert (id >= 0) : "id must be positive integer.";
 
@@ -174,6 +188,7 @@ public class Search extends Bean{
 
     /**
      * Get the maximum value of items listed.
+	 *
      * @return maxValue
      */
 	public int getMaxValue() {
@@ -196,9 +211,10 @@ public class Search extends Bean{
     /**
      * Verify if the data was saved.
      *
-     * @return resultOfSaving
-     *              Returns the confirmation storage in the database
+     * @return
+     *              the confirmation storage in the database.
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
 	public boolean save() throws SQLException {
 		boolean resultOfSaving = false;
@@ -223,16 +239,17 @@ public class Search extends Bean{
     /**
      * Search by id and return a generic bean.
      *
-     * @param id
-     *
+     * @param ID
+     *			Id to be searched for.
      * @return searchById
-     *
+     * 			search with specified ID.
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
-	public static Search get(final int id) throws SQLException {
-		assert (id > 0) : "id must be positive.";
+	public static Search get(final int ID) throws SQLException {
+		assert (ID > 0) : "id must be positive.";
 
-		Search searchById = new Search(id);
+		Search searchById = new Search(ID);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		searchById = (Search) gDB.selectBean(searchById);
 
@@ -242,9 +259,10 @@ public class Search extends Bean{
     /**
      * Return an list of searches made by user.
      *
-     * @return allSearches;
-     *
+     * @return
+	 * 				all the searches.
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
 	public static ArrayList<Search> getAll() throws  SQLException {
 		final Search beanType = new Search();
@@ -261,9 +279,11 @@ public class Search extends Bean{
     /**
      * Count the number of beans generated.
      *
-     * @return numberOfSearches
+     * @return
+	 * 				the number of Searches.
      *
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
 	public static int count() throws  SQLException {
 		final Search type = new Search();
@@ -278,8 +298,9 @@ public class Search extends Bean{
      * Get the first bean created.
      *
      * @return firstSearch
-     *
+     *				search found in the first position.
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
 	public static Search first() throws SQLException {
 		Search firstSearch = new Search();
@@ -293,8 +314,9 @@ public class Search extends Bean{
      * Get the last Bean created.
      *
      * @return lastSearch
-     *
+     *				the search found in the last position.
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
 	public static Search last() throws SQLException {
 		Search lastSearch = new Search();
@@ -305,31 +327,35 @@ public class Search extends Bean{
 	}
 
     /**
-     * Generate a list with values of field, value, like. It's a kind of search.
+     * Search for all the searches with a determined value in a determined field.
      *
-     * @param field
-     * @param value
-     * @param like
+     * @param FIELD
+	 * 				field to be searched.
+     * @param VALUE
+	 * 				value to be searched for.
+     * @param LIKE
+	 * 				param for where.
      *
      * @return listOfFoundInSearch
-     *
+     *				the list of searches found with the value in the specified field
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
-	public static ArrayList<Search> getWhere(final String field, final String value,
-                                             final boolean like) throws SQLException {
+	public static ArrayList<Search> getWhere(final String FIELD, final String VALUE,
+                                             final boolean LIKE) throws SQLException {
 
-		assert (field != null) : "field must never be null.";
-		assert (field != "") : "field name must not be empty.";
-		assert (field.length() >= 1) : "field name must have at least one character.";
-		assert (value != null) : "value must never be null.";
-		assert (value != "") : "value name must not be empty.";
-		assert (value.length() >= 1) : "value name must have at least one character.";
+		assert (FIELD != null) : "field must never be null.";
+		assert (FIELD != "") : "field name must not be empty.";
+		assert (FIELD.length() >= 1) : "field name must have at least one character.";
+		assert (VALUE != null) : "value must never be null.";
+		assert (VALUE != "") : "value name must not be empty.";
+		assert (VALUE.length() >= 1) : "value name must have at least one character.";
 
 		final Search type = new Search();
 		ArrayList<Search> listOfFoundInSearch = new ArrayList<Search>();
 		final GenericBeanDAO gDB = new GenericBeanDAO();
 
-        ArrayList<Bean> selectBean = gDB.selectBeanWhere(type, field, value, like,null);
+        ArrayList<Bean> selectBean = gDB.selectBeanWhere(type, FIELD, VALUE, LIKE,null);
 
 		for (Bean searchBean : selectBean) {
 			listOfFoundInSearch.add((Search) searchBean);
@@ -339,11 +365,13 @@ public class Search extends Bean{
 	}
 
     /**
-     * Delete some bean on context.
+     * Delete this instance of search.
      *
-     * @return resultDelete
+     * @return
+	 * 				the result of the database about the deletion.
      *
      * @throws SQLException
+	 * 				there maybe a problem connecting to database.
      */
 	public boolean delete() throws SQLException {
 		final GenericBeanDAO gDB = new GenericBeanDAO();
@@ -355,26 +383,28 @@ public class Search extends Bean{
 	}
 
 	@Override
-	public void setId(int id) {
-		assert (id > 0) : "Receive a negative treatment.";
-		this.id = id;
+	public void setId(final int ID) {
+		assert (ID > 0) : "Receive a negative treatment.";
+		this.id = ID;
 	}
 
     /**
-     * Get the ID of search.
+     * Get specified data of field.
      *
-     * @param field
+     * @param FIELD
+	 * 				field that it wants the data.
      *
-     * @return contentFromFields
+     * @return
+	 * 				the value of the specified field
      */
 	@Override
-	public String get(final String field) {
-		assert (field != null) : "field must never be null.";
-		assert (field != "") : "field name must not be empty.";
-		assert (field.length() >= 1) : "field name must have at least one character.";
+	public String get(final String FIELD) {
+		assert (FIELD != null) : "field must never be null.";
+		assert (FIELD != "") : "field name must not be empty.";
+		assert (FIELD.length() >= 1) : "field name must have at least one character.";
 
 		String contentFromFields = "";
-        final SearchFields fieldName = SearchFields.valueOf(field);
+        final SearchFields fieldName = SearchFields.valueOf(FIELD);
 
         switch(fieldName) {
             case _id: contentFromFields = Integer.toString(this.getId());
@@ -401,49 +431,51 @@ public class Search extends Bean{
 	}
 
     /**
-     * Set the ID of search by field and data.
+     * Set field with specified data of search.
      *
-     * @param field
-     * @param data
+     * @param FIELD
+	 * 				Field to be set.
+     * @param DATA
+	 * 				Data to be set to field.
      */
 	@Override
-	public void set(final String field, final String data){
-		assert (field != null) : "field must never be null.";
-		assert (field != "") : "field name must not be empty.";
-		assert (field.length() >= 1) : "field name must have at least one character.";
-		assert (data != null) : "data must never be null.";
-		assert (data != "") : "data value must not be empty.";
-		assert (data.length() >= 1) : "data value must have at least one character.";
+	public void set(final String FIELD, final String DATA){
+		assert (FIELD != null) : "field must never be null.";
+		assert (FIELD != "") : "field name must not be empty.";
+		assert (FIELD.length() >= 1) : "field name must have at least one character.";
+		assert (DATA != null) : "data must never be null.";
+		assert (DATA != "") : "data value must not be empty.";
+		assert (DATA.length() >= 1) : "data value must have at least one character.";
         
-        final SearchFields fieldName = SearchFields.valueOf(field);
+        final SearchFields fieldName = SearchFields.valueOf(FIELD);
 
         switch(fieldName) {
             case _id:
-                this.setId(Integer.parseInt(data));
+                this.setId(Integer.parseInt(DATA));
                 break;
             case date:
                 Date dateData = null;
                 try {
-                    dateData = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US).parse(data);
+                    dateData = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US).parse(DATA);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 this.setDate(dateData);
                 break;
             case year:
-                this.setYear(Integer.parseInt(data));
+                this.setYear(Integer.parseInt(DATA));
                 break;
             case option:
-                this.setOption(Integer.parseInt(data));
+                this.setOption(Integer.parseInt(DATA));
                 break;
             case indicator:
-                this.setIndicator(Indicator.getIndicatorByValue(data));
+                this.setIndicator(Indicator.getIndicatorByValue(DATA));
                 break;
             case min_value:
-                this.setMinValue(Integer.parseInt(data));
+                this.setMinValue(Integer.parseInt(DATA));
                 break;
             case max_value:
-                this.setMaxValue(Integer.parseInt(data));
+                this.setMaxValue(Integer.parseInt(DATA));
                 break;
             default:
                 /*Nothing to do*/
@@ -451,9 +483,10 @@ public class Search extends Bean{
     }
 
     /**
-     * Generate a list of fields of database.
+     * Generate a list of fields of this entity.
      *
-     * @return ArrayList<String> fieldsList
+     * @return
+	 * 				List of string of the fields.
      */
 	@Override
 	public ArrayList<String> fieldsList() {

@@ -324,23 +324,23 @@ public class Book extends Bean {
 		assert (field != null) : "Receive a null treatment";
 		assert (field != "") : "Receive a empty treatment";
 
-		String result = "";
+		String selectedField = "";
 
 		if(field.equals("_id")) {
-			result = Integer.toString(this.getId());
+			selectedField = Integer.toString(this.getId());
 		} else if(field.equals("integral_text")) {
-			result = Integer.toString(this.getIntegralText());
+			selectedField = Integer.toString(this.getIntegralText());
 		} else if (field.equals("chapters")) {
-			result = Integer.toString(this.getChapters());
+			selectedField = Integer.toString(this.getChapters());
 		} else if(field.equals("collections")) {
-			result =  Integer.toString(this.getCollections());
+			selectedField =  Integer.toString(this.getCollections());
 		} else if(field.equals("entries")) {
-			result = Integer.toString(this.getEntries());
+			selectedField = Integer.toString(this.getEntries());
 		} else {
-			result = "";
+			selectedField = "";
 		}
 
-		return result;
+		return selectedField;
 	}
 
     /**

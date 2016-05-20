@@ -1,3 +1,10 @@
+/*****************************
+ * Class name: RankingFragment (.java)
+ *
+ * Purpose: Lets the user select a course, a year and a indicator to show a ranking with the better
+ * institution within the best results in the chosen params.
+ *****************************/
+
 package unb.mdsgpp.qualcurso;
 
 import helpers.Indicator;
@@ -7,6 +14,7 @@ import java.util.HashMap;
 
 import models.Course;
 import models.GenericBeanDAO;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -25,57 +33,80 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class RankingFragment extends Fragment {
-	BeanListCallbacks beanCallbacks;
-	Spinner filterFieldSpinner = null;
-	Spinner yearSpinner = null;
-	ListView evaluationList = null;
-	AutoCompleteTextView autoCompleteField = null;
-	Course currentSelection = null;
-	String filterField = Indicator.DEFAULT_INDICATOR;
-
 	private static final String COURSE = "course";
 	private static final String FILTER_FIELD = "filterField";
 	private final String CLASS_CAST_EXCEPTION_COMPLEMENT = "must implement BeanListCallbacks.";
 
+    BeanListCallbacks beanCallbacks = null;
+    Spinner filterFieldSpinner = null;
+    Spinner yearSpinner = null;
+    ListView evaluationList = null;
+    AutoCompleteTextView autoCompleteField = null;
+    Course currentSelection = null;
+    String filterField = Indicator.DEFAULT_INDICATOR;
+
 	public RankingFragment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
+    /**
+     * Preparation callbacks bean when the user access the fragment ranking used for the system to
+     * know where to return.
+     *
+     * @param ACTIVITY
+     *              Previous call activity
+     */
 	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
+	public void onAttach(final Activity ACTIVITY) {
+		super.onAttach(ACTIVITY);
 		try {
-			beanCallbacks = (BeanListCallbacks) activity;
-
-		} catch (ClassCastException e) {
-			String classCastException = activity.toString() + CLASS_CAST_EXCEPTION_COMPLEMENT;
+			beanCallbacks = (BeanListCallbacks) ACTIVITY;
+		} catch(ClassCastException e) {
+			String classCastException = ACTIVITY.toString() + CLASS_CAST_EXCEPTION_COMPLEMENT;
 			throw new ClassCastException(classCastException);
 		}
 	}
 
+    /**
+     * Disassociate callbacks bean when the fragment is no longer needed.
+     */
 	@Override
 	public void onDetach() {
 		super.onDetach();
 		beanCallbacks = null;
 	}
 
-
-
+    /**
+     * Controller attributes of the link and your field vision and setting their values.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     *
+     * @return rootView
+     *          Component view inflated with screen attributes.
+     */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         final int RANKING_FRAGMENT_ID = R.layout.ranking_fragment;
         View rootView = inflater.inflate(RANKING_FRAGMENT_ID, container, false);
-        if (savedInstanceState != null) {
-			if (savedInstanceState.getParcelable(COURSE) != null) {
-				setCurrentSelection((Course) savedInstanceState.getParcelable(COURSE));
-			}else{/*Nothing to do.*/}
-			if (savedInstanceState.getString(FILTER_FIELD) != null) {
-				setFilterField(savedInstanceState.getString(FILTER_FIELD));
 
-			}else{/*Nothing to do.*/}
-		}else{/*Nothing to do.*/}
+        if(savedInstanceState != null) {
+			if(savedInstanceState.getParcelable(COURSE) != null) {
+				setCurrentSelection((Course) savedInstanceState.getParcelable(COURSE));
+			} else {
+			    /*Nothing to do.*/
+            }
+
+			if(savedInstanceState.getString(FILTER_FIELD) != null) {
+				setFilterField(savedInstanceState.getString(FILTER_FIELD));
+			} else {
+			    /*Nothing to do.*/
+            }
+		} else {
+		    /*Nothing to do.*/
+        }
 
         // Setting spinners listener.
         this.filterFieldSpinner = (Spinner) rootView.findViewById(R.id.field);
@@ -94,12 +125,18 @@ public class RankingFragment extends Fragment {
         //Setting autocomplete adapters
         setAutoCompleteAdapters();
 
-        if (currentSelection != null && filterField != Indicator.DEFAULT_INDICATOR) {
+        if(currentSelection != null && filterField != Indicator.DEFAULT_INDICATOR) {
 			updateList();
-		}else{/*Nothing to do.*/}
+		} else {
+		    /*Nothing to do.*/
+        }
 
         return rootView;
 	}
+
+    /**
+     *
+     */
 	private void setAutoCompleteAdapters(){
         // Getting the variables for the autocompleteAdapter
         Context context = getActivity().getApplicationContext();
@@ -121,13 +158,30 @@ public class RankingFragment extends Fragment {
         this.filterFieldSpinner.setAdapter(arrayAdapter);
 	}
 
+    /**
+     * Saves application data when the user is not using it.
+     *
+     * @param outState
+     *          Persistent object data
+     */
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
+        assert (outState != null) : "Receive a null treatment";
+
 		outState.putParcelable(COURSE, this.currentSelection);
 		outState.putString(FILTER_FIELD, this.filterField);
 		super.onSaveInstanceState(outState);
 	}
-	
+
+    /**
+     * When a course is selected in the courses list, set this course as the current course for
+     * ranking.
+     *
+     * @param rootView
+     *              View screen component system user
+     * @return OnItemClickListener
+     *              Screen component
+     */
 	public OnItemClickListener getAutoCompleteListener(final View rootView){
 		return new OnItemClickListener() {
 			@Override
@@ -274,8 +328,15 @@ public class RankingFragment extends Fragment {
 		}
 	}
 
-	private void hideKeyboard(View view) {
-		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+    /**
+     * This method forces the digital Keyboard to be hidden
+     *
+     * @param VIEW
+     */
+	private void hideKeyboard(final View VIEW) {
+		InputMethodManager imm = (InputMethodManager) getActivity()
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(VIEW.getWindowToken(),
+                InputMethodManager.RESULT_UNCHANGED_SHOWN);
 	}
 }

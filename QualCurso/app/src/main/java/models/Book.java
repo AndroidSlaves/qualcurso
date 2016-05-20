@@ -324,19 +324,23 @@ public class Book extends Bean {
 		assert (field != null) : "Receive a null treatment";
 		assert (field != "") : "Receive a empty treatment";
 
+		String result = "";
+
 		if(field.equals("_id")) {
-			return Integer.toString(this.getId());
+			result = Integer.toString(this.getId());
 		} else if(field.equals("integral_text")) {
-			return Integer.toString(this.getIntegralText());
+			result = Integer.toString(this.getIntegralText());
 		} else if (field.equals("chapters")) {
-			return Integer.toString(this.getChapters());
+			result = Integer.toString(this.getChapters());
 		} else if(field.equals("collections")) {
-			return Integer.toString(this.getCollections());
+			result =  Integer.toString(this.getCollections());
 		} else if(field.equals("entries")) {
-			return Integer.toString(this.getEntries());
+			result = Integer.toString(this.getEntries());
 		} else {
-			return "";
+			result = "";
 		}
+
+		return result;
 	}
 
     /**
@@ -381,6 +385,12 @@ public class Book extends Bean {
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
 
+		addFields(fields);
+
+		return fields;
+	}
+
+	private ArrayList<String> addFields (ArrayList<String> fields){
 		fields.add("_id");
 		fields.add("integral_text");
 		fields.add("chapters");

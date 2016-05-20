@@ -102,14 +102,19 @@ public class EvaluationDetailFragment extends Fragment{
 		// Area of text that will be filled with all the evaluation information.
 		TextView textView2 = (TextView) rootView.findViewById(R.id.general_data);
 		textView2.setText(getString(R.string.evaluation_date)+": " + evaluation.getYear() +
-				"\n"+getString(R.string.course)+": " + Course.get(getArguments().getInt(ID_COURSE)).getName() +
-				"\n"+getString(R.string.modality)+": " + evaluation.getModality());
+				          "\n"+getString(R.string.course)+": " + Course.get(getArguments().getInt(ID_COURSE)).getName()
+				          + "\n"+getString(R.string.modality)+": " + evaluation.getModality());
 
 		// List that indicates the institution evaluation.
 		ListView indicatorList = (ListView) rootView.findViewById(R.id.indicator_list);
 		indicatorList.setAdapter(new IndicatorListAdapter(getActivity().getApplicationContext(), R.layout.evaluation_list_item, getListItems(evaluation)));
 
 		assert (rootView != null) : "Rootview can never be null";
+
+
+		indicatorList.setAdapter(new IndicatorListAdapter(getActivity().getApplicationContext(),
+				                 R.layout.evaluation_list_item, getListItems(evaluation)));
+		
 
 		return rootView;
 	}

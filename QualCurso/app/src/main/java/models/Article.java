@@ -118,15 +118,15 @@ public class Article extends Bean {
      *
      * @throws SQLException
      */
-	public static Article get(Integer id) throws  SQLException {
+	public static Article get(final Integer id) throws  SQLException {
 		assert (id >= 0) : "id must be positive";
 
-		Article result = new Article(id);
+		Article retrievedArticle = new Article(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-        result = (Article) gDB.selectBean(result);
+        retrievedArticle = (Article) gDB.selectBean(retrievedArticle);
 
-        return result;
+        return retrievedArticle;
 	}
 
     /**
@@ -177,6 +177,7 @@ public class Article extends Bean {
 		final GenericBeanDAO gDB = new GenericBeanDAO();
 
 		resultFirstArticle = (Article) gDB.firstOrLastBean(resultFirstArticle, false);
+
 		return resultFirstArticle;
 	}
 
@@ -192,6 +193,7 @@ public class Article extends Bean {
 		final GenericBeanDAO gDB = new GenericBeanDAO();
 
 		resultLastArticle = (Article) gDB.firstOrLastBean(resultLastArticle, true);
+
 		return resultLastArticle;
 	}
 

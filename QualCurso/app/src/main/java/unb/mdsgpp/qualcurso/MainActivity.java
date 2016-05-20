@@ -1,3 +1,9 @@
+/*****************************
+ * Class name: MainActivity (.java)
+ *
+ * Purpose: First and primary activity that connects with the other screens and the rest of the
+ * components.
+ ****************************/
 package unb.mdsgpp.qualcurso;
 
 import models.Course;
@@ -39,8 +45,14 @@ public class MainActivity extends ActionBarActivity implements
 
 	public static String CURRENT_TITLE = "currentTitle";
 
-	private SearchView mSearchView;
-	
+	//private SearchView mSearchView;
+
+    /**
+     * Set up global variables on initiation.
+     *
+     * @param savedInstanceState
+     *              instance saved.
+     */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,24 +72,39 @@ public class MainActivity extends ActionBarActivity implements
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 		
 	}
-	
-	public CharSequence getFormatedTitle(CharSequence s){
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(DRAWER_POSITION, drawerPosition);
+        outState.putCharSequence(CURRENT_TITLE, mTitle);
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * get text with the color of the title in hexadecimal formatted char sequence.
+     *
+     * @param stringTitle
+     *              text that will be formatted.
+     * @return
+     *              formatted text.
+     */
+	public CharSequence getFormatedTitle(CharSequence stringTitle){
 		int actionBarTitleColor = getResources().getColor(R.color.actionbar_title_color);
-		return Html.fromHtml("<font color='#"+Integer.toHexString(actionBarTitleColor).substring(2)+"'><b>"+s+"</b></font>");
-	}
-	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-	}
-	
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		outState.putInt(DRAWER_POSITION, drawerPosition);
-		outState.putCharSequence(CURRENT_TITLE, mTitle);
-		super.onSaveInstanceState(outState);
+		return Html.fromHtml("<font color='#"+Integer.toHexString(actionBarTitleColor).substring(2)+"'><b>"+stringTitle+"</b></font>");
 	}
 
+
+    /**
+     * Creates a new fragment based on the option clicked.
+     *
+     * @param position
+     *              position of the click
+     */
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
@@ -133,14 +160,16 @@ public class MainActivity extends ActionBarActivity implements
 		}
 	}
 
+    /*
 	public void onSectionAttached(int number) {
 		switch (number) {
 		//Nothing
 		}
-	}
-	
-	
+	}*/
 
+    /**
+     * Brings back the action bar with the options to the user.
+     */
 	public void restoreActionBar() {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -148,39 +177,48 @@ public class MainActivity extends ActionBarActivity implements
 		actionBar.setTitle(mTitle);
 	}
 
+    /**
+     * Restore action bar when OptionsMenu is opened.
+     *
+     * @param menu
+     *              specified menu that is opened.
+     * @return
+     *              if operation was successful.
+     */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-			// Only show items in the action bar relevant to this screen
-			// if the drawer is not showing. Otherwise, let the drawer
-			// decide what to show in the action bar.
+
+			/* Only show items in the action bar relevant to this screen if the drawer is not
+			showing. Otherwise, let the drawer decide what to show in the action bar.*/
 			getMenuInflater().inflate(R.menu.main, menu);
 			restoreActionBar();
-			//if(getSupportFragmentManager().findFragmentById(R.id.container) instanceof TabsFragment){
-			//	getMenuInflater().inflate(R.menu.search_menu, menu);
-			//}
-			//MenuItem searchItem = menu.findItem(R.id.action_search);
-			//if(searchItem != null){
-			//	mSearchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-			//	setupSearchView(searchItem);
-			//}
+
 			return true;
 		}
 		return super.onCreateOptionsMenu(menu);
 	}
-	private void setupSearchView(MenuItem searchItem){
+
+	/*private void setupSearchView(MenuItem searchItem){
 		searchItem.setShowAsActionFlags(MenuItem.SHOW_AS_ACTION_IF_ROOM|MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
 		mSearchView.setOnQueryTextListener(this);
-	}
+	}*/
 
+    /**
+     * Opens application fragment depending on the selected item.
+     *
+     * @param item
+     *              selected menu item.
+     * @return
+     *              a recursive boolean. The recursive loop is broken with the selected item is recognized.
+     */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+		/* Handle action bar item clicks here. The action bar will automatically handle clicks on
+		the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.*/
 
-		switch(item.getItemId()) {
-			case R.id.action_about:
+        switch(item.getItemId()) {
+	 		case R.id.action_about:
 				aboutApplication();
 				return true;
 			case R.id.action_exit:
@@ -191,15 +229,27 @@ public class MainActivity extends ActionBarActivity implements
 		return super.onOptionsItemSelected(item);
 	}
 
+    /**
+     * Finishes application entirely.
+     */
 	private void closeApplication() {
 		finish();
 		System.exit(1);
 	}
-	
+
+    /**
+     * Opens about fragment, containing the info, when option selected.
+     */
 	private void aboutApplication() {
 		onBeanListItemSelected(AboutFragment.newInstance());
 	}
 
+    /**
+     * Adds the selected fragment to a fragment record maneger, FragmentManeger class.
+     *
+     * @param fragment
+     *              open intended fragment.
+     */
 	@Override
 	public void onBeanListItemSelected(Fragment fragment) {
 		// update the main content by replacing fragments
@@ -211,6 +261,14 @@ public class MainActivity extends ActionBarActivity implements
 								fragment).addToBackStack(null).commit();
 	}
 
+    /**
+     * Adds the selected fragment to a fragment record maneger, FragmentManeger class.
+     *
+     * @param fragment
+     *              open intended fragment.
+     * @param container
+     *              container id that this fragment is being attached to.
+     */
 	@Override
 	public void onBeanListItemSelected(Fragment fragment, int container) {
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -221,6 +279,15 @@ public class MainActivity extends ActionBarActivity implements
 						fragment).commit();
 	}
 
+    /**
+     * Search by course of institution.
+     *
+     * @param search
+     *              instance of search with the specifics of the entry of the user.
+     *
+     * @param bean
+     *              criteria for type of search.
+     */
 	@Override
 	public void onSearchBeanSelected(Search search, Parcelable bean) {
 		if(bean instanceof Institution){

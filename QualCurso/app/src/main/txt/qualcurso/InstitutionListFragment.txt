@@ -1,5 +1,9 @@
-class: InstitutionListFragment
-	//institutionListFragment
+/*****************************
+ * Class name: InstitutionListFragment (.java)
+ *
+ * Purpose: Class that represents the list of intitutions screen.
+ *****************************/
+
 Attributes:
 		String ID_COURSE
 			// identification number of the chosen course.
@@ -11,29 +15,33 @@ Attributes:
 			// Generic object to connects to the database.
 Methods:
 	InstitutionListFragment()
-		// Method to instantiate the object InstitutionListFragment. (constructor).
-		Attributes: Bundle args /* Bundle with a list of arguments to do a search for
-						the user in the present view. */
+		/* Method to instantiate the object InstitutionListFragment. (constructor).
+		 * Attributes: Bundle args: Bundle with a list of arguments to do a search for
+		 * the user in the present view.
+		 */
 	
 	newInstance(int id, int year){
-		// Creates a new instance of the InstitutionListFragment with a diferent year.
-		Attributes: InstitutionListFragment fragment // Fragment that the view will fill.
-					Bundle args // List of string necessary to instatiate the object.
+		/* Creates a new instance of the InstitutionListFragment with a diferent year.
+		 * Attributes: InstitutionListFragment fragment: Fragment that the view will fill.
+		 * Bundle args: List of string necessary to instatiate the object.
+		 */
 		
 	newInstance(int id, int year, ArrayList<Institution> institutions){
 		/* Creates a new instance of the InstitutionListFragment with a diferent year and with a
-		 given list of institutions. */
-		Attributes: InstitutionListFragment fragment // Fragment that the view will fill.
-					Bundle args // List of string necessary to instatiate the object.
+		 * given list of institutions.
+		 * Attributes: InstitutionListFragment fragment: Fragment that the view will fill.
+		 * Bundle args: List of string necessary to instatiate the object.
+		 */
 		
 	onSaveInstanceState(Bundle outState)
 	 	// Method to create parcel with the saved data.
 	
 	onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// When creating view, start the necessary arguments to list to the user the institutions.
-		Attributes: ArrayList<Institution> list // List that will populate the view to te user.
-					ListView rootView // ListView of institutions objects.
+		/* When creating view, start the necessary arguments to list to the user the institutions.
+		 * Attributes: ArrayList<Institution> list: List that will populate the view to te user.
+		 * ListView rootView: ListView of institutions objects.
+		 */
 
 	onAttach(Activity activity)
 		// Method that attach an activity and treat the possible exceptions.
@@ -43,7 +51,8 @@ Methods:
 	
 	onListItemClick(ListView l, View v, int position, long id) 
 		/* Method that selects the item clicked on the list and directs the user to the appropriate
-		 view. */
+		 * view.
+		 */
 	
 	getInstitutionsList(int idCourse)
 		// Get the institution list from the database to populate the listview for the user.

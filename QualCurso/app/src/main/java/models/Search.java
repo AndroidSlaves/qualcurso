@@ -47,9 +47,12 @@ public class Search extends Bean{
 	}
 
 	public void setDate(Date date) {
-		assert (date.getDay() > 0 && date.getDay() < 32) : "Day value must be between 1 and 31";
-		assert (date.getMonth() > 0 && date.getMonth() < 13) : "Month value must be between 1 and 12";
-		assert (date.getYear() > 0 && date.getYear() < 3000) : "Year value must be between 0 and 3000";
+		assert (date.getDay() > 0) : "Day value must be between 1 and 31";
+		assert (date.getDay() < 32) : "Day value must be between 1 and 31";
+		assert (date.getMonth() > 0) : "Month value must be between 1 and 12";
+		assert (date.getMonth() < 13) : "Month value must be between 1 and 12";
+		assert (date.getYear() > 0) : "Year value must be between 0 and 3000";
+		assert (date.getYear() < 3000) : "Year value must be between 0 and 3000";
 
 		this.date = date;
 	}
@@ -59,7 +62,8 @@ public class Search extends Bean{
 	}
 
 	public void setYear(int year) {
-		assert (year > 0 && year < 3000) : "Year value must be between 0 and 3000";
+		assert (year > 0) : "Year value must be between 0 and 3000";
+		assert (year < 3000) : "Year value must be between 0 and 3000";
 
 		this.year = year;
 	}
@@ -69,7 +73,8 @@ public class Search extends Bean{
 	}
 
 	public void setOption(int option) {
-		assert (option >=0 && option <=1) : "Option is defined only for 0 and 1 values.";
+		assert (option >=0) : "Option is defined only for 0 and 1 values.";
+		assert (option <=1) : "Option is defined only for 0 and 1 values.";
 
 		this.option = option;
 	}
@@ -105,62 +110,63 @@ public class Search extends Bean{
 	}
 
 	public boolean save() throws  SQLException {
-		boolean result = false;
+		boolean resultOfSaving = false;
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
 		if(Search.count()>=10){
 			Search.first().delete();
 		}
 
-		result = gDB.insertBean(this);
+		resultOfSaving = gDB.insertBean(this);
 		this.setId(Search.last().getId());
 
-		return result;
+		return resultOfSaving;
 	}
 
 	public static Search get(int id) throws SQLException {
 		assert (id > 0) : "id must be positive.";
 
-		Search result = new Search(id);
+		Search searchById = new Search(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();	
-		result = (Search) gDB.selectBean(result);
+		searchById = (Search) gDB.selectBean(searchById);
 
-		return result;
+		return searchById;
 	}
 
 	public static ArrayList<Search> getAll() throws  SQLException {
 		Search type = new Search();
-		ArrayList<Search> result = new ArrayList<Search>();
+		ArrayList<Search> allSearches = new ArrayList<Search>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
 		for (Bean b : gDB.selectAllBeans(type,null)) {
-			result.add((Search) b);
+			allSearches.add((Search) b);
 		}
 
-		return result;
+		return allSearches;
 	}
 
 	public static int count() throws  SQLException {
 		Search type = new Search();
 		GenericBeanDAO gDB = new GenericBeanDAO();
+		int numberOfSearches = gDB.countBean(type);
 
-		return gDB.countBean(type);
+		return numberOfSearches;
 	}
 
 	public static Search first() throws SQLException {
-		Search result = new Search();
+		Search firstSearch = new Search();
 		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = (Search) gDB.firstOrLastBean(result, false);
+		firstSearch = (Search) gDB.firstOrLastBean(firstSearch, false);
 
-		return result;
+		return firstSearch;
 	}
 
 	public static Search last() throws SQLException {
-		Search result = new Search();
+		Search lastSearch = new Search();
 		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = (Search) gDB.firstOrLastBean(result, true);
+		lastSearch = (Search) gDB.firstOrLastBean(lastSearch, true);
 
-		return result;
+		return lastSearch;
 	}
 
 	public static ArrayList<Search> getWhere(String field, String value, boolean like) throws  SQLException {
@@ -172,13 +178,13 @@ public class Search extends Bean{
 		assert (value.length() >= 1) : "value name must have at least one character.";
 
 		Search type = new Search();
-		ArrayList<Search> result = new ArrayList<Search>();
+		ArrayList<Search> listOfFoundInSearch = new ArrayList<Search>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
 		for (Bean b : gDB.selectBeanWhere(type, field, value, like,null)) {
-			result.add((Search) b);
+			listOfFoundInSearch.add((Search) b);
 		}
-		return result;
+		return listOfFoundInSearch;
 	}
 
 	public boolean delete() throws  SQLException {

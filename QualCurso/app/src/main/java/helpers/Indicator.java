@@ -23,44 +23,90 @@ import unb.mdsgpp.qualcurso.R;
 public class Indicator {
 	private String name = EMPTY;
 	private String value = EMPTY;
-	
+
 	public static final String DEFAULT_INDICATOR = "defaultIndicator";
 	public static final String EMPTY = "";
 
+	/**
+	 * Build indicator with name and value.
+	 *
+	 * @param name
+	 * 				Name of bookmark.
+	 * @param value
+	 * 				Value of bookmark.
+	 */
 	@SuppressLint("Assert")
 	public Indicator(String name, String value) {
 		assert (name != null) : "Received null name";
 		assert (name.length() > 1) : "Treatment to minor of character in a name";
 		assert (name != "") : "Treatment empty name";
-        assert (value != null) : "Received null value";
-        assert (value.length() > 1) : "Treatment to minor of character in a value ";
-        assert (value != "") : "Treatment empty value";
+		assert (value != null) : "Received null value";
+		assert (value.length() > 1) : "Treatment to minor of character in a value ";
+		assert (value != "") : "Treatment empty value";
 
 		this.name = name;
 		this.value = value;
 	}
 
+	/**
+	 *
+	 * @return
+	 * 				Name of indicator.
+	 */
 	public String getName() {
+
+		assert (name != null) : "name must never be null";
 		return name;
 	}
 
+	/**
+	 *
+	 * @param name
+	 * 				Name of bookmark.
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 *
+	 * @return
+	 * 				Value of Indicator.
+	 */
 	public String getValue() {
+        assert (value != null) : "value must never be null";
 		return value;
 	}
 
+	/**
+	 *
+	 * @param value
+	 * 				Value of bookmark.
+	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
+
+	/**
+	 * Get the bookmark name given overriding the toString () default Java
+	 *
+	 * @return
+	 * 				Name of Indicator.
+	 */
 	@Override
 	public String toString() {
-		return this.getName();
+        String name = this.getName();
+
+        assert (name != null) : "name must never be null";
+		return name;
 	} 
 
+	/**
+	 * Get all the indicators assigned to evaluation, book and article and places on a list.
+	 *
+	 * @return
+	 * 				list of indicators.
+	 */
 	public static ArrayList<Indicator> getIndicators() {
 		String [] indicatorList = QualCurso.getInstance().getResources().getStringArray(R.array.indicator);
 		ArrayList<Indicator> result = new ArrayList<Indicator>();
@@ -97,10 +143,24 @@ public class Indicator {
 		result.add(new Indicator(indicatorList[numberArticles], new Article().fieldsList().get(1)));
 		result.add(new Indicator(indicatorList[numberWork], new Article().fieldsList().get(2)));
 
+        assert (result != null) : "this list must never be null";
+
+        final int FIRST = 0;
+        final int LAST = numberWork;
+
+        assert (result.get(FIRST) != null) : "should have first element";
+        assert (result.get(LAST) != null) : "should have last element";
 		return result;
 	}
 
-	// Search an indicator value in the indicator list and returns the index.
+	/**
+	 * Search an indicator value in the indicator list and returns the index.
+	 *
+	 * @param value
+	 * 				Bookmark value to be searched on list.
+	 * @return
+	 * 				An indicator with @param value.
+	 */
 	public static Indicator getIndicatorByValue(String value) {
 		Indicator indicator = null;
 		for(Indicator ind : getIndicators()) {
@@ -112,6 +172,7 @@ public class Indicator {
 			}
 		}
 
+        assert (indicator != null) : "indicator must not be null";
 		return indicator;
 	}
 }

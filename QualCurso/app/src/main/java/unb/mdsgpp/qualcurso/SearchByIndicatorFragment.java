@@ -32,7 +32,14 @@ import android.widget.Toast;
 public class SearchByIndicatorFragment extends Fragment {
 	
 	BeanListCallbacks beanCallbacks;
-	
+	Spinner listSelectionSpinner = null;
+	Spinner filterFieldSpinner = null;
+	Spinner yearSpinner = null;
+	CheckBox maximum = null;
+	EditText firstNumber = null;
+	EditText secondNumber = null;
+	Button searchButton = null;
+
 	public SearchByIndicatorFragment() {
 		super();
 	}
@@ -53,13 +60,7 @@ public class SearchByIndicatorFragment extends Fragment {
         beanCallbacks = null;
     }
 	
-	Spinner listSelectionSpinner = null;
-	Spinner filterFieldSpinner = null;
-	Spinner yearSpinner = null;
-	CheckBox maximum = null;
-	EditText firstNumber = null;
-	EditText secondNumber = null;
-	Button searchButton = null;
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,10 +68,10 @@ public class SearchByIndicatorFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.search_fragment, container,
 				false);
 		
-		listSelectionSpinner = (Spinner) rootView
-				.findViewById(R.id.course_institution);
+		listSelectionSpinner = (Spinner) rootView.findViewById(R.id.course_institution);
 		filterFieldSpinner = (Spinner) rootView.findViewById(R.id.field);
-		filterFieldSpinner.setAdapter(new ArrayAdapter<Indicator>(getActionBar().getThemedContext(), R.layout.simple_spinner_item, R.id.spinner_item_text,Indicator.getIndicators()));
+		filterFieldSpinner.setAdapter(new ArrayAdapter<Indicator>(getActionBar().getThemedContext(),
+                R.layout.simple_spinner_item, R.id.spinner_item_text,Indicator.getIndicators()));
 		yearSpinner = (Spinner) rootView.findViewById(R.id.year);
 		maximum = (CheckBox) rootView.findViewById(R.id.maximum);
 		firstNumber = (EditText) rootView.findViewById(R.id.firstNumber);

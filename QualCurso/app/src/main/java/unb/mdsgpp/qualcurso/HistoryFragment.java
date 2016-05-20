@@ -1,3 +1,8 @@
+/*****************************
+ * Class name: HistoryFragment (.java)
+ * Purpose: Class that shows to the user the history of views viewed in the program recently.
+ *****************************/
+
 package unb.mdsgpp.qualcurso;
 
 import java.util.ArrayList;
@@ -20,12 +25,15 @@ import android.widget.Toast;
 
 public class HistoryFragment extends Fragment {
 
+	// Entity that connects to the database.
 	BeanListCallbacks beanCallbacks;
 
+	// Method that instaciate the historyfragment object, the constructor.
 	public HistoryFragment() {
 		super();
 	}
 
+	// Method that attach an activity and treat the possible exceptions.
 	@Override
 	public void onAttach(Activity activity) {
 		assert (activity !=null) : "activity must never be null";
@@ -38,6 +46,7 @@ public class HistoryFragment extends Fragment {
 		}
 	}
 
+	// Method that detach an activity and treat the possible exceptions.
 	@Override
 	public void onDetach() {
 		super.onDetach();
@@ -46,16 +55,28 @@ public class HistoryFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 	Bundle savedInstanceState) {
+
+		// View that works as a container for the data.
 		View rootView = inflater.inflate(R.layout.fragment_history, container, false);
-		final ListView history = (ListView) rootView.findViewById(R.id.listHistory) ; 
+		assert (rootView != null) : "rootView can never be null";
 
+		// List of objects to be translated in itens for the user.
+		final ListView history = (ListView) rootView.findViewById(R.id.listHistory) ;
+
+		// List of object searches that are filters for the list
 		ArrayList<Search> searches = Search.getAll();
-		
+		assert (searches != null) : "searches can never be null";
+		assert (searches.size() >= 0) : "searches arraylist size negative";
 		Collections.reverse(searches);
-		
-		ListHistoryAdapter histotyAdapter = new ListHistoryAdapter(this.getActivity().getApplicationContext(), R.id.listHistory, searches);
 
-		history.setAdapter((ListAdapter)histotyAdapter);
+		// Adapter that creates a list of itens in the history (listview).
+		ListHistoryAdapter historyAdapter = new ListHistoryAdapter(this.getActivity()
+				                                                   .getApplicationContext(),
+				                                                   R.id.listHistory, searches);
+
+		assert (historyAdapter != null) : "Adapter view must never be null.";
+
+		history.setAdapter((ListAdapter)historyAdapter);
 		
 		history.setOnItemClickListener(new OnItemClickListener() {
 
@@ -74,20 +95,27 @@ public class HistoryFragment extends Fragment {
 		return rootView;
 	}
 
+	// Show list of institutions to the user filtered by the search attr.
 	private void displayInstitutionList(Search search) {
 		assert (search != null) : "search must never be null";
-		
+
+		//  List of institutions to be displayed to the user.
 		ArrayList<Institution> institutions = Institution.getInstitutionsByEvaluationFilter(search);
+		assert (institutions != null) : "institutions arraylist must never be null.";
+		assert (institutions.size() >= 0) : "institutions arraylist cant be negative";
 
 		if( institutions.size() == 0 )
 			displayToastMessage(getResources().getString(R.string.empty_histoty_search_result));
 		else
-			beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(institutions, search));
+			beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(institutions,
+					                             search));
 	}
 
+	// Show list of institutions to the user filtered by the search attr.
 	private void displayCourseList(Search search) {
 		assert (search != null) : "search must never be null";
-		
+
+		// List of courses to be displayed to the user.
 		ArrayList<Course> courses = Course.getCoursesByEvaluationFilter(search);
 
 		if( courses.size() == 0 )
@@ -96,10 +124,13 @@ public class HistoryFragment extends Fragment {
 			beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(courses, search));
 	}
 
+	// Show custom message to the user on screen.
 	private void displayToastMessage(String textMenssage) {
 		assert (textMenssage != null) : "textMenssage must never be null";
 
-		Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), textMenssage, Toast.LENGTH_LONG);
+		// Object that interacts to the screen and shows message.
+		Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), textMenssage,
+				      Toast.LENGTH_LONG);
 		toast.show();
 	}
 }

@@ -333,7 +333,7 @@ public class Evaluation extends Bean {
 	 */
 	public static Evaluation getFromRelation(int idInstitution, int idCourse, int year){
 		assert (idInstitution >= 0) : "idInstitution must never be negative";
-		assert (idCourse >= 0) : "idCourse must never be negative";;
+		assert (idCourse >= 0) : "idCourse must never be negative";
 		assert (year > 1990) : "year must never be smaller than 1990";
 
 		// Instance of Evaluation that will be set with the given values.

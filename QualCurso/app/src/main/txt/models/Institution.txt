@@ -1,5 +1,9 @@
-Class: Institution
-	// Class that represents a generic institution entity with its attributes.
+/*****************************
+ * Class name: Institution (.java)
+ *
+ * Purpose: Class that represents a generic institution entity with its attributes.
+ *****************************/
+
 Attributes:
 	 int id
 	 	// Unic number that identifies the institution.
@@ -28,87 +32,96 @@ Methods:
 	 	// Method that gets and returns the intitution Id.
 
      save()
-     	// Saves the institution entity with its data in the database.
-     	Attributes: boolean result // Result of the operation of saving the data.
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+     	/* Saves the institution entity with its data in the database.
+     	 * Attributes: boolean result: Result of the operation of saving the data.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 		
 	
 	 addCourse(Course course)
-	 	// Method that adds a relationship between institution and course in the database.
-     	Attributes: boolean result // Result of the operation of saving the data.
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+	 	/* Method that adds a relationship between institution and course in the database.
+     	 * Attributes: boolean result: Result of the operation of saving the data.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 
 	 get(int id)
-	 	// Method that get an institution entity from the database by the given ID.
-     	Attributes: boolean result // Result of the operation of saving the data.
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+	 	/* Method that get an institution entity from the database by the given ID.
+     	 * Attributes: boolean result: Result of the operation of saving the data.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 	 
 	 getAll()
-		// Selects and returns all the institution entities from the database.
-	 	Attributes: Institution type /* Generic institution that receives the data and is 
-	 									added to the array list that is returned. */
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
-	 				ArrayList<Institution> result /* Arraylist that is populated with 
-	 												Institution objects and is returned. */
+		/* Selects and returns all the institution entities from the database.
+	 	 * Attributes: Institution type: Generic institution that receives the data and is added to
+	 	 * the array list that is returned.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+	 	 * ArrayList<Institution> result: Arraylist that is populated with
+	 	 * Institution objects and is returned.
+	 	 */
 	
 	 count()
-	 	// Returns the number of institutions in the database.
-	 	Attributes: Institution type /* Generic institution that is used as type for search. */
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+	 	/* Returns the number of institutions in the database.
+	 	 * Attributes: Institution type: Generic institution that is used as type for search.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 
 	 first() 
-	 	// Method that gets and returns the first institution of the list.
-	 	Attributes: Institution result /* Institution object that receives the first 
-	 									institution from the list and is returned. */
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+	 	/* Method that gets and returns the first institution of the list.
+	 	 * Attributes: Institution result: Institution object that receives the first institution
+	 	 * from the list and is returned.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 	 
 			
 	 last() 
-		// Method that gets and returns the last institution of the list.
-	 	Attributes: Institution result /* Institution object that receives the last 
-	 									institution from the list and is returned. */
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+		/* Method that gets and returns the last institution of the list.
+	 	 * Attributes: Institution result: Institution object that receives the last institution
+	 	 * from the list and is returned.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 	 
 	 getCourses()
-	 	// Method that returns all the courses relatade to this one institution.
-		Attributes: GenericBeanDAO gDB // Entity that connects with the database DAO.
-					ArrayList<Course> courses /* List of courses that the database will return.
-												It is the return object. */
-	
-	
+	 	/* Method that returns all the courses relatade to this one institution.
+		 * Attributes: GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 * ArrayList<Course> courses: List of courses that the database will return. It is the
+		 * return object.
+		 */
+
 	 getCourses(int year)
-	 	// Method that returns all the courses relatade to this one institution on a single year.
-		Attributes: GenericBeanDAO gDB // Entity that connects with the database DAO.
-					ArrayList<Course> courses /* List of courses that the database will return.
-												It is the return object. */
+	 	/* Method that returns all the courses relatade to this one institution on a single year.
+		 * Attributes: GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 * ArrayList<Course> courses: List of courses that the database will return. It is the
+		 * return object.
+		 */
 	
 	 getWhere(String field, String value, boolean like)
-	 	// Method that select Institutions by the acronym and return it.
-	 	Attributes: Institution type // Generic Institution entity to be used and search type.
-					ArrayList<Institution> result /* List of institutions selected that will be
-													returned. */
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+	 	/* Method that select Institutions by the acronym and return it.
+	 	 * Attributes: Institution type: Generic Institution entity to be used and search type.
+		 * ArrayList<Institution> result: List of institutions selected that will be returned.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 
 	 getInstitutionsByEvaluationFilter(Search search)
-	 	// Get and returns a list of institutions filtered by a given type of search.		
-		Attributes: ArrayList<Institution> result /* List of institutions selected that will be
-													returned. */
-					String sql // SQL command line to execute the search and filter.
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
+	 	/* Get and returns a list of institutions filtered by a given type of search.
+		 * Attributes: ArrayList<Institution> result: List of institutions selected that will be
+		 * returned.
+		 * String sql: SQL command line to execute the search and filter.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 
 	 getCoursesByEvaluationFilter(int id_institution, Search search)
-		// Get and returns a list of institutions filtered by a given type of search and its ID.		
-		Attributes: ArrayList<Institution> result /* List of institutions selected that will be
-													returned. */
-					String sql // SQL command line to execute the search and filter.
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
-		
+		/* Get and returns a list of institutions filtered by a given type of search and its ID.
+		 * Attributes: ArrayList<Institution> result: List of institutions selected that will be
+		 * returned.
+		 * String sql: SQL command line to execute the search and filter.
+		 * GenericBeanDAO gDB // Entity that connects with the database DAO.
+		 */
 	
 	 delete()
-		// delete this institution entity with its data in the database.
-     	Attributes: boolean result // Result of the operation of deleting the data.
-					GenericBeanDAO gDB // Entity that connects with the database DAO.
-
+		/* Delete this institution entity with its data in the database.
+     	 * Attributes: boolean result: Result of the operation of deleting the data.
+		 * GenericBeanDAO gDB: Entity that connects with the database DAO.
+		 */
 	
 	 String get(String field) {
 		// Gets and returns the data according to the specified field.
@@ -117,8 +130,9 @@ Methods:
 	 	// Sets the the specified data to the specified field in the institution entity.
 		
 	 fieldsList()
-		// Return the list of strings corresponding to attributes of the institituton class.
-		ArrayList<String> fields // List of fields to be returned.
+		/* Return the list of strings corresponding to attributes of the institituton class.
+		 * ArrayList<String> fields: List of fields to be returned.
+		 */
 
 	 toString()
 	 	// Returns the acronym attribute of the institution entity.

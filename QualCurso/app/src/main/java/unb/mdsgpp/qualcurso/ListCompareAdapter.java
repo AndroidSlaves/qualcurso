@@ -62,7 +62,8 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements OnC
 			cb.setOnCheckedChangeListener(this);
 			currentView.setTag(cb);
 		}
-		
+
+		assert (currentView != null) : "this view should not be null";
 		return currentView;
 	}
 

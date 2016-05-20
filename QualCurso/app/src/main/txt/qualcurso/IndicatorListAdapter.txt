@@ -1,3 +1,4 @@
+
 Class: IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>>
    // Indicator allows an object to use services of other View objects.
 

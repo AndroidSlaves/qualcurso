@@ -3,7 +3,7 @@
  *
  * Purpose: Generic Dao class that connects to the SQL database by executing generic SQL commands.
  *****************************/
- 
+
 Attributes:
 	SQLiteStatement pst
 		/*
@@ -18,6 +18,11 @@ Methods:
 	selectBeanRelationship(Bean bean, String table, String orderField)
 		/* Method that opens a connection with the database and executes SQL code to get ordered 
 	     * table of values.
+	     * @param bean object bean
+         * @param table object table
+         * @param orderField object orderField
+         * @return objects Beans got from the database with ordered table of values.
+         * @throws SQLException
 	     * Attributes: ArrayList<Bean> beans represents the objects Beans to get from the database.
 	     * String sql: It is the sql command line to be executed in the database.
 	     * Cursor cursor: Represents the interator for the database table being accessed.
@@ -28,6 +33,12 @@ Methods:
 	selectBeanRelationship(Bean bean, String table, int year, String orderField)
 		/* Method that opens a connection with the database and executes SQL code to get ordered 
 	     * table of values, but this time with the year.
+	     * @param bean Object bean
+         * @param table Object table
+         * @param year Object year
+         * @param orderField Object orderField
+         * @return Object beans with the SQL code got ordered  table of values, but this time with
+         *		   the year.
 		 * Attributes: ArrayList<Bean> beans Represents the objects Beans to get from the database.
 	     * String sql: It is the sql command line to be executed in the database.
 	     * Cursor cursor: Represents the interator for the database table being accessed.
@@ -38,6 +49,9 @@ Methods:
 	selectFromFields(Bean bean, ArrayList<String> fields, String orderField)
 		/* Method that opens connection with the database and select objects according to their 
 		 * fields.
+		 * @param bean Object bean
+         * @param orderField Object orderField
+         * @return selected objects according to their fields.
 		 * Attributes: ArrayList<String> values: Array list with all the values to be used in the
 		 * connection with the database.
 		 * ArrayList<Bean> beans: Represents the objects Beans to get from the database.
@@ -49,26 +63,41 @@ Methods:
 
 	insertBean(Bean bean)
 		/* Takes a bean object, treat it and insert in the database.
+		 * @param bean Object bean
+         * @return True, if the bean was inserted in database.
+         * @throws SQLException
 		 * Attributes: String replace: Temporary string used to mount sql command line.
 		 * int i: index variable used in the bindString method.
 		 * ArrayList<String> notPrimaryFields: List of field strings that will be changed
 		 * to insert the bean.
 	     * String sql: It is the sql command line to be executed in the database to insert the bean.
 		 * long result: Result that will be returned in the end.
+		 */
 
 	addBeanRelationship(Bean parentBean, Bean childBean)
 		/* Method that creates a relationship between beans.
+		 * @param parentBean Object parentBean
+         * @param childBean Object childBean.
+         * @return True, if the relationship was made.
+         * @throws SQLException
 		 * Attributes: String sql: It is the sql command line to be executed in the database to
 		 * insert a relationship.
 		 */
 	
 	deleteBeanRelationship(Bean parentBean, Bean childBean)
 		/* Delete relationship between two beans
+		 * @param parentBean Object parentBean.
+         * @param childBean Object childBean.
+       	 * @return True, if it was deleted.
+     	 * @throws SQLException
 		 * Attributes: String sql: It is the sql command line to be executed in the database.
 	     */
 
 	selectBean(Bean bean)
 		/* Method that gets a bean from the database tables.
+		 * @param bean Object bean
+       	 * @return A bean from the database tables.
+         * @throws SQLException
 		 * Attributes: Bean result: receives the value to be returned in the end of the function.
 		 * String sql: It is the sql command line that will execute the select command.
 	 	 * Cursor cursor: Represents the interator for the database table being accessed.
@@ -76,6 +105,10 @@ Methods:
 
 	selectAllBeans(Bean type, String orderField)
 		/* Retrieves all beans from database by an specified order.
+		 * @param type Object type.
+         * @param orderField Object orderField.
+         * @return Beans from database by an specified order.
+         * @throws SQLException
 		 * Attributes: ArrayList<Bean> beans: list of beans to be returned in the end.
 		 * Cursor cursor: Represents the interator for the database table being accessed.
 	     * Bean bean: Represent an temporary Bean object that will be added to the
@@ -89,14 +122,19 @@ Methods:
 		//
 
 	countBean(Bean type)
-		/* Return the number of beans present in the database.
+		/* @param type Object type.
+         * @return the number of beans present in the database.
+         * @throws SQLException.
 		 * Attributes: Integer count: Contains the number of beans.
 		 * String sql: It is the sql command line that will execute the select command.
 		 * Cursor cursor: Represents the interator for the database table being accessed.
 		 */
 	     			
 	firstOrLastBean(Bean type, boolean last)
-		/* Returns first or the last bean dependending on the boolean parameter `last`.
+		/* @param type Object type.
+         * @param last Object last.
+         * @return first or the last bean dependending on the boolean parameter `last`.
+         * @throws SQLException
 		 * Attributes: Bean bean: receives the value to be returned in the end of the function.
 		 * String sql: It is the sql command line that will execute the select command.
 		 * Cursor cursor: Represents the interator for the database table being accessed.
@@ -105,6 +143,12 @@ Methods:
 	selectOrdered(ArrayList<String> returnFields, String orderedBy, String condition,
 				   String groupBy, boolean desc)
 		/* Method that get beans by selected fields, order type and characteristics.
+		 * @param returnFields Object returnFields.
+         * @param orderedBy Object orderedBy
+         * @param conditio Object condition
+         * @param groupBy Object groupBy
+         * @param desc Object desc
+         * @return Order type and characteristics.
 		 * Attributes: String fields: String with all the fields to do the select.
 		 * String sql: It is the sql command line that will execute the select command.
 		 * ArrayList<HashMap<String, String>> values: Hash map with the value from the
@@ -116,6 +160,13 @@ Methods:
     selectBeanWhere(Bean type, String field,
 					String value, boolean use_like, String orderField)
     	/* Method that selects bean according to a field.
+    	 * @param type Object type.
+         * @param field Object field.
+         * @param value Object value.
+         * @param use_like Object use_like.
+         * @param orderField Object orderField.
+         * @return the selected bean.
+         * @throws SQLException
     	 * Attributes: ArrayList<Bean> beans: Array of beans to be selected according to the condition.
 		 * String sql: It is the sql command line that will execute the select command.
 		 * Cursor cursor: Represents the interator for the database table being accessed.
@@ -123,11 +174,16 @@ Methods:
 
 	deleteBean(Bean bean)
 		/* Delete a selected bean from the database.
+		 * @param bean Object bean.
+         * @return he bean selected deleted.
+         * @throws SQLException
 		 * Attributes: String sql: It is the sql command line that will execute the select command.
 		 */
 	
 	init(String beanIdentifier)
 		/* Starts the BeanIdentifier by creating a new model object.
+		 * @param beanIdentifier Object beanIdentifier.
+         * @return The beanIdentifier started.
 		 * Attributes: Bean object: Object that will be instantiated.
 		 */
 		

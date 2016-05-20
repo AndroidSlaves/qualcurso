@@ -6,7 +6,6 @@
 
 package models;
 
-
 import android.database.SQLException;
 
 import java.util.ArrayList;
@@ -34,9 +33,15 @@ public class GenericBeanDAO extends DataBase{
 	 * of values.
 	 *
 	 * @param bean
+	 *				Object bean
 	 * @param table
+	 * 				Object table
 	 * @param orderField
+	 * 				Object orderField
+	 *
 	 * @return
+	 * 				Objects Beans got from the database with ordered table of values.
+	 *
 	 * @throws SQLException
 	 */
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, String orderField)
@@ -79,10 +84,17 @@ public class GenericBeanDAO extends DataBase{
 	 * of values, but this time with the year.
 	 *
 	 * @param bean
+	 *				Object bean
 	 * @param table
+	 * 				Object table
 	 * @param year
+	 * 				Object year
 	 * @param orderField
+	 * 				Object orderField
 	 * @return
+	 * 				Object beans with the SQL code got ordered  table of values, but this time with
+	 * 				the year.
+	 *
 	 * @throws SQLException
 	 */
 	public ArrayList<Bean> selectBeanRelationship(Bean bean, String table, int year,
@@ -119,9 +131,15 @@ public class GenericBeanDAO extends DataBase{
 	 * Method that opens connection with the database and select objects according to their fields.
 	 *
 	 * @param bean
+	 *				Object bean.
 	 * @param fields
+	 * 				Object fields.
 	 * @param orderField
+	 * 				Object orderField.
+	 *
 	 * @return
+	 * 				selected objects according to their fields.
+	 *
 	 * @throws SQLException
 	 */
 	public ArrayList<Bean> selectFromFields(Bean bean, ArrayList<String> fields, String orderField)
@@ -176,7 +194,11 @@ public class GenericBeanDAO extends DataBase{
 	 * Takes a bean object, treat it and insert in the database.
 	 *
 	 * @param bean
+	 * 				Object bean
+	 *
 	 * @return
+	 * 				True, if the bean was inserted in database.
+	 *
 	 * @throws SQLException
 	 */
 	public boolean insertBean(Bean bean) throws SQLException {
@@ -223,8 +245,12 @@ public class GenericBeanDAO extends DataBase{
 	 * Method that creates a relationship between beans.
 	 *
 	 * @param parentBean
+	 * 				Object parentBean
 	 * @param childBean
+	 * 				Object childBean.
+	 *
 	 * @return
+	 * 				True, if the relationship was made.
 	 * @throws SQLException
 	 */
 	public boolean addBeanRelationship(Bean parentBean, Bean childBean) throws SQLException {
@@ -252,8 +278,13 @@ public class GenericBeanDAO extends DataBase{
 	 * Delete relationship between two beans
 	 *
 	 * @param parentBean
+	 * 				Object parentBean.
 	 * @param childBean
+	 * 				Object childBean.
+	 *
 	 * @return
+	 * 				True, if it was deleted.
+	 *
 	 * @throws SQLException
 	 */
 	public boolean deleteBeanRelationship(Bean parentBean, Bean childBean)
@@ -282,7 +313,11 @@ public class GenericBeanDAO extends DataBase{
 	 * Method that gets a bean from the database tables.
 	 *
 	 * @param bean
+	 * 				Object bean
+	 *
 	 * @return
+	 * 				A bean from the database tables.
+	 *
 	 * @throws SQLException
 	 */
 	public Bean selectBean(Bean bean) throws SQLException {
@@ -316,8 +351,13 @@ public class GenericBeanDAO extends DataBase{
 	 * Retrieves all beans from database by an specified order.
 	 *
 	 * @param type
+	 * 				Object type.
 	 * @param orderField
+	 * 				Object orderField.
+	 *
 	 * @return
+	 * 				Beans from database by an specified order.
+	 *
 	 * @throws SQLException
 	 */
 	public ArrayList<Bean> selectAllBeans(Bean type, String orderField) throws SQLException {
@@ -378,11 +418,11 @@ public class GenericBeanDAO extends DataBase{
 
 		this.openConnection();
 		ArrayList<Bean> result = new ArrayList<Bean>();
-		Cursor cs = this.database.rawQuery(sql, null);
-		while (cs.moveToNext()) {
+		Cursor cursor = this.database.rawQuery(sql, null);
+		while (cursor.moveToNext()) {
 			Bean bean = init(type.identifier);
 			for (String s : type.fieldsList()) {
-				bean.set(s, cs.getString(cs.getColumnIndex(s)));
+				bean.set(s, cursor.getString(cursor.getColumnIndex(s)));
 			}
 			result.add(bean);
 		}
@@ -391,8 +431,8 @@ public class GenericBeanDAO extends DataBase{
 	}
 
 	/**
-	 *
 	 * @param type
+	 * 				Object type
 	 * @return
 	 * 				the number of beans present in the database.
 	 * @throws SQLException
@@ -422,9 +462,12 @@ public class GenericBeanDAO extends DataBase{
 
 	/**
 	 * @param type
+	 * 				Object type.
 	 * @param last
+	 * 				Object last.
 	 * @return
 	 * 				first or the last bean dependending on the boolean parameter `last`.
+	 *
 	 * @throws SQLException
 	 */
 	public Bean firstOrLastBean(Bean type, boolean last) throws SQLException {
@@ -464,11 +507,18 @@ public class GenericBeanDAO extends DataBase{
 	 * Method that get beans by selected fields, order type and characteristics.
 	 *
 	 * @param returnFields
+	 * 				Object returnFields.
 	 * @param orderedBy
+	 * 				Object orderedBy
 	 * @param condition
+	 * 				Object condition
 	 * @param groupBy
+	 * 				Object groupBy
 	 * @param desc
+	 * 				Object desc
+	 *
 	 * @return
+	 * 				Order type and characteristics.
 	 */
 	public ArrayList<HashMap<String, String>> selectOrdered(ArrayList<String> returnFields,
 															String orderedBy, String condition,
@@ -527,11 +577,19 @@ public class GenericBeanDAO extends DataBase{
 	 * Method that selects bean according to a field.
 	 *
 	 * @param type
+	 * 				Object type.
 	 * @param field
+	 * 				Object field.
 	 * @param value
+	 * 				Object value.
 	 * @param use_like
+	 * 				Object use_like.
 	 * @param orderField
+	 * 				Object orderField.
+	 *
 	 * @return
+	 * 				the selected bean.
+	 *
 	 * @throws SQLException
 	 */
 	public ArrayList<Bean> selectBeanWhere(Bean type, String field, String value, boolean use_like,
@@ -579,7 +637,11 @@ public class GenericBeanDAO extends DataBase{
 	 * Delete a selected bean from the database.
 	 *
 	 * @param bean
+	 * 				Object bean.
+	 *
 	 * @return
+	 * 				the bean selected deleted.
+	 *
 	 * @throws SQLException
 	 */
 	public boolean deleteBean(Bean bean) throws SQLException {
@@ -601,7 +663,10 @@ public class GenericBeanDAO extends DataBase{
 	 * Starts the BeanIdentifier by creating a new model object.
 	 *
 	 * @param beanIdentifier
+	 * 				Object beanIdentifier.
+	 *
 	 * @return
+	 * 				The beanIdentifier started.
 	 */
 	public Bean init(String beanIdentifier) {
 		assert (beanIdentifier != null) : "beanIdentifier must never be null";

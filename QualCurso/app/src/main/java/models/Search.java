@@ -1,7 +1,7 @@
 /*****************************
  * Class name: Search (.java)
  *
- * Purpose:
+ * Purpose: Search is a class that realize searches by some Indicators.
  *****************************/
 
 package models;
@@ -18,31 +18,56 @@ import java.util.Locale;
 import helpers.Indicator;
 
 public class Search extends Bean{
-	public static int COURSE = 0;
-	public static int INSTITUTION = 1;
+	public static final int COURSE = 0;
+	public static final int INSTITUTION = 1;
+    public static final int MAX_SEARCHES_SAVE = 10;
 
-	private int id;
-	private Date date;
-	private int year;
-	private int option;
-	private Indicator indicator;
-	private int minValue;
-	private int maxValue;
+	// Unique identification number for search.
+	private int id = 0;
+	// Date of the search.
+	private Date date = null;
+	// Year of the evaluation searched.
+	private int year = 0;
+	// Types of search.
+	private int option = 0;
+	// Indicator related to search.
+	private Indicator indicator = null;
+	// Min value for search list.
+	private int minValue = 0;
+	// Max value for search list.
+	private int maxValue = 0;
 
+    // Each value of enum represents a table field from Course
+    private enum SearchFields {
+        _id, date, year, option, indicator, min_value, max_value
+    }
+	/**
+	 * Empty constructor for the Search. Set basic default information about the search.
+	 */
 	public Search() {
 		this.id = 0;
-		this.identifier="search";
-		this.relationship="";
+		this.identifier = "search";
+		this.relationship = "";
 	}
-
+	/**
+	 * Construct the Search with defined id.
+	 *
+	 * @param id
+	 *              Identification number of the search that will be set at initialization.
+	 */
 	public Search(int id) {
 		assert (id >= 0) : "id must be positive integer.";
 
 		this.id = id;
-		this.identifier="search";
-		this.relationship="";
+		this.identifier = "search";
+		this.relationship = "";
 	}
 
+    /**
+     * Get the date stored. Will be used on search.
+     *
+     * @return date
+     */
 	public Date getDate() {
 		final Calendar dates = Calendar.getInstance();
 		final Date today = dates.getTime();
@@ -51,6 +76,11 @@ public class Search extends Bean{
 		return date;
 	}
 
+    /**
+     * Store the date. Will be used on search.
+     *
+     * @param date
+     */
 	public void setDate(Date date) {
 
 		final Calendar dates = Calendar.getInstance();
@@ -60,6 +90,12 @@ public class Search extends Bean{
 		this.date = date;
 	}
 
+    /**
+     * Get the year stored. Will be used on search.
+     *
+     * @return year
+     *              Number integer of the year when the indicator was analyzed.
+     */
 	public int getYear() {
 		final Calendar data = Calendar.getInstance();
 		final int yearData = data.get(Calendar.YEAR);
@@ -69,6 +105,12 @@ public class Search extends Bean{
 		return year;
 	}
 
+    /**
+     * Store the year. Will be used on search.
+     *
+     * @param year
+     *              Number integer of the year when the indicator was analyz
+     */
 	public void setYear(int year) {
 
 		final Calendar data = Calendar.getInstance();
@@ -79,10 +121,20 @@ public class Search extends Bean{
 		this.year = year;
 	}
 
+    /**
+     * Get the search option user selects.
+     *
+     * @return option.
+     */
 	public int getOption() {
 		return option;
 	}
 
+    /**
+     * Class attribute Date setter.
+     *
+     * @param option
+     */
 	public void setOption(int option) {
 		assert (option >= 0) : "Option is defined only for 0  values.";
 		assert (option <= 1) : "Option is defined only for 1 values.";
@@ -90,49 +142,93 @@ public class Search extends Bean{
 		this.option = option;
 	}
 
+    /**
+     * Get the indicators.
+     *
+     * @return indicator
+     */
 	public Indicator getIndicator() {
 		assert (indicator != null) : "Receive a null treatment";
 
 		return indicator;
 	}
 
+    /**
+     * Set the incicators.
+     *
+     * @param indicator
+     */
 	public void setIndicator(Indicator indicator) {
 		assert (indicator != null) : "indicator can't be null";
 
 		this.indicator = indicator;
 	}
 
+    /**
+     * Get the minimum value of items listed.
+     *
+     * @return minValue
+     */
 	public int getMinValue() {
 		assert (minValue > 0) : "minimum value must be positive.";
 
 		return minValue;
 	}
 
-	public void setMinValue(int minValue) {
+    /**
+     * Set the minimum value of items listed.
+     *
+     * @param minValue
+     */
+	public void setMinValue(final int minValue) {
 		assert (minValue > 0) : "minimum value must be positive.";
 
 		this.minValue = minValue;
 	}
 
+    /**
+     * Get the maximum value of items listed.
+	 *
+     * @return maxValue
+     */
 	public int getMaxValue() {
 		assert (maxValue > 0) : "maximum value must be positive.";
 
 		return maxValue;
 	}
 
-	public void setMaxValue(int maxValue) {
+    /**
+     * Set the maximum value of items listed.
+     *
+     * @param maxValue
+     */
+	public void setMaxValue(final int maxValue) {
 		assert (maxValue > 0) : "maximum value must be positive.";
 
 		this.maxValue = maxValue;
 	}
 
-	public boolean save() throws  SQLException {
+    /**
+     * Verify if the data was saved.
+     *
+     * @return
+     *              the confirmation storage in the database.
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
+	public boolean save() throws SQLException {
 		boolean resultOfSaving = false;
-		GenericBeanDAO gDB = new GenericBeanDAO();
+		final GenericBeanDAO gDB = new GenericBeanDAO();
 
-		if(Search.count()>=10){
+        /**
+         * If the total os searchers stored in the database is higher than the save limit
+         * delete the actual first search in the database as it is the old one saved
+         */
+		if(Search.count() >= MAX_SEARCHES_SAVE) {
 			Search.first().delete();
-		}
+		} else {
+            //Nothing to do.
+        }
 
 		resultOfSaving = gDB.insertBean(this);
 		this.setId(Search.last().getId());
@@ -140,160 +236,269 @@ public class Search extends Bean{
 		return resultOfSaving;
 	}
 
-	public static Search get(int id) throws SQLException {
-		assert (id > 0) : "id must be positive.";
+    /**
+     * Search by id and return a generic bean.
+     *
+     * @param ID
+     *			Id to be searched for.
+     * @return searchById
+     * 			search with specified ID.
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
+	public static Search get(final int ID) throws SQLException {
+		assert (ID > 0) : "id must be positive.";
 
-		Search searchById = new Search(id);
+		Search searchById = new Search(ID);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		searchById = (Search) gDB.selectBean(searchById);
 
 		return searchById;
 	}
 
+    /**
+     * Return an list of searches made by user.
+     *
+     * @return
+	 * 				all the searches.
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
 	public static ArrayList<Search> getAll() throws  SQLException {
-		Search type = new Search();
+		final Search beanType = new Search();
 		ArrayList<Search> allSearches = new ArrayList<Search>();
-		GenericBeanDAO gDB = new GenericBeanDAO();
+		final GenericBeanDAO gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.selectAllBeans(type,null)) {
-			allSearches.add((Search) b);
+		for(Bean searchBean : gDB.selectAllBeans(beanType,null)) {
+			allSearches.add((Search) searchBean);
 		}
 
 		return allSearches;
 	}
 
+    /**
+     * Count the number of beans generated.
+     *
+     * @return
+	 * 				the number of Searches.
+     *
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
 	public static int count() throws  SQLException {
-		Search type = new Search();
-		GenericBeanDAO gDB = new GenericBeanDAO();
+		final Search type = new Search();
+		final GenericBeanDAO gDB = new GenericBeanDAO();
 		int numberOfSearches = gDB.countBean(type);
 
 		assert (numberOfSearches >= 0) : "Receive a null treatment";
 		return numberOfSearches;
 	}
 
+    /**
+     * Get the first bean created.
+     *
+     * @return firstSearch
+     *				search found in the first position.
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
 	public static Search first() throws SQLException {
 		Search firstSearch = new Search();
-		GenericBeanDAO gDB = new GenericBeanDAO();
+		final GenericBeanDAO gDB = new GenericBeanDAO();
 		firstSearch = (Search) gDB.firstOrLastBean(firstSearch, false);
 
 		return firstSearch;
 	}
 
+    /**
+     * Get the last Bean created.
+     *
+     * @return lastSearch
+     *				the search found in the last position.
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
 	public static Search last() throws SQLException {
 		Search lastSearch = new Search();
-		GenericBeanDAO gDB = new GenericBeanDAO();
+		final GenericBeanDAO gDB = new GenericBeanDAO();
 		lastSearch = (Search) gDB.firstOrLastBean(lastSearch, true);
 
 		return lastSearch;
 	}
 
-	public static ArrayList<Search> getWhere(String field, String value, boolean like)
-			throws  SQLException {
-		assert (field != null) : "field must never be null.";
-		assert (field != "") : "field name must not be empty.";
-		assert (field.length() >= 1) : "field name must have at least one character.";
-		assert (value != null) : "value must never be null.";
-		assert (value != "") : "value name must not be empty.";
-		assert (value.length() >= 1) : "value name must have at least one character.";
+    /**
+     * Search for all the searches with a determined value in a determined field.
+     *
+     * @param FIELD
+	 * 				field to be searched.
+     * @param VALUE
+	 * 				value to be searched for.
+     * @param LIKE
+	 * 				param for where.
+     *
+     * @return listOfFoundInSearch
+     *				the list of searches found with the value in the specified field
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
+	public static ArrayList<Search> getWhere(final String FIELD, final String VALUE,
+                                             final boolean LIKE) throws SQLException {
 
-		Search type = new Search();
+		assert (FIELD != null) : "field must never be null.";
+		assert (FIELD != "") : "field name must not be empty.";
+		assert (FIELD.length() >= 1) : "field name must have at least one character.";
+		assert (VALUE != null) : "value must never be null.";
+		assert (VALUE != "") : "value name must not be empty.";
+		assert (VALUE.length() >= 1) : "value name must have at least one character.";
+
+		final Search type = new Search();
 		ArrayList<Search> listOfFoundInSearch = new ArrayList<Search>();
-		GenericBeanDAO gDB = new GenericBeanDAO();
+		final GenericBeanDAO gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.selectBeanWhere(type, field, value, like,null)) {
-			listOfFoundInSearch.add((Search) b);
+        ArrayList<Bean> selectBean = gDB.selectBeanWhere(type, FIELD, VALUE, LIKE,null);
+
+		for (Bean searchBean : selectBean) {
+			listOfFoundInSearch.add((Search) searchBean);
 		}
+
 		return listOfFoundInSearch;
 	}
 
-	public boolean delete() throws  SQLException {
-		boolean result = false;
-		GenericBeanDAO gDB = new GenericBeanDAO();
-		result = gDB.deleteBean(this);
+    /**
+     * Delete this instance of search.
+     *
+     * @return
+	 * 				the result of the database about the deletion.
+     *
+     * @throws SQLException
+	 * 				there maybe a problem connecting to database.
+     */
+	public boolean delete() throws SQLException {
+		final GenericBeanDAO gDB = new GenericBeanDAO();
+        boolean resultDelete = false;
 
-		return result;
+		resultDelete = gDB.deleteBean(this);
+
+		return resultDelete;
 	}
 
 	@Override
-	public void setId(int id) {
-		assert (id > 0) : "Receive a negative treatment.";
-		this.id = id;
+	public void setId(final int ID) {
+		assert (ID > 0) : "Receive a negative treatment.";
+		this.id = ID;
 	}
 
+    /**
+     * Get specified data of field.
+     *
+     * @param FIELD
+	 * 				field that it wants the data.
+     *
+     * @return
+	 * 				the value of the specified field
+     */
 	@Override
-	public String get(String field) {
-		assert (field != null) : "field must never be null.";
-		assert (field != "") : "field name must not be empty.";
-		assert (field.length() >= 1) : "field name must have at least one character.";
+	public String get(final String FIELD) {
+		assert (FIELD != null) : "field must never be null.";
+		assert (FIELD != "") : "field name must not be empty.";
+		assert (FIELD.length() >= 1) : "field name must have at least one character.";
 
 		String contentFromFields = "";
+        final SearchFields fieldName = SearchFields.valueOf(FIELD);
 
-		if(field.equals("_id")) {
-			contentFromFields = Integer.toString(this.getId());
-		}else if(field.equals("date")) {
-			contentFromFields = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US)
-					.format(this.date);
-		}else if (field.equals("year")) {
-			contentFromFields = Integer.toString(this.getYear());
-		}else if(field.equals("option")) {
-			contentFromFields = Integer.toString(this.getOption());
-		}else if(field.equals("indicator")) {
-			contentFromFields = this.getIndicator().getValue();
-		}else if(field.equals("min_value")) {
-			contentFromFields = Integer.toString(this.getMinValue());
-		}else if(field.equals("max_value")) {
-			contentFromFields = Integer.toString(this.getMaxValue());
-		}else {/*Nothing to do*/}
+        switch(fieldName) {
+            case _id: contentFromFields = Integer.toString(this.getId());
+                break;
+            case date: contentFromFields = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",
+                    Locale.US).format(this.date);
+                break;
+            case year: contentFromFields = Integer.toString(this.getYear());
+                break;
+            case option: contentFromFields = Integer.toString(this.getOption());
+                break;
+            case indicator: contentFromFields = this.getIndicator().getValue();
+                break;
+            case min_value: contentFromFields = Integer.toString(this.getMinValue());
+                break;
+            case max_value: contentFromFields = Integer.toString(this.getMaxValue());
+                break;
+            default:
+                /*Nothing to do*/
+        }
 
 		assert (contentFromFields != null) : "Receive a null treatment";
 		return contentFromFields;
 	}
 
+    /**
+     * Set field with specified data of search.
+     *
+     * @param FIELD
+	 * 				Field to be set.
+     * @param DATA
+	 * 				Data to be set to field.
+     */
 	@Override
-	public void set(String field, String data){
-		assert (field != null) : "field must never be null.";
-		assert (field != "") : "field name must not be empty.";
-		assert (field.length() >= 1) : "field name must have at least one character.";
-		assert (data != null) : "data must never be null.";
-		assert (data != "") : "data value must not be empty.";
-		assert (data.length() >= 1) : "data value must have at least one character.";
+	public void set(final String FIELD, final String DATA){
+		assert (FIELD != null) : "field must never be null.";
+		assert (FIELD != "") : "field name must not be empty.";
+		assert (FIELD.length() >= 1) : "field name must have at least one character.";
+		assert (DATA != null) : "data must never be null.";
+		assert (DATA != "") : "data value must not be empty.";
+		assert (DATA.length() >= 1) : "data value must have at least one character.";
+        
+        final SearchFields fieldName = SearchFields.valueOf(FIELD);
 
-		if(field.equals("_id")){
-			this.setId(Integer.parseInt(data));
-		}else if(field.equals("date")){
-			Date dateData = null;
-			try {
-				dateData = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US)
-						.parse(data);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-			this.setDate(dateData);
-		}else if (field.equals("year")) {
-			this.setYear(Integer.parseInt(data));
-		}else if (field.equals("option")) {
-			this.setOption(Integer.parseInt(data));
-		}else if (field.equals("indicator")) {
-			this.setIndicator(Indicator.getIndicatorByValue(data));
-		}else if (field.equals("min_value")) {
-			this.setMinValue(Integer.parseInt(data));
-		}else if (field.equals("max_value")) {
-			this.setMaxValue(Integer.parseInt(data));
-		}
+        switch(fieldName) {
+            case _id:
+                this.setId(Integer.parseInt(DATA));
+                break;
+            case date:
+                Date dateData = null;
+                try {
+                    dateData = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy",Locale.US).parse(DATA);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                this.setDate(dateData);
+                break;
+            case year:
+                this.setYear(Integer.parseInt(DATA));
+                break;
+            case option:
+                this.setOption(Integer.parseInt(DATA));
+                break;
+            case indicator:
+                this.setIndicator(Indicator.getIndicatorByValue(DATA));
+                break;
+            case min_value:
+                this.setMinValue(Integer.parseInt(DATA));
+                break;
+            case max_value:
+                this.setMaxValue(Integer.parseInt(DATA));
+                break;
+            default:
+                /*Nothing to do*/
+        }
+    }
 
-	}
-
+    /**
+     * Generate a list of fields of this entity.
+     *
+     * @return
+	 * 				List of string of the fields.
+     */
 	@Override
 	public ArrayList<String> fieldsList() {
 		ArrayList<String> fields = new ArrayList<String>();
 
-		fields.add("_id");
-		fields.add("date");
-		fields.add("year");
-		fields.add("option");
-		fields.add("indicator");
-		fields.add("min_value");
-		fields.add("max_value");
+		fields.add(SearchFields._id.toString());
+		fields.add(SearchFields.date.toString());
+		fields.add(SearchFields.year.toString());
+		fields.add(SearchFields.option.toString());
+		fields.add(SearchFields.indicator.toString());
+        fields.add(SearchFields.min_value.toString());
+		fields.add(SearchFields.max_value.toString());
 
 		assert (fields != null) : "field must never be null.";
 		assert (fields.size() >= 1) : "field name must have at least one character.";

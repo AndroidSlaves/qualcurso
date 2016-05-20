@@ -11,15 +11,15 @@ import java.util.ArrayList;
 
 public class Book extends Bean {
 	// Unique identifier of the book.
-	private int id;
+	private int id = 0;
 	// Name title text of the book.
-	private int integralText;
+	private int integralText = 0;
 	// Number of chapter of the book.
-	private int chapters;
+	private int chapters = 0;
 	// Number of collections containing this book.
-	private int collections;
+	private int collections = 0;
 	// Number of entries of the same book.
-	private int entries;
+	private int entries = 0;
 	// Constant with fields names.
 	final String FIELDS_NAMES[] = {"_id","integral_text","chapters","collections","entries"};
 	/**
@@ -32,7 +32,7 @@ public class Book extends Bean {
 	}
 
 	/**
-	 * Construct the DrugstoreController with defined id.
+	 * Construct the Book with defined id.
 	 *
 	 * @param id
 	 *              Identification number of the book that will be set at initialization.

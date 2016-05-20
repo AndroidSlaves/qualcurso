@@ -16,14 +16,14 @@ import android.database.sqlite.SQLiteStatement;
 import libraries.DataBase;
 
 public class GenericBeanDAO extends DataBase{
-
-	/*
-	 * Represents a statement that can be executed against a database. The statement cannot return
-	 * multiple rows or columns, but a single value.
-	 */
 	private SQLiteStatement pst;
 
-	// Contructor which instatiate an object GenericBeanDAO
+    private enum DatabaseTablesNames {
+        institution, course, books, articles, evaluation, search
+    }
+
+	private SQLiteStatement pst;
+
 	public GenericBeanDAO() throws SQLException {
 		super();
 	}
@@ -647,6 +647,7 @@ public class GenericBeanDAO extends DataBase{
 	public boolean deleteBean(Bean bean) throws SQLException {
 		assert (bean != null) : "bean must never be null";
 		assert (bean.identifier != null) : "bean's identifier must never be null";
+
 		this.openConnection();
 
 		// It is the sql command line that will execute the select command.
@@ -656,6 +657,7 @@ public class GenericBeanDAO extends DataBase{
 		int result = this.pst.executeUpdateDelete();
 		this.pst.clearBindings();
 		this.closeConnection();
+
 		return (result == 1) ? true : false;
 	}
 

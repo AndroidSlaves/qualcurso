@@ -58,21 +58,25 @@ public class HistoryFragment extends Fragment {
 
 		// View that works as a container for the data.
 		View rootView = inflater.inflate(R.layout.fragment_history, container, false);
+		assert (rootView != null) : "rootView can never be null";
 
 		// List of objects to be translated in itens for the user.
 		final ListView history = (ListView) rootView.findViewById(R.id.listHistory) ;
 
 		// List of object searches that are filters for the list
 		ArrayList<Search> searches = Search.getAll();
-		
+		assert (searches != null) : "searches can never be null";
+		assert (searches.size() >= 0) : "searches arraylist size negative";
 		Collections.reverse(searches);
 
 		// Adapter that creates a list of itens in the history (listview).
-		ListHistoryAdapter histotyAdapter = new ListHistoryAdapter(this.getActivity()
+		ListHistoryAdapter historyAdapter = new ListHistoryAdapter(this.getActivity()
 				                                                   .getApplicationContext(),
 				                                                   R.id.listHistory, searches);
 
-		history.setAdapter((ListAdapter)histotyAdapter);
+		assert (historyAdapter != null) : "Adapter view must never be null.";
+
+		history.setAdapter((ListAdapter)historyAdapter);
 		
 		history.setOnItemClickListener(new OnItemClickListener() {
 
@@ -97,6 +101,8 @@ public class HistoryFragment extends Fragment {
 
 		//  List of institutions to be displayed to the user.
 		ArrayList<Institution> institutions = Institution.getInstitutionsByEvaluationFilter(search);
+		assert (institutions != null) : "institutions arraylist must never be null.";
+		assert (institutions.size() >= 0) : "institutions arraylist cant be negative";
 
 		if( institutions.size() == 0 )
 			displayToastMessage(getResources().getString(R.string.empty_histoty_search_result));

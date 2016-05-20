@@ -79,6 +79,7 @@ public class EvaluationDetailFragment extends Fragment{
 		args.putInt(ID_INSTITUTION, id_institution);
 		args.putInt(YEAR, year);
 		fragment.setArguments(args);
+
 		return fragment;
 	}
 
@@ -107,7 +108,9 @@ public class EvaluationDetailFragment extends Fragment{
 		// List that indicates the institution evaluation.
 		ListView indicatorList = (ListView) rootView.findViewById(R.id.indicator_list);
 		indicatorList.setAdapter(new IndicatorListAdapter(getActivity().getApplicationContext(), R.layout.evaluation_list_item, getListItems(evaluation)));
-		
+
+		assert (rootView != null) : "Rootview can never be null";
+
 		return rootView;
 	}
 	

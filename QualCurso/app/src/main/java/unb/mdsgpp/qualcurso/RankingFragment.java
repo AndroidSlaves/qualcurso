@@ -70,12 +70,12 @@ public class RankingFragment extends Fragment {
         if (savedInstanceState != null) {
 			if (savedInstanceState.getParcelable(COURSE) != null) {
 				setCurrentSelection((Course) savedInstanceState.getParcelable(COURSE));
-			}
+			}else{/*Nothing to do.*/}
 			if (savedInstanceState.getString(FILTER_FIELD) != null) {
 				setFilterField(savedInstanceState.getString(FILTER_FIELD));
 
-			}
-		}
+			}else{/*Nothing to do.*/}
+		}else{/*Nothing to do.*/}
 
         // Setting spinners listener.
         this.filterFieldSpinner = (Spinner) rootView.findViewById(R.id.field);
@@ -96,7 +96,7 @@ public class RankingFragment extends Fragment {
 
         if (currentSelection != null && filterField != Indicator.DEFAULT_INDICATOR) {
 			updateList();
-		}
+		}else{/*Nothing to do.*/}
 
         return rootView;
 	}
@@ -170,7 +170,7 @@ public class RankingFragment extends Fragment {
 
                 if (currentSelection != null && filterField != Indicator.DEFAULT_INDICATOR) {
 					updateList();
-				}
+				}else{/*Nothing to do.*/}
 			}
 
 			@Override
@@ -189,7 +189,7 @@ public class RankingFragment extends Fragment {
 					int arg2, long arg3) {
 				if (currentSelection != null && filterField != Indicator.DEFAULT_INDICATOR) {
 					updateList();
-				}
+				}else{/*Nothing to do.*/}
 			}
 
 			@Override
@@ -201,55 +201,71 @@ public class RankingFragment extends Fragment {
 	}
 	
 	public ArrayList<String> getListFields(){
-		ArrayList<String> fields = new ArrayList<String>();
-		fields.add(this.filterField);
-		fields.add("id_institution");
-		fields.add("id_course");
-		fields.add("acronym");
-		fields.add("year");
+        final String FIELDS_NAMES[] = {this.filterField,"id_institution","id_course","acronym","year"};
+        ArrayList<String> fields = new ArrayList<String>();
+
+		fields.add(FIELDS_NAMES[0]);
+		fields.add(FIELDS_NAMES[1]);
+		fields.add(FIELDS_NAMES[2]);
+		fields.add(FIELDS_NAMES[3]);
+		fields.add(FIELDS_NAMES[4]);
+
 		return fields;
 	}
 	
 	public int getYear(){
 		int year = 0;
-		if (yearSpinner.getSelectedItemPosition() != 0) {
-			year = Integer.parseInt(yearSpinner.getSelectedItem()
-					.toString());
+        final int SPINNER_POSITION = yearSpinner.getSelectedItemPosition();
+
+        // Get year spinner and return the selected year.
+		if (SPINNER_POSITION != 0) {
+            final String YEAR_SPINNER_OBJECT = yearSpinner.getSelectedItem().toString();
+			year = Integer.parseInt(YEAR_SPINNER_OBJECT);
 		} else {
-			yearSpinner
-					.setSelection(yearSpinner.getAdapter().getCount() - 1);
-			year = Integer.parseInt(yearSpinner.getAdapter()
-					.getItem(yearSpinner.getAdapter().getCount() - 1)
-					.toString());
+			yearSpinner.setSelection(yearSpinner.getAdapter().getCount() - 1);
+            final int YEAR_SPINNER_COUNT = yearSpinner.getAdapter().getCount() - 1;
+            final Object YEAR_SPINNER_OBJECT = yearSpinner.getAdapter().getItem(YEAR_SPINNER_COUNT);
+			year = Integer.parseInt(YEAR_SPINNER_OBJECT.toString());
 		}
+
 		return year;
 	}
 
-	public void setFilterField(String filterField) {
-		this.filterField = filterField;
+	public void setFilterField(final String FILTER_FIELD) {
+		this.filterField = FILTER_FIELD;
 	}
 
 	public void setCurrentSelection(Course currentSelection) {
 		this.currentSelection = currentSelection;
 	}
 	
-	private void displayToastMessage(String textMenssage) {
-		Toast toast = Toast.makeText(
-				this.getActivity().getApplicationContext(), textMenssage,
-				Toast.LENGTH_SHORT);
+	private void displayToastMessage(final String TEXT_MESSAGE) {
+		Context context = this.getActivity().getApplicationContext();
+        Toast toast = Toast.makeText(context, TEXT_MESSAGE, Toast.LENGTH_SHORT);
 		toast.show();
 	}
 
 	public void updateList() {
 		if (this.filterField != Indicator.DEFAULT_INDICATOR) {
+            // Getting values to set adapter.
 			final ArrayList<String> fields = getListFields();
 			int year = getYear();
+            final String SQL_QUERY = "id_course =" +
+                    this.currentSelection.getId() +
+                    " AND year =" + year;
+            final String ID = "id_institution";
 			GenericBeanDAO gDB = new GenericBeanDAO();
-			ListAdapter adapter = new ListAdapter(getActivity()
-					.getApplicationContext(), R.layout.list_item,
-					gDB.selectOrdered(fields, fields.get(0), "id_course ="
-							+ this.currentSelection.getId() + " AND year ="
-							+ year, "id_institution", true));
+
+            // Get hash of institutions from database.
+            ArrayList<HashMap<String, String>> selectedListFromDB = gDB.selectOrdered(fields,
+                    fields.get(0), SQL_QUERY, ID, true);
+
+            // Creating list adapter
+            Context context = getActivity().getApplicationContext();
+            final int ID_LIST_ITEM = R.layout.list_item;
+			ListAdapter adapter = new ListAdapter(context, ID_LIST_ITEM, selectedListFromDB);
+
+            // Setting adapter.
 			evaluationList.setAdapter(adapter);
 		} else {
 			String emptySearchFilter = getResources().getString(

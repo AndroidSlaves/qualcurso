@@ -33,13 +33,13 @@ public class MainActivity extends ActionBarActivity implements
 	 * Fragment managing the behaviors, interactions and presentation of the
 	 * navigation drawer.
 	 */
-	private NavigationDrawerFragment mNavigationDrawerFragment;
+	private NavigationDrawerFragment navigationDrawerFragment;
 
 	/**
 	 * Used to store the last screen title. For use in
 	 * {@link #restoreActionBar()}.
 	 */
-	private CharSequence mTitle;
+	private CharSequence screenTitle = "";
 	private int drawerPosition = 10;
 	public static String DRAWER_POSITION = "drawerPosition";
 
@@ -59,16 +59,16 @@ public class MainActivity extends ActionBarActivity implements
 		setContentView(R.layout.activity_main);
 		if(savedInstanceState != null){
 			drawerPosition = savedInstanceState.getInt(DRAWER_POSITION);
-			mTitle = savedInstanceState.getCharSequence(CURRENT_TITLE);
+			screenTitle = savedInstanceState.getCharSequence(CURRENT_TITLE);
 		}else{
 			
-			mTitle = getFormatedTitle(getTitle());
+			screenTitle = getFormatedTitle(getTitle());
 		}
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
+		navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 
 		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
+		navigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
 		
 	}
@@ -81,7 +81,7 @@ public class MainActivity extends ActionBarActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(DRAWER_POSITION, drawerPosition);
-        outState.putCharSequence(CURRENT_TITLE, mTitle);
+        outState.putCharSequence(CURRENT_TITLE, screenTitle);
         super.onSaveInstanceState(outState);
     }
 
@@ -118,7 +118,7 @@ public class MainActivity extends ActionBarActivity implements
 				formatedTitle = getString(R.string.title_section1);
 				fragment = new TabsFragment();
 				drawerPosition = 0;
-			break;
+				break;
 			case 1:
 				formatedTitle = getString(R.string.title_section2);
 				fragment = new SearchByIndicatorFragment();
@@ -146,7 +146,7 @@ public class MainActivity extends ActionBarActivity implements
 			}		
 		if(fragment != null){
 			actionBar.setTitle(getFormatedTitle(formatedTitle));
-			mTitle = getFormatedTitle(formatedTitle);
+			screenTitle = getFormatedTitle(formatedTitle);
 			if(fragment instanceof TabsFragment){
 				fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 				fragmentManager
@@ -174,7 +174,7 @@ public class MainActivity extends ActionBarActivity implements
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
+		actionBar.setTitle(screenTitle);
 	}
 
     /**
@@ -187,16 +187,21 @@ public class MainActivity extends ActionBarActivity implements
      */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!mNavigationDrawerFragment.isDrawerOpen()) {
+		boolean operation = false;
+
+		if (!navigationDrawerFragment.isDrawerOpen()) {
 
 			/* Only show items in the action bar relevant to this screen if the drawer is not
 			showing. Otherwise, let the drawer decide what to show in the action bar.*/
 			getMenuInflater().inflate(R.menu.main, menu);
 			restoreActionBar();
 
-			return true;
+			operation = true;
+		} else {
+			operation = super.onCreateOptionsMenu(menu);
 		}
-		return super.onCreateOptionsMenu(menu);
+
+		return operation;
 	}
 
 	/*private void setupSearchView(MenuItem searchItem){
@@ -217,16 +222,21 @@ public class MainActivity extends ActionBarActivity implements
 		/* Handle action bar item clicks here. The action bar will automatically handle clicks on
 		the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.*/
 
+		boolean isItemClicked = false;
+
         switch(item.getItemId()) {
 	 		case R.id.action_about:
 				aboutApplication();
-				return true;
+				isItemClicked = true;
+				break;
+
 			case R.id.action_exit:
 				closeApplication();
-				return true;
+				isItemClicked = true;
+
 		}
 
-		return super.onOptionsItemSelected(item);
+		return isItemClicked;
 	}
 
     /**
@@ -255,8 +265,7 @@ public class MainActivity extends ActionBarActivity implements
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
-				fragmentManager
-						.beginTransaction()
+		fragmentManager.beginTransaction()
 						.replace(R.id.container,
 								fragment).addToBackStack(null).commit();
 	}

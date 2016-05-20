@@ -11,6 +11,7 @@ import android.database.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -54,6 +55,10 @@ public class Search extends Bean{
      * @return date
      */
 	public Date getDate() {
+		final Calendar dates = Calendar.getInstance();
+		final Date today = dates.getTime();
+		assert (today != null) : "Receive a null treatment";
+
 		return date;
 	}
 
@@ -63,12 +68,10 @@ public class Search extends Bean{
      * @param date
      */
 	public void setDate(Date date) {
-		assert (date.getDay() > 0) : "Day value must be between 1 and 31";
-		assert (date.getDay() < 32) : "Day value must be between 1 and 31";
-		assert (date.getMonth() > 0) : "Month value must be between 1 and 12";
-		assert (date.getMonth() < 13) : "Month value must be between 1 and 12";
-		assert (date.getYear() > 0) : "Year value must be between 0 and 3000";
-		assert (date.getYear() < 3000) : "Year value must be between 0 and 3000";
+
+		final Calendar dates = Calendar.getInstance();
+		final Date today = dates.getTime();
+		assert (today != null) : "Receive a null treatment";
 
 		this.date = date;
 	}
@@ -80,6 +83,11 @@ public class Search extends Bean{
      *              Number integer of the year when the indicator was analyzed.
      */
 	public int getYear() {
+		final Calendar data = Calendar.getInstance();
+		final int yearData = data.get(Calendar.YEAR);
+		assert (year > 0) : "Receive a negative treatment";
+		assert (year <= yearData) : "Receive a max year treatment";
+
 		return year;
 	}
 
@@ -90,8 +98,11 @@ public class Search extends Bean{
      *              Number integer of the year when the indicator was analyz
      */
 	public void setYear(int year) {
-		assert (year > 0) : "Year value must be between 0 and 3000";
-		assert (year < 3000) : "Year value must be between 0 and 3000";
+
+		final Calendar data = Calendar.getInstance();
+		final int yearData = data.get(Calendar.YEAR);
+		assert (year > 0) : "Receive a negative treatment";
+		assert (year <= yearData) : "Receive a max year treatment";
 
 		this.year = year;
 	}
@@ -111,8 +122,8 @@ public class Search extends Bean{
      * @param option
      */
 	public void setOption(int option) {
-		assert (option >=0) : "Option is defined only for 0 and 1 values.";
-		assert (option <=1) : "Option is defined only for 0 and 1 values.";
+		assert (option >= 0) : "Option is defined only for 0  values.";
+		assert (option <= 1) : "Option is defined only for 1 values.";
 
 		this.option = option;
 	}
@@ -123,6 +134,8 @@ public class Search extends Bean{
      * @return indicator
      */
 	public Indicator getIndicator() {
+		assert (indicator != null) : "Receive a null treatment";
+
 		return indicator;
 	}
 
@@ -143,6 +156,8 @@ public class Search extends Bean{
      * @return minValue
      */
 	public int getMinValue() {
+		assert (minValue > 0) : "minimum value must be positive.";
+
 		return minValue;
 	}
 
@@ -162,6 +177,8 @@ public class Search extends Bean{
      * @return maxValue
      */
 	public int getMaxValue() {
+		assert (maxValue > 0) : "maximum value must be positive.";
+
 		return maxValue;
 	}
 
@@ -216,7 +233,7 @@ public class Search extends Bean{
 		assert (id > 0) : "id must be positive.";
 
 		Search searchById = new Search(id);
-		GenericBeanDAO gDB = new GenericBeanDAO();	
+		GenericBeanDAO gDB = new GenericBeanDAO();
 		searchById = (Search) gDB.selectBean(searchById);
 
 		return searchById;
@@ -253,6 +270,7 @@ public class Search extends Bean{
 		final GenericBeanDAO gDB = new GenericBeanDAO();
 		int numberOfSearches = gDB.countBean(type);
 
+		assert (numberOfSearches >= 0) : "Receive a null treatment";
 		return numberOfSearches;
 	}
 
@@ -299,6 +317,7 @@ public class Search extends Bean{
      */
 	public static ArrayList<Search> getWhere(final String field, final String value,
                                              final boolean like) throws SQLException {
+
 		assert (field != null) : "field must never be null.";
 		assert (field != "") : "field name must not be empty.";
 		assert (field.length() >= 1) : "field name must have at least one character.";
@@ -337,6 +356,7 @@ public class Search extends Bean{
 
 	@Override
 	public void setId(int id) {
+		assert (id > 0) : "Receive a negative treatment.";
 		this.id = id;
 	}
 
@@ -376,6 +396,7 @@ public class Search extends Bean{
                 /*Nothing to do*/
         }
 
+		assert (contentFromFields != null) : "Receive a null treatment";
 		return contentFromFields;
 	}
 
@@ -393,7 +414,7 @@ public class Search extends Bean{
 		assert (data != null) : "data must never be null.";
 		assert (data != "") : "data value must not be empty.";
 		assert (data.length() >= 1) : "data value must have at least one character.";
-
+        
         final SearchFields fieldName = SearchFields.valueOf(field);
 
         switch(fieldName) {
@@ -446,11 +467,14 @@ public class Search extends Bean{
         fields.add(SearchFields.min_value.toString());
 		fields.add(SearchFields.max_value.toString());
 
+		assert (fields != null) : "field must never be null.";
+		assert (fields.size() >= 1) : "field name must have at least one character.";
 		return fields;
 	}
 
 	@Override
 	public int getId() {
+		assert (id > 0) : "Receive a negative treatment";
 		return this.id;
 	}
 

@@ -21,6 +21,7 @@ public class Search extends Bean{
 	public static final int COURSE = 0;
 	public static final int INSTITUTION = 1;
     public static final int MAX_SEARCHES_SAVE = 10;
+	public static final int SEARCH_MAXIMUM_VALUE = -1;
 
 	// Unique identification number for search.
 	private int id = 0;

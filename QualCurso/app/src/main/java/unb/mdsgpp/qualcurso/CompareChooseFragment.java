@@ -71,6 +71,8 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
             String classCastException = activity.toString() + CLASS_CAST_EXCEPTION_COMPLEMENT;
 			throw new ClassCastException(classCastException);
         }
+
+		assert (activity != null) : "Receive a null treatment";
 	}
 
     /**
@@ -115,6 +117,7 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 		this.yearSpinner.setOnItemSelectedListener(getYearSpinnerListener());
 		this.autoCompleteField.setOnItemClickListener(getAutoCompleteListener(rootView));
 
+		assert (rootView != null) : "Receive a null treatment";
 		return rootView;
 	}
 
@@ -151,6 +154,8 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				if(selectedCourse!=null){
 					updateList();
+				}else {
+					/*Nothing to do.*/
 				}
 			}
 
@@ -219,10 +224,13 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
                 final int secondSelectedInstitutionId = selectedInstitutions.get(1).getId();
                 final int courseId = selectedCourse.getId();
 
-				Evaluation evaluationA = Evaluation.getFromRelation(firstSelectedInstitutionId, courseId, selectedYear);
-                Evaluation evaluationB = Evaluation.getFromRelation(secondSelectedInstitutionId, courseId, selectedYear);
-
-                CompareShowFragment compareShowFragment =CompareShowFragment.newInstance(evaluationA.getId(), evaluationB.getId());
+				Evaluation evaluationA = Evaluation.getFromRelation(firstSelectedInstitutionId,
+										 courseId, selectedYear);
+                Evaluation evaluationB = Evaluation.getFromRelation(secondSelectedInstitutionId,
+										 courseId, selectedYear);
+                CompareShowFragment compareShowFragment = CompareShowFragment
+														  .newInstance(evaluationA.getId(),
+																  evaluationB.getId());
                 beanCallbacks.onBeanListItemSelected(compareShowFragment);
 
 			} else {
@@ -262,11 +270,12 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
     /**
      * Set the selection set a institution.
      *
-     * @param CURRENTSELECTION
+     * @param CURRENT_SELECTION
      *              The current selection of a institution
      */
-    public void setCurrentSelection(final Course CURRENTSELECTION) {
-        this.selectedCourse = CURRENTSELECTION;
+    public void setCurrentSelection(final Course CURRENT_SELECTION) {
+		assert (CURRENT_SELECTION != null) : "Receive a null treatment";
+        this.selectedCourse = CURRENT_SELECTION;
     }
 
     /**
@@ -276,8 +285,10 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
      *              The digital keyboard view component.
      */
     private void hideKeyboard(final View VIEW) {
-		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(VIEW.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+		InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
+												.getSystemService(Context.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(VIEW.getWindowToken(),
+				InputMethodManager.RESULT_UNCHANGED_SHOWN);
 	}
 
     /**
@@ -287,6 +298,7 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
      */
 	private ActionBar getActionBar() {
         ActionBar action = ((ActionBarActivity) getActivity()).getSupportActionBar();
+		assert (action != null) : "Receive a null treatment";
         return action;
     }
 
@@ -311,8 +323,6 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
      *              View screen component system user.
      */
     private void boundLayoutObjects(final View ROOTVIEW) {
-        assert(ROOTVIEW != null): "rootView must never be null";
-
         // bound variables with layout objects
         int yearSpinnerId = R.id.compare_year;
         this.yearSpinner = (Spinner) ROOTVIEW.findViewById(yearSpinnerId);
@@ -322,6 +332,7 @@ public class CompareChooseFragment extends Fragment implements CheckBoxListCallb
 
         int institutionListId = R.id.institutionList;
         this.institutionList = (ListView) ROOTVIEW.findViewById(institutionListId);
-    }
 
+		assert(ROOTVIEW != null): "rootView must never be null";
+    }
 }

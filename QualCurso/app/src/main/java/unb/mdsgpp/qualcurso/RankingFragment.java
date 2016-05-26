@@ -66,6 +66,8 @@ public class RankingFragment extends Fragment {
 			String classCastException = ACTIVITY.toString() + CLASS_CAST_EXCEPTION_COMPLEMENT;
 			throw new ClassCastException(classCastException);
 		}
+
+		assert (ACTIVITY != null) : "Receive a null treatment";
 	}
 
     /**
@@ -135,7 +137,8 @@ public class RankingFragment extends Fragment {
 		    /*Nothing to do.*/
         }
 
-        return rootView;
+		assert (rootView != null) : "Receive a null treatment";
+		return rootView;
 	}
 
 	private void setAutoCompleteAdapters() {
@@ -167,11 +170,10 @@ public class RankingFragment extends Fragment {
      */
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-        assert (outState != null) : "Receive a null treatment";
-
 		outState.putParcelable(COURSE, this.currentSelection);
 		outState.putString(FILTER_FIELD, this.filterField);
 		super.onSaveInstanceState(outState);
+		assert (outState != null) : "Receive a null treatment";
 	}
 
     /**
@@ -191,6 +193,7 @@ public class RankingFragment extends Fragment {
 				setCurrentSelection((Course) parent.getItemAtPosition(position));
 				updateList();
 
+				assert (rootView != null) : "Receive a null treatment";
 				hideKeyboard(rootView);
 			}
 		};
@@ -210,14 +213,19 @@ public class RankingFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 final int EVALUATION_YEAR = Integer.parseInt(((HashMap<String, String>)
-                        parent.getItemAtPosition(position)).get("year"));
+                        					parent.getItemAtPosition(position)).get("year"));
+
                 final int EVALUATION_COURSE_ID = Integer.parseInt(((HashMap<String, String>)
-                        parent.getItemAtPosition(position)).get("id_course"));
+                        						 parent.getItemAtPosition(position))
+												 .get("id_course"));
+
                 final int EVALUATION_INSTITUTION_ID = Integer.parseInt(((HashMap<String, String>)
-                        parent.getItemAtPosition(position)).get("id_institution"));
+                        							  parent.getItemAtPosition(position))
+													  .get("id_institution"));
 
                 EvaluationDetailFragment fragment = EvaluationDetailFragment.newInstance(
-                        EVALUATION_INSTITUTION_ID,EVALUATION_COURSE_ID,EVALUATION_YEAR);
+                        							EVALUATION_INSTITUTION_ID,EVALUATION_COURSE_ID,
+													EVALUATION_YEAR);
 
                 beanCallbacks.onBeanListItemSelected(fragment);
 			}
@@ -285,14 +293,15 @@ public class RankingFragment extends Fragment {
      */
 	public ArrayList<String> getListFields(){
         final String FIELDS_NAMES[] = {this.filterField,"id_institution","id_course","acronym",
-                "year"};
+                					  "year"};
         ArrayList<String> fields = new ArrayList<String>();
 
-		fields.add(FIELDS_NAMES[0]);
-		fields.add(FIELDS_NAMES[1]);
-		fields.add(FIELDS_NAMES[2]);
-		fields.add(FIELDS_NAMES[3]);
-		fields.add(FIELDS_NAMES[4]);
+		// Max number that will be added in fields names.
+		final int FIELDS_NAMES_MAX = 5;
+
+		for(int i = 0; i < FIELDS_NAMES_MAX; i++) {
+			fields.add(FIELDS_NAMES[i]);
+		}
 
 		return fields;
 	}
@@ -329,17 +338,19 @@ public class RankingFragment extends Fragment {
      *              Filter field to search.
      */
 	public void setFilterField(final String FILTER_FIELD) {
-        this.filterField = FILTER_FIELD;
+		assert (FILTER_FIELD != null) : "Receive a null treatment";
+		this.filterField = FILTER_FIELD;
 	}
 
     /**
      * Set the selection set a course.
      *
-     * @param CURRENTSELECTION
+     * @param CURRENT_SELECTION
      *              The current selection of a course
      */
-	public void setCurrentSelection(final Course CURRENTSELECTION) {
-		this.currentSelection = CURRENTSELECTION;
+	public void setCurrentSelection(final Course CURRENT_SELECTION) {
+		assert (CURRENT_SELECTION != null) : "Receive a null treatment";
+		this.currentSelection = CURRENT_SELECTION;
 	}
 
     /**
@@ -350,6 +361,8 @@ public class RankingFragment extends Fragment {
      */
 	private void displayToastMessage(final String TEXT_MESSAGE) {
 		final Context context = this.getActivity().getApplicationContext();
+		assert (context != null) : "Receive a null treatment";
+		assert (TEXT_MESSAGE != null) : "Receive a null treatment";
         Toast toast = Toast.makeText(context, TEXT_MESSAGE, Toast.LENGTH_SHORT);
 		toast.show();
 	}
@@ -392,9 +405,9 @@ public class RankingFragment extends Fragment {
      *              The digital keyboard view component.
      */
 	private void hideKeyboard(final View VIEW) {
-		InputMethodManager imm = (InputMethodManager) getActivity()
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(VIEW.getWindowToken(),
-                InputMethodManager.RESULT_UNCHANGED_SHOWN);
+		InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
+                				 .getSystemService(Context.INPUT_METHOD_SERVICE);
+								 inputMethodManager.hideSoftInputFromWindow(VIEW.getWindowToken(),
+										 InputMethodManager.RESULT_UNCHANGED_SHOWN);
 	}
 }

@@ -35,39 +35,41 @@ import android.widget.Toast;
 
 public class NavigationDrawerFragment extends Fragment {
 
-    /**
-     * Remember the position of the selected item.
-     */
+    // Remember the position of the selected item.
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
-
-    /**
-     * Per the design guidelines, you should show the drawer on launch until the user manually
-     * expands it. This shared preference tracks this.
-     */
+    /* Per the design guidelines, you should show the drawer on launch until the user manually
+     * expands it. This shared preference tracks this. */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-
-    /**
-     * A pointer to the current callbacks instance (the Activity).
-     */
+    // A pointer to the current callbacks instance (the Activity).
     private NavigationDrawerCallbacks mCallbacks = null;
-
-    /**
-     * Helper component that ties the action bar to the navigation drawer.
-     */
+    // Helper component that ties the action bar to the navigation drawer.
     private ActionBarDrawerToggle mDrawerToggle = null;
-
+    // Object that helps the layout.
     private DrawerLayout mDrawerLayout = null;
+    // Object that helps the layout of the listview.
     private ListView mDrawerListView = null;
+    // Object that comports the fragment views.
     private View mFragmentContainerView = null;
-
+    // Selected item on the list.
     private int mCurrentSelectedPosition = 0;
+    // Saved state from last used.
     private boolean mFromSavedInstanceState = false;
+    // Learner of the Drawer.
     private boolean mUserLearnedDrawer = false;
 
+    /**
+     * Empty constructor
+     */
     public NavigationDrawerFragment() {
 
     }
 
+    /**
+     * Method that executes on the creation of this view.
+     *
+     * @param savedInstanceState
+     *              Obligatory parameter of original method.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         assert (savedInstanceState != null) : "Receive a null treatment";
@@ -94,6 +96,12 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
+    /**
+     * Set menu option when activity is created.
+     *
+     * @param savedInstanceState
+     *              Obligatory parameter.
+     */
     @Override
     public void onActivityCreated (Bundle savedInstanceState) {
         assert (savedInstanceState != null) : "Receive a null tratment";
@@ -102,6 +110,17 @@ public class NavigationDrawerFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    /**
+     * Method that is called when view is created.
+     *
+     * @param inflater
+     *              Obligatory parameter.
+     * @param container
+     *              Obligatory parameter.
+     * @param savedInstanceState
+     *              Obligatory parameter.
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -128,6 +147,12 @@ public class NavigationDrawerFragment extends Fragment {
         return mDrawerListView;
     }
 
+    /**
+     * Determines if the drawer is ready.
+     *
+     * @return
+     *              a boolean that represents if the drawer is ready.
+     */
     public boolean isDrawerOpen() {
         boolean isOpen = false;
 

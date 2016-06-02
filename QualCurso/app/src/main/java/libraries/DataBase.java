@@ -13,8 +13,11 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DataBase extends SQLiteAssetHelper{
 
+	// Name of the database. Useful for the connection.
 	private static final String DATABASE_NAME = "database.sqlite3.db";
+	// Version of the database. It increases if the database model changes due to data demand.
 	private static final int DATABASE_VERSION = 1;
+	// Instance of the connection with the database.
 	protected SQLiteDatabase database;
 
     /**

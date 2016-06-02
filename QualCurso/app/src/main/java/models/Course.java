@@ -16,7 +16,9 @@ import java.util.Date;
 
 
 public class Course extends Bean implements Parcelable{
+	// Unique identification number.
 	private int id;
+	// Name of the course given by the university.
 	private String name;
 
 	/**

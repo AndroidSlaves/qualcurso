@@ -29,20 +29,18 @@ import android.text.Spanned;
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, BeanListCallbacks, OnQueryTextListener {
 
-	/**
-	 * Fragment managing the behaviors, interactions and presentation of the
-	 * navigation drawer.
-	 */
+	/* Fragment managing the behaviors, interactions and presentation of the
+	 * navigation drawer.*/
 	private NavigationDrawerFragment navigationDrawerFragment;
 
-	/**
-	 * Used to store the last screen title. For use in
-	 * {@link #restoreActionBar()}.
-	 */
+	/* Used to store the last screen title. For use in
+	 * {@link #restoreActionBar()}. */
 	private CharSequence screenTitle = "";
+	// Position of the drawer.
 	private int drawerPosition = 10;
+	// Field for drawer position.
 	public static String DRAWER_POSITION = "drawerPosition";
-
+	// Field for current title.
 	public static String CURRENT_TITLE = "currentTitle";
 
 	//private SearchView mSearchView;
@@ -73,6 +71,12 @@ public class MainActivity extends ActionBarActivity implements
 		
 	}
 
+	/**
+	 * Obligatory method.
+	 *
+	 * @param newConfig
+	 * 				Obligatory parameter.
+	 */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -80,7 +84,7 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(DRAWER_POSITION, drawerPosition);
+		outState.putInt(DRAWER_POSITION, drawerPosition);
         outState.putCharSequence(CURRENT_TITLE, screenTitle);
         super.onSaveInstanceState(outState);
     }

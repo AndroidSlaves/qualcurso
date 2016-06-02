@@ -11,8 +11,10 @@ import android.content.Context;
 
 
 public class QualCurso extends Application {
-	
+
+	// Unique instance of the Qualcurso application. There cannot be more than one instance.
 	private static QualCurso instance;
+	// Database name is defined so there can be a connection with the database.
 	private static String databaseName;
 
     /**

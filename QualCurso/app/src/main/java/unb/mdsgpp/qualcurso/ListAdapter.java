@@ -23,6 +23,7 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 	/**
 	 * Building an object if it receives the ID of the parent class TextView.
+	 *
 	 * @param context
 	 * 				Where this screen will be instantiated.
 	 * @param textViewResourceId
@@ -37,6 +38,7 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 	/**
 	 * Building an object if it receives the resource and the items list of the parent class.
+	 *
 	 * @param context
 	 * 				Where this screen will be instantiated.
 	 * @param resource
@@ -69,21 +71,23 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 		assert (position >= 0) : "Treatment for lower position of an item in the list";
 		assert (parent != null) : "Receive the null treatment";
 
-		View v = convertView;
+		View view = convertView;
 
-		if (v == null) {
-			LayoutInflater vi;
-			vi = LayoutInflater.from(getContext());
-			v = vi.inflate(R.layout.list_item, null);
+		if (view == null) {
+			LayoutInflater layoutInflater;
+			layoutInflater = LayoutInflater.from(getContext());
+			view = layoutInflater.inflate(R.layout.list_item, null);
 		}
 
-		HashMap<String, String> h = getItem(position);
+		HashMap<String, String> hashMap = getItem(position);
 
-		if (h != null) {
-			TextView rank = (TextView) v.findViewById(R.id.position);
-			TextView institutionName = (TextView) v.findViewById(R.id.university);
-			TextView value = (TextView) v.findViewById(R.id.data);
-			ImageView trophy = (ImageView) v.findViewById(R.id.trophyIcon);
+		if (hashMap != null) {
+			TextView rank = (TextView) view.findViewById(R.id.position);
+			TextView institutionName = (TextView) view.findViewById(R.id.university);
+			TextView value = (TextView) view.findViewById(R.id.data);
+			ImageView trophy = (ImageView) view.findViewById(R.id.trophyIcon);
+			final String institution = "acronym";
+			final String valueInstitution = "order_field";
 
         	if (rank != null) {
             	rank.setText(Integer.toString(position+1));
@@ -92,19 +96,19 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
         		trophy.setImageDrawable(getTrophyImage(position+1));
         	}
         	if (institutionName != null) {
-        		institutionName.setText(h.get("acronym"));
+        		institutionName.setText(hashMap.get(institution));
         	}
         	if (value != null) {
-            	value.setText(h.get(h.get("order_field")));
+            	value.setText(hashMap.get(hashMap.get(valueInstitution)));
         	}
     	}
-
-		assert (v != null) : "view should not be null";
-    	return v;
+		assert (view != null) : "view should not be null";
+    	return view;
 	}
 
 	/**
 	 * Show trophy image according array index.
+	 *
 	 * @param position
 	 * 				Arraylist index.
 	 * @return
@@ -132,7 +136,6 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 		default:
 			break;
 		}
-
 		return trophy;
 	}
 }

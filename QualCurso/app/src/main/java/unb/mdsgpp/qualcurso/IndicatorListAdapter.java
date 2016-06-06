@@ -62,29 +62,29 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
         assert (position >= 0) : "Treatment for lower position of an item in the list";
         assert (parent != null) : "Receive the null treatment";
 
-		View v = convertView;
+		View view = convertView;
 
-		if (v == null) {
+		if (view == null) {
 			LayoutInflater vi;
 			vi = LayoutInflater.from(getContext());
-			v = vi.inflate(itemLayout, null);
+			view = vi.inflate(itemLayout, null);
 		}
 
-		HashMap<String,String> h = getItem(position);
+		HashMap<String,String> hashMap = getItem(position);
 
-		if (h != null) {
-			TextView indicator = (TextView) v.findViewById(R.id.indicator);
-			TextView indicatorText = (TextView) v.findViewById(R.id.indicator_text);
+		if (hashMap != null) {
+			TextView indicator = (TextView) view.findViewById(R.id.indicator);
+			TextView indicatorText = (TextView) view.findViewById(R.id.indicator_text);
 
         	if (indicator != null) {
-            	indicator.setText(h.get(VALUE));
+            	indicator.setText(hashMap.get(VALUE));
         	}
         	if (indicatorText != null) {
-        		indicatorText.setText(Indicator.getIndicatorByValue(h.get(INDICATOR_VALUE)).getName());
+        		indicatorText.setText(Indicator.getIndicatorByValue(hashMap.get(INDICATOR_VALUE))
+						.getName());
         	}
     	}
-
-		assert (v != null) : "view should never be null";
-    	return v;
+		assert (view != null) : "view should never be null";
+    	return view;
 	}
 }

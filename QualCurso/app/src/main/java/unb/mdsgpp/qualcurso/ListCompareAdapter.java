@@ -23,7 +23,8 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
-public class ListCompareAdapter extends ArrayAdapter<Institution> implements OnCheckedChangeListener{
+public class ListCompareAdapter extends ArrayAdapter<Institution> implements
+		OnCheckedChangeListener{
 
 	// Defines the structure of the term presented institutions, word formatting.
 	public static int INSTITUTION = R.string.institution;
@@ -85,23 +86,26 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements OnC
 		View currentView = contextView;
 		checkBoxCallBacks = (CheckBoxListCallbacks)this.callingFragment;
 		if(currentView == null){
-			LayoutInflater li;
-			li = LayoutInflater.from(getContext());
-			currentView = li.inflate(R.layout.compare_choose_list_item, null);
+			LayoutInflater layoutInflater;
+			layoutInflater = LayoutInflater.from(getContext());
+			currentView = layoutInflater.inflate(R.layout.compare_choose_list_item, null);
+		}else {
+			/*Nothing to do */
 		}
 
-		Institution i = getItem(position);
+		Institution institution = getItem(position);
 
-		if(i != null){
+		if(institution != null){
 			cb = (CheckBox) currentView.findViewById(R.id.compare_institution_checkbox);
-			cb.setText(i.getAcronym());
-			cb.setTag(INSTITUTION, i);
+			cb.setText(institution.getAcronym());
+			cb.setTag(INSTITUTION, institution);
 			cb.setTag(POSITION, position);
 			cb.setChecked(checkedItems.get(position));
 			cb.setOnCheckedChangeListener(this);
 			currentView.setTag(cb);
+		}else{
+			/*Nothing to do */
 		}
-
 		assert (currentView != null) : "this view should not be null";
 		return currentView;
 	}

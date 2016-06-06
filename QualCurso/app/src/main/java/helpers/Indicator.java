@@ -49,18 +49,15 @@ public class Indicator {
 	}
 
 	/**
-	 *
 	 * @return
 	 * 				Name of indicator.
 	 */
 	public String getName() {
-
 		assert (name != null) : "name must never be null";
 		return name;
 	}
 
 	/**
-	 *
 	 * @param name
 	 * 				Name of bookmark.
 	 */
@@ -69,7 +66,6 @@ public class Indicator {
 	}
 
 	/**
-	 *
 	 * @return
 	 * 				Value of Indicator.
 	 */
@@ -79,7 +75,6 @@ public class Indicator {
 	}
 
 	/**
-	 *
 	 * @param value
 	 * 				Value of bookmark.
 	 */
@@ -108,7 +103,8 @@ public class Indicator {
 	 * 				list of indicators.
 	 */
 	public static ArrayList<Indicator> getIndicators() {
-		String [] indicatorList = QualCurso.getInstance().getResources().getStringArray(R.array.indicator);
+		String [] indicatorList = QualCurso.getInstance().getResources()
+								  .getStringArray(R.array.indicator);
 		ArrayList<Indicator> result = new ArrayList<Indicator>();
 
 		// Attribute indicator List
@@ -127,16 +123,22 @@ public class Indicator {
 		int numberArticles = 12;
 		int numberWork = 13;
 
-
 		result.add(new Indicator(indicatorList[indicator], DEFAULT_INDICATOR));
-		result.add(new Indicator(indicatorList[conceptYear], new Evaluation().fieldsList().get(7)));
-		result.add(new Indicator(indicatorList[yearStartMaster], new Evaluation().fieldsList().get(5)));
-		result.add(new Indicator(indicatorList[yearStartDoctoral], new Evaluation().fieldsList().get(6)));
-		result.add(new Indicator(indicatorList[averageAnnualTeachers], new Evaluation().fieldsList().get(8)));
-		result.add(new Indicator(indicatorList[thesesDefended], new Evaluation().fieldsList().get(9)));
-		result.add(new Indicator(indicatorList[dissertations], new Evaluation().fieldsList().get(10)));
+		result.add(new Indicator(indicatorList[conceptYear], new Evaluation().fieldsList()
+				   .get(7)));
+		result.add(new Indicator(indicatorList[yearStartMaster], new Evaluation().fieldsList()
+				   .get(5)));
+		result.add(new Indicator(indicatorList[yearStartDoctoral], new Evaluation().fieldsList()
+				   .get(6)));
+		result.add(new Indicator(indicatorList[averageAnnualTeachers], new Evaluation()
+				   .fieldsList().get(8)));
+		result.add(new Indicator(indicatorList[thesesDefended], new Evaluation().fieldsList()
+				   .get(9)));
+		result.add(new Indicator(indicatorList[dissertations], new Evaluation().fieldsList()
+				   .get(10)));
 		result.add(new Indicator(indicatorList[artwork], new Evaluation().fieldsList().get(13)));
-		result.add(new Indicator(indicatorList[numberBookChapters], new Book().fieldsList().get(2)));
+		result.add(new Indicator(indicatorList[numberBookChapters], new Book().fieldsList()
+				   .get(2)));
 		result.add(new Indicator(indicatorList[numberFullTexts], new Book().fieldsList().get(1)));
 		result.add(new Indicator(indicatorList[numberCollections], new Book().fieldsList().get(3)));
 		result.add(new Indicator(indicatorList[numberEntries], new Book().fieldsList().get(4)));
@@ -168,11 +170,10 @@ public class Indicator {
 				indicator = ind;
 				break;
 			} else {
-				//Nothing to do
+				/* Nothing to do. */
 			}
 		}
-
-        assert (indicator != null) : "indicator must not be null";
+        assert (indicator != null) : "Indicator must not be null";
 		return indicator;
 	}
 }

@@ -32,56 +32,73 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 	@SuppressLint("InflateParams")
 	@Override
 	public View getView(int position, View contextView, ViewGroup parent) {
-		View v = contextView;
-		if (v == null) {
-			LayoutInflater li;
-			li = LayoutInflater.from(getContext());
-			v = li.inflate(R.layout.history_list_item, null);
-		}
-		Search s = getItem(position);
-		if (s != null) {
-			option = (TextView) v.findViewById(R.id.option);
-			year = (TextView) v.findViewById(R.id.year);
-			indicator = (TextView) v.findViewById(R.id.indicator);
-			firstValue = (TextView) v.findViewById(R.id.firstValue);
-			secondValue = (TextView) v.findViewById(R.id.secondValue);
-			searchDate = (TextView) v.findViewById(R.id.searchDate);
-			setListRow(s);
+		View view = contextView;
+
+		if (view == null) {
+			LayoutInflater layoutInflater;
+			layoutInflater = LayoutInflater.from(getContext());
+			view = layoutInflater.inflate(R.layout.history_list_item, null);
+		}else {
+			/*Nothing to do */
 		}
 
-		assert (v != null) : "this view should never be null";
-		return v;
+		Search search = getItem(position);
+
+		if (search != null) {
+			option = (TextView) view.findViewById(R.id.option);
+			year = (TextView) view.findViewById(R.id.year);
+			indicator = (TextView) view.findViewById(R.id.indicator);
+			firstValue = (TextView) view.findViewById(R.id.firstValue);
+			secondValue = (TextView) view.findViewById(R.id.secondValue);
+			searchDate = (TextView) view.findViewById(R.id.searchDate);
+			setListRow(search);
+		}else {
+			/*Nothing to do*/
+		}
+
+		assert (view != null) : "this view should never be null";
+		return view;
 	}
 
-	public void setListRow(Search s) {
-		if (s.getOption() == Search.COURSE) {
+	/**
+	 * It includes the data of the course and the institution in an item list of courses.
+	 *
+	 * @param search
+	 */
+	public void setListRow(Search search) {
+		if (search.getOption() == Search.COURSE) {
 			setItem(option, R.string.course);
-		} else if (s.getOption() == Search.INSTITUTION) {
+		} else if (search.getOption() == Search.INSTITUTION) {
 			setItem(option, R.string.institution);
 		}
-		setItem(year, Integer.toString(s.getYear()));
-		setItem(indicator, s.getIndicator().getName());
-		setItem(firstValue, Integer.toString(s.getMinValue()));
-		int max = s.getMaxValue();
+		setItem(year, Integer.toString(search.getYear()));
+		setItem(indicator, search.getIndicator().getName());
+		setItem(firstValue, Integer.toString(search.getMinValue()));
+
+		// Full maximum of survey course return.
+		int max = search.getMaxValue();
 		if (max == -1) {
 			setItem(secondValue, R.string.maximum);
 		} else {
 			setItem(secondValue, Integer.toString(max));
 		}
 		setItem(searchDate,
-				SimpleDateFormat.getDateTimeInstance().format(s.getDate()));
+				SimpleDateFormat.getDateTimeInstance().format(search.getDate()));
 	}
 
 	public void setItem(TextView view, String data) {
 		if (view != null) {
 			view.setText(data);
+		}else {
+			/*Nothing to do */
 		}
 	}
 
 	public void setItem(TextView view, int resId) {
 		if (view != null) {
 			view.setText(resId);
+		}else {
+			/*Nothing to do */
 		}
 	}
-
 }

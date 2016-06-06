@@ -35,7 +35,7 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
 	// Used to identify which item from the list of institutions was selected by the user.
 	private CheckBoxListCallbacks checkBoxCallBacks;
 	// Component used to list the institutions.
-	private CheckBox cb = null;
+	private CheckBox checkBox = null;
 	// List of items within the CheckBox component to the user's selection.
 	private ArrayList<Boolean> checkedItems = new ArrayList<Boolean>();
 
@@ -86,27 +86,27 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
 		View currentView = contextView;
 		checkBoxCallBacks = (CheckBoxListCallbacks)this.callingFragment;
 		if(currentView == null){
-			LayoutInflater layoutInflater;
-			layoutInflater = LayoutInflater.from(getContext());
-			currentView = layoutInflater.inflate(R.layout.compare_choose_list_item, null);
-		}else {
-			/*Nothing to do */
-		}
+			LayoutInflater li;
+			li = LayoutInflater.from(getContext());
+			currentView = li.inflate(R.layout.compare_choose_list_item, null);
+			assert (currentView != null) : "this view should not be null";
+
+		}else{/*Nothing to do*/}
+
 
 		Institution institution = getItem(position);
 
 		if(institution != null){
-			cb = (CheckBox) currentView.findViewById(R.id.compare_institution_checkbox);
-			cb.setText(institution.getAcronym());
-			cb.setTag(INSTITUTION, institution);
-			cb.setTag(POSITION, position);
-			cb.setChecked(checkedItems.get(position));
-			cb.setOnCheckedChangeListener(this);
-			currentView.setTag(cb);
-		}else{
-			/*Nothing to do */
-		}
-		assert (currentView != null) : "this view should not be null";
+			checkBox = (CheckBox) currentView.findViewById(R.id.compare_institution_checkbox);
+			assert (checkBox != null) : "checkbox should not be null";
+			checkBox.setText(institution.getAcronym());
+			checkBox.setTag(INSTITUTION, institution);
+			checkBox.setTag(POSITION, position);
+			checkBox.setChecked(checkedItems.get(position));
+			checkBox.setOnCheckedChangeListener(this);
+			currentView.setTag(checkBox);
+		}else{/*Nothing to do*/}
+
 		return currentView;
 	}
 
@@ -120,8 +120,8 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
      */
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		// TODO Auto-generated method stub
-        int pos = (Integer)buttonView.getTag(ListCompareAdapter.POSITION);
+		int pos = (Integer)buttonView.getTag(ListCompareAdapter.POSITION);
+
         if (pos != ListView.INVALID_POSITION) {
         	if(isChecked){
 				checkBoxCallBacks.onCheckedItem((CheckBox)buttonView);
@@ -129,6 +129,6 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
 				checkBoxCallBacks.onUnchekedItem((CheckBox)buttonView);
 			}
         	checkedItems.set(pos, isChecked);
-        }
+        }else{/*Nothing to do*/}
 	}
 }

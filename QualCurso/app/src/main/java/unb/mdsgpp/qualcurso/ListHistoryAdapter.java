@@ -35,30 +35,34 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 		View view = contextView;
 
 		if (view == null) {
-			LayoutInflater layoutInflater;
-			layoutInflater = LayoutInflater.from(getContext());
-			view = layoutInflater.inflate(R.layout.history_list_item, null);
-		}else {
-			/*Nothing to do */
-		}
+			LayoutInflater li;
+			li = LayoutInflater.from(getContext());
+			view = li.inflate(R.layout.history_list_item, null);
+		}else{/*Nothing to do*/}
 
+		// Getting values of the search screen
 		Search search = getItem(position);
-
 		if (search != null) {
 			option = (TextView) view.findViewById(R.id.option);
+			assert (option != null) : "option text view should not be null";
 			year = (TextView) view.findViewById(R.id.year);
+			assert (year != null) : "year text view should not be null";
 			indicator = (TextView) view.findViewById(R.id.indicator);
+			assert (indicator != null) : "indicator text view should not be null";
 			firstValue = (TextView) view.findViewById(R.id.firstValue);
+			assert (firstValue != null) : "firstValues text view should not be null";
 			secondValue = (TextView) view.findViewById(R.id.secondValue);
+			assert (secondValue != null) : "secondvalue text view should not be null";
 			searchDate = (TextView) view.findViewById(R.id.searchDate);
+			assert (searchDate != null) : "search date text view should not be null";
 			setListRow(search);
-		}else {
-			/*Nothing to do*/
-		}
+		}else{/*Nothing to do*/}
+
 
 		assert (view != null) : "this view should never be null";
 		return view;
 	}
+
 
 	/**
 	 * It includes the data of the course and the institution in an item list of courses.
@@ -70,12 +74,14 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 			setItem(option, R.string.course);
 		} else if (search.getOption() == Search.INSTITUTION) {
 			setItem(option, R.string.institution);
-		}
+
+		}else{/*Nothing to do*/}
+
 		setItem(year, Integer.toString(search.getYear()));
 		setItem(indicator, search.getIndicator().getName());
 		setItem(firstValue, Integer.toString(search.getMinValue()));
 
-		// Full maximum of survey course return.
+
 		int max = search.getMaxValue();
 		if (max == -1) {
 			setItem(secondValue, R.string.maximum);

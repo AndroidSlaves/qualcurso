@@ -68,7 +68,7 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
 			LayoutInflater vi;
 			vi = LayoutInflater.from(getContext());
 			view = vi.inflate(itemLayout, null);
-		}
+		}else{/*Nothing to do*/}
 
 		HashMap<String,String> hashMap = getItem(position);
 
@@ -78,13 +78,12 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
 
         	if (indicator != null) {
             	indicator.setText(hashMap.get(VALUE));
-        	}
+        	}else{/*Nothing to do*/}
         	if (indicatorText != null) {
         		indicatorText.setText(Indicator.getIndicatorByValue(hashMap.get(INDICATOR_VALUE))
 						.getName());
-        	}
-    	}
-		assert (view != null) : "view should never be null";
+        	}else{/*Nothing to do*/}
+    	}else{/*Nothing to do*/}
     	return view;
 	}
 }

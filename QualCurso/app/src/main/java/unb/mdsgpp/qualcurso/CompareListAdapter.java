@@ -57,9 +57,8 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 			LayoutInflater layoutInflater;
 			layoutInflater = LayoutInflater.from(getContext());
 			view = layoutInflater.inflate(R.layout.compare_show_list_item, null);
-		} else {
-			/* Nothing to do */
-		}
+
+		}else{/*Nothing to do*/}
 
 		HashMap<String, String> hashMap = getItem(position);
 
@@ -74,14 +73,14 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 			if(indicatorNameTextView != null) {
 				indicatorNameTextView.setText(Indicator.getIndicatorByValue(
 						hashMap.get(INDICATOR_VALUE)).getName());
-			} else {
-				/* Nothing to do */
-			}
+			} else {/*Nothing to do*/}
+
 			if(firstIndicatorTextView != null || secondIndicatorTextView != null) {
 				int first = Integer.parseInt(hashMap.get(FIRST_VALUE));
 				int second = Integer.parseInt(hashMap.get(SECOND_VALUE));
 				firstIndicatorTextView.setText(Integer.toString(first));
 				secondIndicatorTextView.setText(Integer.toString(second));
+
 				if (hashMap.get(IGNORE_INDICATOR).equals(FALSE)) {
 					if(first > second) {
 						firstIndicatorTextView.setBackgroundColor(QualCurso
@@ -114,10 +113,8 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 							.getColor(R.color.white));
 				}
 			}
-		} else {
-			/* Nothing to do */
-		}
-		assert (view != null) : "this view should never be null";
+		}else{/*Nothing to do*/}
+
 		return view;
 	}
 

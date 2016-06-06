@@ -76,8 +76,9 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 		if (view == null) {
 			LayoutInflater layoutInflater;
 			layoutInflater = LayoutInflater.from(getContext());
+			assert (layoutInflater != null) : "layout should not be null";
 			view = layoutInflater.inflate(R.layout.list_item, null);
-		}
+		}else{/*Nothing to do*/}
 
 		HashMap<String, String> hashMap = getItem(position);
 
@@ -91,17 +92,17 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
         	if (rank != null) {
             	rank.setText(Integer.toString(position+1));
-        	}
+        	}else{/*Nothing to do*/}
         	if (trophy != null) {
         		trophy.setImageDrawable(getTrophyImage(position+1));
-        	}
+        	}else{/*Nothing to do*/}
         	if (institutionName != null) {
         		institutionName.setText(hashMap.get(institution));
-        	}
+        	}else{/*Nothing to do*/}
         	if (value != null) {
             	value.setText(hashMap.get(hashMap.get(valueInstitution)));
-        	}
-    	}
+        	}else{/*Nothing to do*/}
+    	}else{/*Nothing to do*/}
 		assert (view != null) : "view should not be null";
     	return view;
 	}
@@ -123,14 +124,17 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 		switch (position) {
 		case 1:
 			trophy = QualCurso.getInstance().getResources().getDrawable(R.drawable.gold_trophy);
+			assert (trophy != null) : "trophy should be found";
 			break;
 
 		case 2:
 			trophy = QualCurso.getInstance().getResources().getDrawable(R.drawable.silver_trophy);
+			assert (trophy != null) : "trophy should be found";
 			break;
 
 		case 3:
 			trophy = QualCurso.getInstance().getResources().getDrawable(R.drawable.bronze_trophy);
+			assert (trophy != null) : "trophy should be found";
 			break;
 			
 		default:

@@ -62,6 +62,7 @@ public class Indicator {
 	 * 				Name of bookmark.
 	 */
 	public void setName(String name) {
+		assert(name !=null) : "name must never be null";
 		this.name = name;
 	}
 
@@ -107,48 +108,49 @@ public class Indicator {
 								  .getStringArray(R.array.indicator);
 		ArrayList<Indicator> result = new ArrayList<Indicator>();
 
-		// Attribute indicator List
-		int indicator = 0;
-		int conceptYear = 1;
-		int yearStartMaster = 2;
-		int yearStartDoctoral = 3;
-		int averageAnnualTeachers = 4;
-		int thesesDefended = 5;
-		int dissertations = 6;
-		int artwork = 7;
-		int numberBookChapters = 8;
-		int numberFullTexts = 9;
-		int numberCollections = 10;
-		int numberEntries = 11;
-		int numberArticles = 12;
-		int numberWork = 13;
+		// Attribute INDICATOR List
+		final int INDICATOR = 0;
+		final int CONCEPT_YEAR = 1;
+		final int YEAR_START_MASTERS = 2;
+		final int YEAR_START_DOCTORADE = 3;
+		final int AVARAGE_ANNUAL_TEACHER = 4;
+		final int THESES_DEFENDED = 5;
+		final int DISSERTATIONS = 6;
+		final int ARTWORK = 7;
+		final int NUMBER_OF_BOOK_CHAPTERS = 8;
+		final int NUMBER_FULL_TEXT = 9;
+		final int NUMBER_COLLECTIONS = 10;
+		final int NUMBER_ENTRIES = 11;
+		final int NUMBER_ARTICLES = 12;
+		final int NUMBER_WORK = 13;
 
-		result.add(new Indicator(indicatorList[indicator], DEFAULT_INDICATOR));
-		result.add(new Indicator(indicatorList[conceptYear], new Evaluation().fieldsList()
+		// Creating indicator objects
+		result.add(new Indicator(indicatorList[INDICATOR], DEFAULT_INDICATOR));
+		result.add(new Indicator(indicatorList[CONCEPT_YEAR], new Evaluation().fieldsList()
 				   .get(7)));
-		result.add(new Indicator(indicatorList[yearStartMaster], new Evaluation().fieldsList()
+		result.add(new Indicator(indicatorList[YEAR_START_MASTERS], new Evaluation().fieldsList()
 				   .get(5)));
-		result.add(new Indicator(indicatorList[yearStartDoctoral], new Evaluation().fieldsList()
+		result.add(new Indicator(indicatorList[YEAR_START_DOCTORADE], new Evaluation().fieldsList()
 				   .get(6)));
-		result.add(new Indicator(indicatorList[averageAnnualTeachers], new Evaluation()
+		result.add(new Indicator(indicatorList[AVARAGE_ANNUAL_TEACHER], new Evaluation()
 				   .fieldsList().get(8)));
-		result.add(new Indicator(indicatorList[thesesDefended], new Evaluation().fieldsList()
+		result.add(new Indicator(indicatorList[THESES_DEFENDED], new Evaluation().fieldsList()
 				   .get(9)));
-		result.add(new Indicator(indicatorList[dissertations], new Evaluation().fieldsList()
+		result.add(new Indicator(indicatorList[DISSERTATIONS], new Evaluation().fieldsList()
 				   .get(10)));
-		result.add(new Indicator(indicatorList[artwork], new Evaluation().fieldsList().get(13)));
-		result.add(new Indicator(indicatorList[numberBookChapters], new Book().fieldsList()
+		result.add(new Indicator(indicatorList[ARTWORK], new Evaluation().fieldsList().get(13)));
+		result.add(new Indicator(indicatorList[NUMBER_OF_BOOK_CHAPTERS], new Book().fieldsList()
 				   .get(2)));
-		result.add(new Indicator(indicatorList[numberFullTexts], new Book().fieldsList().get(1)));
-		result.add(new Indicator(indicatorList[numberCollections], new Book().fieldsList().get(3)));
-		result.add(new Indicator(indicatorList[numberEntries], new Book().fieldsList().get(4)));
-		result.add(new Indicator(indicatorList[numberArticles], new Article().fieldsList().get(1)));
-		result.add(new Indicator(indicatorList[numberWork], new Article().fieldsList().get(2)));
+		result.add(new Indicator(indicatorList[NUMBER_FULL_TEXT], new Book().fieldsList().get(1)));
+		result.add(new Indicator(indicatorList[NUMBER_COLLECTIONS], new Book().fieldsList().get(3)));
+		result.add(new Indicator(indicatorList[NUMBER_ENTRIES], new Book().fieldsList().get(4)));
+		result.add(new Indicator(indicatorList[NUMBER_ARTICLES], new Article().fieldsList().get(1)));
+		result.add(new Indicator(indicatorList[NUMBER_WORK], new Article().fieldsList().get(2)));
 
         assert (result != null) : "this list must never be null";
 
         final int FIRST = 0;
-        final int LAST = numberWork;
+        final int LAST = NUMBER_WORK;
 
         assert (result.get(FIRST) != null) : "should have first element";
         assert (result.get(LAST) != null) : "should have last element";
@@ -166,6 +168,7 @@ public class Indicator {
 	public static Indicator getIndicatorByValue(String value) {
 		Indicator indicator = null;
 		for(Indicator ind : getIndicators()) {
+			assert (ind.getValue() != null) : "this value is used";
 			if(ind.getValue().equals(value)) {
 				indicator = ind;
 				break;

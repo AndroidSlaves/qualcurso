@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteStatement;
 import libraries.DataBase;
 
 public class GenericBeanDAO extends DataBase{
-	private SQLiteStatement pst;
+	//private SQLiteStatement pst;
 
     private enum DatabaseTablesNames {
         institution, course, books, articles, evaluation, search

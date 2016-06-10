@@ -54,14 +54,16 @@ FUNCTIONS
 	
 *setIntegralText(String integralText): 
 	/**
-	  * Void type. Used to access the variable integralText and  	       * store a value there.
+	  * Void type. Used to access the variable integralText and
+	  * store a value there.
 	  */
 *getChapters():
 	/** String type. Used to return chapters value.
 	
 *setChapters(String Chapters): 
 	/**
-	  * Void type. Used to access the variable chapters and  	   * store a value there.
+	  * Void type. Used to access the variable chapters and
+	  * store a value there.
 	  */
 
 *getCollections():
@@ -69,7 +71,8 @@ FUNCTIONS
 	
 *setCollections(String Collections): 
 	/**
-	  * Void type. Used to access the variable collections and  	      * store a value there.
+	  * Void type. Used to access the variable collections and
+	  * store a value there.
 	  */
 
 *getEntries():
@@ -77,21 +80,26 @@ FUNCTIONS
 	
 *setEntries(String Entries): 
 	/**
-	  * Void type. Used to access the variable entries and  	  * store a value there.
+	  * Void type. Used to access the variable entries and
+	  * store a value there.
 	  */
 		
 *save(): 
 	/**
 	  * Boolean type and throws  SQLException.
-	  * Initing with a boolean variable called "result" that    		  * receive false. Instaciated a GenericBeanDAO called "gDB" 
+	  * Initing with a boolean variable called "result" that
+	  * receive false. Instaciated a GenericBeanDAO called "gDB"
 	  * result receive the method that insert the fields and set it
 	  * in id Book. In the end return result equals true.
 	  */
 	
 *addInstitution(Institution institution):
 	/**
-	  * Boolean type. Throws  SQLException. Initing with a boolean 		  * variable called "result" that receive false.
-	  * Instance GenericBeanDAO called "gDB". The "result" receive 		  * the method addBeanRelationship that add a list of fields  		  * in database and return the result true.
+	  * Boolean type. Throws  SQLException. Initing with a boolean
+	  * variable called "result" that receive false.
+	  * Instance GenericBeanDAO called "gDB". The "result" receive
+	  * the method addBeanRelationship that add a list of fields
+	  * in database and return the result true.
 	  */
 
 *get(int id): 
@@ -104,8 +112,10 @@ FUNCTIONS
 *getAll(): 
 	/**
 	  * Static ArrayList<Book> type. Throws  SQLException.
-	  * Instanciated Book "type" and do an ArrayList<Book> 		  * called "result". After that instance a GenericBeanDAO 		  * called "gDB". In the end uses an interactive for to    
-          * select all the Book take type and add the  		  
+	  * Instanciated Book "type" and do an ArrayList<Book>
+	  * called "result". After that instance a GenericBeanDAO
+	  * called "gDB". In the end uses an interactive for to
+      ]* select all the Book take type and add the
 	  * substituition for. Returning true.
 	  */	
 

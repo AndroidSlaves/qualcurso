@@ -23,9 +23,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 public class CourseListFragment extends ListFragment{
-
+	// Institution id field name.
 	private static final String ID_INSTITUTION = "idInstitution";
+	// courses id field name.
 	private static final String IDS_COURSES = "idsCourses";
+	// year field name.
 	private static final String YEAR = "year";
 	
 	BeanListCallbacks beanCallbacks;
@@ -35,9 +37,12 @@ public class CourseListFragment extends ListFragment{
      */
 	public CourseListFragment() {
 		super();
+
+		// Set need arguments for institutions.
 		Bundle args = new Bundle();
 		args.putInt(ID_INSTITUTION, 0);
 		args.putParcelableArrayList(IDS_COURSES, getCoursesList(0));
+
 		this.setArguments(args);
 	}
 
@@ -55,11 +60,14 @@ public class CourseListFragment extends ListFragment{
      */
 	public static CourseListFragment newInstance(int id, int year){
 		CourseListFragment fragment = new CourseListFragment();
+
+		// Set needed arguments for institutions, year and courses.
 		Bundle args = new Bundle();
 		args.putInt(ID_INSTITUTION, id);
 		args.putInt(YEAR, year);
 		args.putParcelableArrayList(IDS_COURSES, getCoursesList(id));
 		fragment.setArguments(args);
+
 		return fragment;
 	}
 
@@ -79,6 +87,8 @@ public class CourseListFragment extends ListFragment{
      */
 	public static CourseListFragment newInstance(int id, int year, ArrayList<Course> list){
 		CourseListFragment fragment = new CourseListFragment();
+
+		// Set needed arguments for institutions, year and courses.
 		Bundle args = new Bundle();
 		args.putInt(ID_INSTITUTION, id);
 		args.putInt(YEAR, year);
@@ -91,14 +101,19 @@ public class CourseListFragment extends ListFragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		ArrayList<Course> list;
+
+		// Get courses from arrayList
 		if(getArguments().getParcelableArrayList(IDS_COURSES) != null){
 			list = getArguments().getParcelableArrayList(IDS_COURSES);
 		}else{
 			list = savedInstanceState.getParcelableArrayList(IDS_COURSES);
 		}
-		ListView rootView = (ListView) inflater.inflate(R.layout.fragment_list, container,
-				false);
+
+		// Get views.
+		ListView rootView = (ListView) inflater.inflate(R.layout.fragment_list, container, false);
 		rootView = (ListView) rootView.findViewById(android.R.id.list);
+
+		// Set adapter with list of
 		try {
 			if(list != null){
 			rootView.setAdapter(new ArrayAdapter<Course>(

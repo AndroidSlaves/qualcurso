@@ -11,10 +11,21 @@ public class TestAboutFragment extends AndroidTestCase {
     }
 
     //Must Fail(red)
-    public void testShouldGetNewInstanceOfCompareChooseFragment() {
+    /*
+    public void testShouldGetNewInstanceOfCompareChooseFragmentFail() {
         Fragment fragment = new AboutFragment();
+        //it will fail because it couldn't be null
         AboutFragment aboutFragment = (AboutFragment) fragment;
         assertNull(aboutFragment);
+    }
+    */
+
+    //Must pass (green)
+    public void testShouldGetNewInstanceOfCompareChooseFragment() {
+        Fragment fragment = new AboutFragment();
+        //must be not null
+        AboutFragment aboutFragment = (AboutFragment) fragment;
+        assertNotNull(aboutFragment);
     }
 }
 

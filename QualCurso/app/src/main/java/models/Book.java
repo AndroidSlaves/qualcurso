@@ -53,7 +53,7 @@ public class Book extends Bean {
      *              the book unique identifier.
 	 */
 	public int getId() {
-        assert (id <= 0) : "Receive a negative treatment";
+        assert (id >= 0) : "Receive a negative treatment";
         return id;
 	}
 
@@ -64,7 +64,7 @@ public class Book extends Bean {
 	 *              identification number of the book.
 	 */
 	public void setId(int id) {
-		assert (id <= 0) : "Receive a negative treatment";
+		assert (id >= 0) : "Receive a negative treatment";
 		this.id = id;
 	}
 
@@ -85,7 +85,7 @@ public class Book extends Bean {
 	 *              the text name of the book.
 	 */
 	public void setIntegralText(int integralText) {
-		assert (integralText <= 0) : "Receive a negative treatment";
+		assert (integralText >= 0) : "Receive a negative treatment";
 		this.integralText = integralText;
 	}
 
@@ -96,7 +96,7 @@ public class Book extends Bean {
      *              the number of chapters in the book.
 	 */
 	public int getChapters() {
-        assert (chapters <= 0) : "Receive a negative treatment";
+        assert (chapters >= 0) : "Receive a negative treatment";
         return chapters;
 	}
 
@@ -107,7 +107,7 @@ public class Book extends Bean {
 	 *              the number of chapters of the book.
 	 */
 	public void setChapters(int chapters) {
-		assert (chapters <= 0) : "Receive a negative treatment";
+		assert (chapters >= 0) : "Receive a negative treatment";
 		this.chapters = chapters;
 	}
 
@@ -118,7 +118,7 @@ public class Book extends Bean {
      *              the number of collections of this book.
 	 */
 	public int getCollections() {
-        assert (collections <= 0) : "Receive a negative treatment";
+        assert (collections >= 0) : "Receive a negative treatment";
         return collections;
 	}
 
@@ -140,7 +140,7 @@ public class Book extends Bean {
      *              the number of entries of the same book.
 	 */
 	public int getEntries() {
-        assert (entries <= 0) : "Receive a negative treatment";
+        assert (entries >= 0) : "Receive a negative treatment";
         return entries;
 	}
 

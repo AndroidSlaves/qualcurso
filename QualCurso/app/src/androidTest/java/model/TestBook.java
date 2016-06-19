@@ -59,4 +59,51 @@ public class TestBook extends AndroidTestCase {
     }
 
 
+    public void testSetChaptersBook(){
+        Book idBook = new Book();
+        idBook.setId(25);
+        assertEquals(idBook.getId(), 25);
+    }
+
+    public void testSetChaptersBookMustFail(){
+        Book idBook = new Book();
+        idBook.setId(-11);
+        assertNotSame(idBook.getId(), 13);
+    }
+
+    public void testGetChaptersBook(){
+        Book idBook = new Book();
+        idBook.setId(26);
+        assertEquals(26, idBook.getId());
+    }
+
+    public void testGetChaptersBookMustFail(){
+        Book idBook = new Book();
+        idBook.setId(-175);
+        assertNotSame(idBook.getId(), 571);
+    }
+
+    public void testSetCollectionsBook(){
+        Book idBook = new Book();
+        idBook.setId(21);
+        assertEquals(idBook.getId(), 21);
+    }
+
+    public void testSetCollectionsBookMustFail(){
+        Book idBook = new Book();
+        idBook.setId(-33);
+        assertNotSame(idBook.getId(), 13);
+    }
+
+    public void testGetCollectionsBook(){
+        Book idBook = new Book();
+        idBook.setId(31);
+        assertEquals(31, idBook.getId());
+    }
+
+    public void testGetCollectionsBookMustFail(){
+        Book idBook = new Book();
+        idBook.setId(-185);
+        assertNotSame(idBook.getId(), 871);
+    }
 }

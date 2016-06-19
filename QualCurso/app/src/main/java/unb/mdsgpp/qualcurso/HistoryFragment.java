@@ -1,16 +1,11 @@
 /*****************************
  * Class name: HistoryFragment (.java)
+ *
  * Purpose: Class that shows to the user the history of views viewed in the program recently.
  *****************************/
 
 package unb.mdsgpp.qualcurso;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
-import models.Course;
-import models.Institution;
-import models.Search;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,16 +14,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+import models.Course;
+import models.Institution;
+import models.Search;
 
 public class HistoryFragment extends Fragment {
 
 	// Entity that connects to the database.
 	BeanListCallbacks beanCallbacks;
 
-	// Method that instaciate the historyfragment object, the constructor.
+	// Method that instantiate the historyFragment object, the constructor.
 	public HistoryFragment() {
 		super();
 	}
@@ -37,12 +38,12 @@ public class HistoryFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		assert (activity !=null) : "activity must never be null";
+
 		super.onAttach(activity);
 		try {
 			beanCallbacks = (BeanListCallbacks) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement BeanListCallbacks.");
+		} catch(ClassCastException e) {
+			throw new ClassCastException(activity.toString() + " must implement BeanListCallbacks.");
 		}
 	}
 
@@ -66,31 +67,33 @@ public class HistoryFragment extends Fragment {
 		// List of object searches that are filters for the list
 		ArrayList<Search> searches = Search.getAll();
 		assert (searches != null) : "searches can never be null";
-		assert (searches.size() >= 0) : "searches arraylist size negative";
+
 		Collections.reverse(searches);
 
-		// Adapter that creates a list of itens in the history (listview).
+		// Adapter that creates a list of items in the history (listView).
 		ListHistoryAdapter historyAdapter = new ListHistoryAdapter(this.getActivity()
-				                                                   .getApplicationContext(),
-				                                                   R.id.listHistory, searches);
+                                                            .getApplicationContext(),
+                                                             R.id.listHistory, searches);
 
 		assert (historyAdapter != null) : "Adapter view must never be null.";
 
-		history.setAdapter((ListAdapter)historyAdapter);
+		history.setAdapter(historyAdapter);
 		
 		history.setOnItemClickListener(new OnItemClickListener() {
 
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Search search = (Search) parent.getItemAtPosition(position);
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Search search = (Search) parent.getItemAtPosition(position);
 
-				if(search.getOption() == Search.INSTITUTION){
-					displayInstitutionList(search);
-				}else if(search.getOption() == Search.COURSE){
-					displayCourseList(search);
-				}
-			}
-		});
+                if (search.getOption() == Search.INSTITUTION) {
+                    displayInstitutionList(search);
+                } else if (search.getOption() == Search.COURSE) {
+                    displayCourseList(search);
+                } else {
+                    /* Nothing to do! */
+                }
+            }
+        });
 
 		return rootView;
 	}
@@ -102,13 +105,12 @@ public class HistoryFragment extends Fragment {
 		//  List of institutions to be displayed to the user.
 		ArrayList<Institution> institutions = Institution.getInstitutionsByEvaluationFilter(search);
 		assert (institutions != null) : "institutions arraylist must never be null.";
-		assert (institutions.size() >= 0) : "institutions arraylist cant be negative";
 
-		if( institutions.size() == 0 )
-			displayToastMessage(getResources().getString(R.string.empty_histoty_search_result));
-		else
-			beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(institutions,
-					                             search));
+		if(institutions.size() == 0) {
+            displayToastMessage(getResources().getString(R.string.empty_histoty_search_result));
+        } else {
+            beanCallbacks.onBeanListItemSelected(SearchListFragment.newInstance(institutions,search));
+        }
 	}
 
 	// Show list of institutions to the user filtered by the search attr.
@@ -125,12 +127,12 @@ public class HistoryFragment extends Fragment {
 	}
 
 	// Show custom message to the user on screen.
-	private void displayToastMessage(String textMenssage) {
-		assert (textMenssage != null) : "textMenssage must never be null";
+	private void displayToastMessage(String textMessage) {
+		assert (textMessage != null) : "textMessage must never be null";
 
 		// Object that interacts to the screen and shows message.
-		Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), textMenssage,
-				      Toast.LENGTH_LONG);
+		Toast toast = Toast.makeText(this.getActivity().getApplicationContext(), textMessage,
+                Toast.LENGTH_LONG);
 		toast.show();
 	}
 }

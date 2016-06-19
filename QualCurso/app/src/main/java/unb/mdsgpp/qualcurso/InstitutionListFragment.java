@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import models.Course;
 import models.Institution;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -56,7 +57,7 @@ public class InstitutionListFragment extends ListFragment{
 	 * 				Object year.
 	 *
 	 * @return
-	 * 				The fragment with list os intitutions
+	 * 				The fragment with list os institutions
 	 */
 	public static InstitutionListFragment newInstance(int id, int year){
 		assert (id >= 0) : "id must never be negative";
@@ -68,11 +69,12 @@ public class InstitutionListFragment extends ListFragment{
 		args.putInt(YEAR, year);
 		args.putParcelableArrayList(IDS_INSTITUTIONS, getInstitutionsList(id));
 		fragment.setArguments(args);
+
 		return fragment;
 	}
 
 	/**
-	 * Creates a new instance of the InstitutionListFragment with a diferent year and with a
+	 * Creates a new instance of the InstitutionListFragment with a different year and with a
 	 * given list of institutions.
 	 *
 	 * @param id
@@ -82,23 +84,25 @@ public class InstitutionListFragment extends ListFragment{
 	 * @param institutions
 	 * 				Object institutions.
 	 * @return
-	 * 				The fragment with list os intitutions
+	 * 				The fragment with list os institutions
 	 */
 	public static InstitutionListFragment newInstance(int id, int year,
-													  ArrayList<Institution> institutions){
+                                                      ArrayList<Institution> institutions){
+
 		assert (id >= 0) : "id must never be negative";
-		assert (year > 1990) : "search must never be smaller than 1990";
+		assert (year >= 1990) : "search must never be smaller than 1990";
 		assert (institutions != null) : "institutions must never be null";
 
 		// Fragment that the view will fill.
 		InstitutionListFragment fragment = new InstitutionListFragment();
 
-		//List of string necessary to instatiate the object.
+		//List of string necessary to instantiate the object.
 		Bundle arguments = new Bundle();
 		arguments.putInt(ID_COURSE, id);
 		arguments.putInt(YEAR, year);
 		arguments.putParcelableArrayList(IDS_INSTITUTIONS, institutions);
 		fragment.setArguments(arguments);
+
 		return fragment;
 	}
 
@@ -112,14 +116,13 @@ public class InstitutionListFragment extends ListFragment{
 
 	// When creating view, start the necessary arguments to list to the user the institutions.
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		// List that will populate the view to te user.
 		ArrayList<Institution> list; 
-		if(getArguments().getParcelableArrayList(IDS_INSTITUTIONS) != null){
+		if(getArguments().getParcelableArrayList(IDS_INSTITUTIONS) != null) {
 			list = getArguments().getParcelableArrayList(IDS_INSTITUTIONS);
-		}else{
+		} else {
 			list = savedInstanceState.getParcelableArrayList(IDS_INSTITUTIONS);
 		}
 
@@ -132,7 +135,9 @@ public class InstitutionListFragment extends ListFragment{
 				rootView.setAdapter(new ArrayAdapter<Institution>(
 						getActionBar().getThemedContext(),
 						R.layout.custom_textview, list));
-			}
+			} else {
+                /* Nothing to do! */
+            }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -143,11 +148,13 @@ public class InstitutionListFragment extends ListFragment{
 	@Override
 	public void onAttach(Activity activity) {
 		assert (activity != null) : "activity must never be null";
+
 		super.onAttach(activity);
+
 		try {
             beanCallbacks = (BeanListCallbacks) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()+" must implement BeanListCallbacks.");
+        } catch(ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement BeanListCallbacks.");
         }
 	}
 
@@ -163,37 +170,45 @@ public class InstitutionListFragment extends ListFragment{
    	 * view.
    	 */
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		assert (l != null) : "l must never be null";
-		assert (v != null) : "v must never be null";
+	public void onListItemClick(ListView listView, View view, int position, long id) {
+		assert (listView != null) : "l must never be null";
+		assert (view != null) : "v must never be null";
 		assert (position >= 0) : "position must never be null";
 		assert (id >= 0) : "id must never be negative";
 
-		if(getArguments().getInt(ID_COURSE)==0){
-			beanCallbacks.onBeanListItemSelected(CourseListFragment.newInstance(((Institution)l
+		if(getArguments().getInt(ID_COURSE) == 0){
+			beanCallbacks.onBeanListItemSelected(CourseListFragment.newInstance(((Institution)listView
 					.getItemAtPosition(position)).getId(),getArguments().getInt(YEAR)));
-		}else {
+		} else {
 			beanCallbacks.onBeanListItemSelected(EvaluationDetailFragment
-					.newInstance(((Institution)l.getItemAtPosition(position)).getId()
+					.newInstance(((Institution)listView.getItemAtPosition(position)).getId()
 							,getArguments().getInt(ID_COURSE),getArguments().getInt(YEAR)));
 		}
-			super.onListItemClick(l, v, position, id);
+
+        super.onListItemClick(listView, view, position, id);
 	}
 
 	// Get the institution list from the database to populate the listview for the user.
-	private static ArrayList<Institution> getInstitutionsList(int idCourse) throws SQLException{
-
+	private static ArrayList<Institution> getInstitutionsList(int idCourse) throws SQLException {
 		assert (idCourse >= 0) : "id must never be negative";
 
-		if(idCourse == 0){
-			return Institution.getAll();
-		}else{
-			return Course.get(idCourse).getInstitutions();
+        ArrayList<Institution> listResult = null;
+
+		if(idCourse == 0) {
+			listResult = Institution.getAll();
+		} else {
+			listResult = Course.get(idCourse).getInstitutions();
 		}
+
+        return listResult;
 	}
 
 	// Get the action bar with the option for the user.
 	private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+        ActionBar actionBar = null;
+        actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        assert (actionBar != null): "Action Bar component can not be null";
+
+        return actionBar;
     }
 }

@@ -1,5 +1,6 @@
 package model;
 
+import android.database.SQLException;
 import android.test.AndroidTestCase;
 
 import libraries.DataBaseStructures;
@@ -31,5 +32,28 @@ public class TestArticle extends AndroidTestCase {
         super.tearDown();
     }
 
-    
+    public void testShouldCreateNewArticleOnDataBase() throws ClassNotFoundException, SQLException {
+        int initialCount = Article.count();
+
+        Article article = new Article();
+        article.setPublishedJournals(Integer.parseInt("0"));
+        article.setPublishedConferenceProceedings(Integer.parseInt("0"));
+
+        assertTrue(article.save());
+        assertEquals(initialCount, Article.count() - 1);
+        article.delete();
+    }
+
+    public void testShouldCountArticleOnDataBase() throws ClassNotFoundException, SQLException {
+        int initialCount = Article.count();
+        Article article = new Article();
+
+        article.setPublishedJournals(Integer.parseInt("0"));
+        article.setPublishedConferenceProceedings(Integer.parseInt("0"));
+        article.save();
+
+        assertEquals(initialCount+1, Article.count());
+        assertEquals(Article.getAll().size(), Article.count());
+        article.delete();
+    }
 }

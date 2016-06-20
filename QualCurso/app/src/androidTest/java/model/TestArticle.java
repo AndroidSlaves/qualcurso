@@ -102,5 +102,25 @@ public class TestArticle extends AndroidTestCase {
                 articleList.get(articleList.size()-1).getPublishedConferenceProceedings());
     }
 
-    
+    public void testShouldGetArticleWithWhereOnDataBase() throws ClassNotFoundException, SQLException {
+        Article articleSampleOne = new Article();
+        articleSampleOne.setPublishedJournals(Integer.parseInt("8000"));
+        articleSampleOne.setPublishedConferenceProceedings(Integer.parseInt("8"));
+        articleSampleOne.save();
+
+        Article articleSampleTwo = new Article();
+        articleSampleTwo.setPublishedJournals(Integer.parseInt("10000"));
+        articleSampleTwo.setPublishedConferenceProceedings(Integer.parseInt("10"));
+        articleSampleTwo.save();
+
+        ArrayList<Article> articlesListOne = Article.getWhere("published_journals", "00", true);
+        ArrayList<Article> articlesListTwo = Article.getWhere("published_journals", "10", true);
+
+        assertEquals(2, articlesListOne.size());
+        assertEquals(1, articlesListTwo.size());
+
+        articleSampleOne.delete();
+        articleSampleTwo.delete();
+    }
+
 }

@@ -1,11 +1,7 @@
 package model;
 
 import android.test.AndroidTestCase;
-
-import junit.framework.TestCase;
-
 import models.Book;
-
 
 public class TestBook extends AndroidTestCase {
 
@@ -58,7 +54,6 @@ public class TestBook extends AndroidTestCase {
         assertNotSame(idBook.getId(), 551);
     }
 
-
     public void testSetChaptersBook(){
         Book idBook = new Book();
         idBook.setId(25);
@@ -105,5 +100,29 @@ public class TestBook extends AndroidTestCase {
         Book idBook = new Book();
         idBook.setId(-185);
         assertNotSame(idBook.getId(), 871);
+    }
+
+    public void testSetEntriesBook(){
+        Book idBook = new Book();
+        idBook.setId(12);
+        assertEquals(idBook.getId(), 12);
+    }
+
+    public void testSetEntriesBookMustFail(){
+        Book idBook = new Book();
+        idBook.setId(-42);
+        assertNotSame(idBook.getId(), 28);
+    }
+
+    public void testGetEntriesBook(){
+        Book idBook = new Book();
+        idBook.setId(42);
+        assertEquals(42, idBook.getId());
+    }
+
+    public void testGetEntriesBookMustFail(){
+        Book idBook = new Book();
+        idBook.setId(-223);
+        assertNotSame(idBook.getId(), 441);
     }
 }

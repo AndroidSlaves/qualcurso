@@ -5,6 +5,7 @@ import helpers.Indicator;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
 import models.Course;
 import models.Institution;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,7 +41,8 @@ public class SearchByIndicatorFragment extends Fragment {
 	EditText firstNumber = null;
 	EditText secondNumber = null;
 	Button searchButton = null;
-
+	// Used to Log system.
+	private final String TAG = SearchByIndicatorFragment.class.getSimpleName();
 	public SearchByIndicatorFragment() {
 		super();
 	}
@@ -47,9 +50,13 @@ public class SearchByIndicatorFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+		assert (activity != null) : "Activity context must never be null.";
+
 		try {
-            beanCallbacks = (BeanListCallbacks) activity;
+			Log.d(TAG, "Trying to attach activity to bean list...");
+			beanCallbacks = (BeanListCallbacks) activity;
         } catch (ClassCastException e) {
+			Log.e(TAG, "ERROR: Can't attach activity to bean list!");
             throw new ClassCastException(activity.toString()+" must implement BeanListCallbacks.");
         }
 	}
@@ -65,6 +72,10 @@ public class SearchByIndicatorFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+		assert (inflater != null) : "LayoutInflater must never be null.";
+		assert (container != null) : "Container layout must never be null.";
+		assert (savedInstanceState != null) : "Bundle instance must never be null.";
+
 		View rootView = inflater.inflate(R.layout.search_fragment, container,
 				false);
 		
@@ -143,6 +154,8 @@ public class SearchByIndicatorFragment extends Fragment {
 	}
 
 	private void hideKeyboard(View view) {
+		assert (view != null) : "View context must never be null.";
+
 		InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context
 								  .INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager
@@ -150,6 +163,12 @@ public class SearchByIndicatorFragment extends Fragment {
 	}
 
 	private void callInstitutionList(int min, int max, int year, Indicator filterField){
+		assert (min >= 0) : "Minimum value can't be negative.";
+		assert (max >= 0) : "Maximum value can't be negative";
+		assert (year >= 0) : "Year value can't be negative";
+		assert (filterField != null) : "Field can't be null.";
+
+
 		Calendar calendar = Calendar.getInstance();
 		Search search = new Search();
 		search.setDate(new Date(calendar.getTime().getTime()));
@@ -165,6 +184,11 @@ public class SearchByIndicatorFragment extends Fragment {
 	}
 
 	private void callCourseList(int min, int max, int year, Indicator filterField){
+		assert (min >= 0) : "Minimum value can't be negative.";
+		assert (max >= 0) : "Maximum value can't be negative";
+		assert (year >= 0) : "Year value can't be negative";
+		assert (filterField != null) : "Field can't be null.";
+
 		Calendar calendar = Calendar.getInstance();
 		Search search = new Search();
 		search.setDate(new Date(calendar.getTime().getTime()));
@@ -181,6 +205,11 @@ public class SearchByIndicatorFragment extends Fragment {
 	
 	private void updateSearchList(int min, int max, int year, int listSelectionPosition,
 								  Indicator filterField) {
+		assert (min >= 0) : "Minimum value can't be negative.";
+		assert (max >= 0) : "Maximum value can't be negative";
+		assert (year >= 0) : "Year value can't be negative";
+		assert (filterField != null) : "Field can't be null.";
+
 		if(filterField.getValue() == Indicator.DEFAULT_INDICATOR) {
 			Context context = QualCurso.getInstance();
 			String emptySearchFilter = getResources().getString(R.string.empty_search_filter);

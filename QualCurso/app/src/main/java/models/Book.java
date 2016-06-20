@@ -129,7 +129,7 @@ public class Book extends Bean {
 	 *              the number of collections of the book.
 	 */
 	public void setCollections(int collections) {
-		assert (collections <= 0) : "Receive a negative treatment";
+		assert (collections >= 0) : "Receive a negative treatment";
 		this.collections = collections;
 	}
 

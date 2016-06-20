@@ -21,7 +21,7 @@ import unb.mdsgpp.qualcurso.QualCurso;
 import unb.mdsgpp.qualcurso.R;
 
 public class Indicator {
-	private String name = EMPTY;
+    private String name = EMPTY;
 	private String value = EMPTY;
 
 	public static final String DEFAULT_INDICATOR = "defaultIndicator";
@@ -39,10 +39,10 @@ public class Indicator {
 	public Indicator(String name, String value) {
 		assert (name != null) : "Received null name";
 		assert (name.length() > 1) : "Treatment to minor of character in a name";
-		assert (name != "") : "Treatment empty name";
+		assert (!name.equals("")) : "Treatment empty name";
 		assert (value != null) : "Received null value";
 		assert (value.length() > 1) : "Treatment to minor of character in a value ";
-		assert (value != "") : "Treatment empty value";
+		assert (!value.equals("")) : "Treatment empty value";
 
 		this.name = name;
 		this.value = value;
@@ -80,7 +80,7 @@ public class Indicator {
 	 * 				Value of bookmark.
 	 */
 	public void setValue(String value) {
-		this.value = value;
+        this.value = value;
 	}
 
 	/**
@@ -105,15 +105,15 @@ public class Indicator {
 	 */
 	public static ArrayList<Indicator> getIndicators() {
 		String [] indicatorList = QualCurso.getInstance().getResources()
-								  .getStringArray(R.array.indicator);
+				.getStringArray(R.array.indicator);
 		ArrayList<Indicator> result = new ArrayList<Indicator>();
 
 		// Attribute INDICATOR List
 		final int INDICATOR = 0;
 		final int CONCEPT_YEAR = 1;
 		final int YEAR_START_MASTERS = 2;
-		final int YEAR_START_DOCTORADE = 3;
-		final int AVARAGE_ANNUAL_TEACHER = 4;
+		final int YEAR_START_DOCTORATE = 3;
+		final int AVERAGE_ANNUAL_TEACHER = 4;
 		final int THESES_DEFENDED = 5;
 		final int DISSERTATIONS = 6;
 		final int ARTWORK = 7;
@@ -126,21 +126,14 @@ public class Indicator {
 
 		// Creating indicator objects
 		result.add(new Indicator(indicatorList[INDICATOR], DEFAULT_INDICATOR));
-		result.add(new Indicator(indicatorList[CONCEPT_YEAR], new Evaluation().fieldsList()
-				   .get(7)));
-		result.add(new Indicator(indicatorList[YEAR_START_MASTERS], new Evaluation().fieldsList()
-				   .get(5)));
-		result.add(new Indicator(indicatorList[YEAR_START_DOCTORADE], new Evaluation().fieldsList()
-				   .get(6)));
-		result.add(new Indicator(indicatorList[AVARAGE_ANNUAL_TEACHER], new Evaluation()
-				   .fieldsList().get(8)));
-		result.add(new Indicator(indicatorList[THESES_DEFENDED], new Evaluation().fieldsList()
-				   .get(9)));
-		result.add(new Indicator(indicatorList[DISSERTATIONS], new Evaluation().fieldsList()
-				   .get(10)));
+		result.add(new Indicator(indicatorList[CONCEPT_YEAR], new Evaluation().fieldsList().get(7)));
+		result.add(new Indicator(indicatorList[YEAR_START_MASTERS], new Evaluation().fieldsList().get(5)));
+		result.add(new Indicator(indicatorList[YEAR_START_DOCTORATE], new Evaluation().fieldsList().get(6)));
+		result.add(new Indicator(indicatorList[AVERAGE_ANNUAL_TEACHER], new Evaluation().fieldsList().get(8)));
+		result.add(new Indicator(indicatorList[THESES_DEFENDED], new Evaluation().fieldsList().get(9)));
+		result.add(new Indicator(indicatorList[DISSERTATIONS], new Evaluation().fieldsList().get(10)));
 		result.add(new Indicator(indicatorList[ARTWORK], new Evaluation().fieldsList().get(13)));
-		result.add(new Indicator(indicatorList[NUMBER_OF_BOOK_CHAPTERS], new Book().fieldsList()
-				   .get(2)));
+		result.add(new Indicator(indicatorList[NUMBER_OF_BOOK_CHAPTERS], new Book().fieldsList().get(2)));
 		result.add(new Indicator(indicatorList[NUMBER_FULL_TEXT], new Book().fieldsList().get(1)));
 		result.add(new Indicator(indicatorList[NUMBER_COLLECTIONS], new Book().fieldsList().get(3)));
 		result.add(new Indicator(indicatorList[NUMBER_ENTRIES], new Book().fieldsList().get(4)));

@@ -17,25 +17,24 @@
     <string name="m_start_year">Year of beginning master degree:</string>
     <string name="d_start_year">Year of beginning doctorate degree:</string>
     <string name="year_concept">Concept in the reporting year:</string>
-    
-    <string name="permanent_teachers">Média anual de docentes permanentes:</string>
-    <string name="theses">Total de teses defendidas:</string>
-    <string name="dissertation">Total de dissertações defendidas:</string>
-    <string name="artistic_works">Total de trabalhos artísticos defendidos:</string>
-    <string name="chapters">Quantidade de capítulos de livros publicados:</string>
-    <string name="integral_texts">Quantidade de textos integrais publicados:</string>
-    <string name="collections">Quantidade de coletâneas publicadas:</string>
-    <string name="entries">Quantidade de verbetes e outros publicados:</string>
-    <string name="articles">Quantidade de artigos publicados:</string>
-    <string name="works">Quantidade de trabalhos publicados:</string>
-    <string name="empty_search_filter">Escolha um indicador</string>
-    <string name="exit">Sair</string>
-    <string name="about">Sobre</string>
-    <string name="between">Entre:</string>
-    <string name="max">Máx</string>
-    <string name="search">Buscar</string>
+    <string name="permanent_teachers">Average annual professors permanents:</string>
+    <string name="theses">Total defended theses:</string>
+    <string name="dissertation">Total defended dissertations:</string>
+    <string name="artistic_works">Total defended artwork :</string>
+    <string name="chapters">Amount of books published chapters:</string>
+    <string name="integral_texts">Number of published full texts:</string>
+    <string name="collections">Number of published compilations :</string>
+    <string name="entries">Entries of quantity and other published :</string>
+    <string name="articles">Number of published articles :</string>
+    <string name="works">Number of published works :</string>
+    <string name="empty_search_filter">Select indicator</string>
+    <string name="exit">Exit</string>
+    <string name="about">About</string>
+    <string name="between">Enter:</string>
+    <string name="max">Max</string>
+    <string name="search">Search</string>
     <string name="line">------------------------------------------------</string>
-    <string name="listBy">Buscar por:</string>
+    <string name="listBy">Search for:</string>
 
     <string-array name="list">
         <item>Opção</item>

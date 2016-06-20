@@ -29,7 +29,7 @@ public class CourseListFragment extends ListFragment{
 	private static final String IDS_COURSES = "idsCourses";
 	// year field name.
 	private static final String YEAR = "year";
-	
+	// Interface used to store bean information.
 	BeanListCallbacks beanCallbacks;
 
     /**
@@ -90,23 +90,25 @@ public class CourseListFragment extends ListFragment{
 
 		// Set needed arguments for institutions, year and courses.
 		Bundle args = new Bundle();
+
 		args.putInt(ID_INSTITUTION, id);
 		args.putInt(YEAR, year);
 		args.putParcelableArrayList(IDS_COURSES, list);
 		fragment.setArguments(args);
+
 		return fragment;
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		ArrayList<Course> list;
+		ArrayList<Course> courseList;
 
 		// Get courses from arrayList
-		if(getArguments().getParcelableArrayList(IDS_COURSES) != null){
-			list = getArguments().getParcelableArrayList(IDS_COURSES);
-		}else{
-			list = savedInstanceState.getParcelableArrayList(IDS_COURSES);
+		if (getArguments().getParcelableArrayList(IDS_COURSES) != null) {
+			courseList = getArguments().getParcelableArrayList(IDS_COURSES);
+		} else {
+			courseList = savedInstanceState.getParcelableArrayList(IDS_COURSES);
 		}
 
 		// Get views.
@@ -115,11 +117,11 @@ public class CourseListFragment extends ListFragment{
 
 		// Set adapter with list of
 		try {
-			if(list != null){
+			if(courseList != null){
 			rootView.setAdapter(new ArrayAdapter<Course>(
 			        getActionBar().getThemedContext(),
 			        R.layout.custom_textview,
-			        list));
+			        courseList));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -154,7 +156,7 @@ public class CourseListFragment extends ListFragment{
 		if(getArguments().getInt(ID_INSTITUTION) == 0){
 			
 			beanCallbacks.onBeanListItemSelected(InstitutionListFragment.newInstance((((Course)l.getAdapter().getItem(position)).getId()), getArguments().getInt(YEAR)));
-		}else{
+		} else {
 			beanCallbacks.onBeanListItemSelected(EvaluationDetailFragment.newInstance(getArguments().getInt(ID_INSTITUTION), ((Course)l.getAdapter().getItem(position)).getId(),getArguments().getInt(YEAR)));
 		}
 		super.onListItemClick(l, v, position, id);
@@ -164,6 +166,7 @@ public class CourseListFragment extends ListFragment{
 	public void onAttach(Activity activity) {
 		assert (activity != null) : "Receive a null treatment";
 		super.onAttach(activity);
+
 		try {
             beanCallbacks = (BeanListCallbacks) activity;
         } catch (ClassCastException e) {
@@ -190,10 +193,13 @@ public class CourseListFragment extends ListFragment{
      *              there maybe a problem accessing the database.
      */
 	private static ArrayList<Course> getCoursesList(int idInstitution) throws SQLException{
-		if(idInstitution == 0){
-			return Course.getAll();
-		}else{
-			return Institution.get(idInstitution).getCourses();
+		ArrayList<Course> courseList;
+		if (idInstitution == 0) {
+			courseList = Course.getAll();
+			return courseList;
+		} else {
+			courseList = Institution.get(idInstitution).getCourses();
+			return courseList;
 		}
 	}
 
@@ -202,7 +208,8 @@ public class CourseListFragment extends ListFragment{
      * @return the action bar with the menus for the user.
      */
 	private ActionBar getActionBar() {
-        return ((ActionBarActivity) getActivity()).getSupportActionBar();
+		ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        return actionBar;
     }
 	
 }

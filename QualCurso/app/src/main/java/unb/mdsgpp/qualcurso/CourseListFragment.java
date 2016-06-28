@@ -213,7 +213,6 @@ public class CourseListFragment extends ListFragment{
 			Log.d(TAG, "Beans where succesfully attached!");
 
         } catch(ClassCastException exceptionClass) {
-
 			Log.e(TAG, "Beans implementation FAILED.");
             throw new ClassCastException(activity.toString() + " must implement BeanListCallbacks.");
         }

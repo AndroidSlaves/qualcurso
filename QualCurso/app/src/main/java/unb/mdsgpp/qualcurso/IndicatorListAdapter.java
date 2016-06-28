@@ -13,6 +13,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
+
+    // Set the class name for use in log.
+    private static String CLASS_NAME_FOR_LOG = "IndicatorListAdapter - ";
 
 	public static String INDICATOR_VALUE = "indicatorValue";
 	public static String VALUE = "value";
@@ -64,26 +68,54 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
 
 		View view = convertView;
 
-		if (view == null) {
-			LayoutInflater vi;
-			vi = LayoutInflater.from(getContext());
-			view = vi.inflate(itemLayout, null);
-		}else{/*Nothing to do*/}
+        view = nullView(convertView);
 
+        // Getting indicators in their positions.
 		HashMap<String,String> hashMap = getItem(position);
 
-		if (hashMap != null) {
+		if(hashMap != null) {
 			TextView indicator = (TextView) view.findViewById(R.id.indicator);
 			TextView indicatorText = (TextView) view.findViewById(R.id.indicator_text);
 
-        	if (indicator != null) {
+        	if(indicator != null) {
             	indicator.setText(hashMap.get(VALUE));
-        	}else{/*Nothing to do*/}
-        	if (indicatorText != null) {
-        		indicatorText.setText(Indicator.getIndicatorByValue(hashMap.get(INDICATOR_VALUE))
-						.getName());
-        	}else{/*Nothing to do*/}
-    	}else{/*Nothing to do*/}
+        	} else {
+        	    /*Nothing to do*/
+            }
+
+        	if(indicatorText != null) {
+        		indicatorText.setText(Indicator.getIndicatorByValue(hashMap.get(INDICATOR_VALUE)).getName());
+        	} else {
+        	    /*Nothing to do*/
+            }
+
+    	} else {
+    	    /*Nothing to do*/
+        }
     	return view;
 	}
+
+    /**
+     * This method is responsible to check if the view is null or not.
+     *
+     * @param view
+     * @return view
+     */
+    private View nullView(View view) {
+        final boolean viewNotInitialized = (view == null);
+
+        if(viewNotInitialized) {
+
+            // Inflating the view.
+            LayoutInflater inflateView;
+            inflateView = LayoutInflater.from(getContext());
+            view = inflateView.inflate(itemLayout, null);
+
+            Log.i(CLASS_NAME_FOR_LOG + "nullView", "View sucesfully initialized!");
+        } else {
+            Log.w(CLASS_NAME_FOR_LOG + "nullView", "View not initialized!");
+        }
+
+        return view;
+    }
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import models.Course;
 import models.Institution;
+
 import android.database.SQLException;
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import junit.framework.Assert;
 
 public class CourseListFragment extends ListFragment{
 	// Institution id field name.
@@ -45,6 +48,7 @@ public class CourseListFragment extends ListFragment{
 		Bundle args = new Bundle();
 		args.putInt(ID_INSTITUTION, 0);
 		args.putParcelableArrayList(IDS_COURSES, getCoursesList(0));
+        Assert.assertNotNull(args);
 
 		this.setArguments(args);
 	}
@@ -52,7 +56,7 @@ public class CourseListFragment extends ListFragment{
     /**
      * Creates a new instance of the list of courses based on the id and the year.
      *
-     * @param id
+     * @param id_institution
      *              identification number of the list of courses.
      *
      * @param year
@@ -61,15 +65,18 @@ public class CourseListFragment extends ListFragment{
      * @return
      *              return the fragment in which the list will be.
      */
-	public static CourseListFragment newInstance(int id, int year){
+	public static CourseListFragment newInstance(int id_institution, int year){
 		CourseListFragment fragment = new CourseListFragment();
 
 		// Set needed arguments for institutions, year and courses.
 		Bundle args = new Bundle();
-		args.putInt(ID_INSTITUTION, id);
+		args.putInt(ID_INSTITUTION, id_institution);
 		args.putInt(YEAR, year);
-		args.putParcelableArrayList(IDS_COURSES, getCoursesList(id));
+		args.putParcelableArrayList(IDS_COURSES, getCoursesList(id_institution));
 		fragment.setArguments(args);
+
+        Assert.assertNotNull(args);
+        Assert.assertNotNull(fragment);
 
 		return fragment;
 	}
@@ -99,12 +106,16 @@ public class CourseListFragment extends ListFragment{
 		args.putParcelableArrayList(IDS_COURSES, list);
 		fragment.setArguments(args);
 
+        Assert.assertNotNull(args);
+        Assert.assertNotNull(fragment);
+
 		return fragment;
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        assert (container != null) : "Receive a null treatment";
+        assert (inflater != null) : "Receive a null treatment";
 
 		ArrayList<Course> courseList;
 
@@ -117,7 +128,7 @@ public class CourseListFragment extends ListFragment{
 			Log.i(TAG, "Course ID null. Using previous instance to generate" +
 					"CourseList.");
 			courseList = savedInstanceState.getParcelableArrayList(IDS_COURSES);
-		}
+        }
 
 		// Get views.
 		ListView rootView = (ListView) inflater.inflate(R.layout.fragment_list, container, false);
@@ -125,19 +136,23 @@ public class CourseListFragment extends ListFragment{
 
 		// Set adapter with list of
 		try {
-			Log.d(TAG, "Trying to set adapter view on screen...");
-			if (courseList != null) {
+            Log.d(TAG, "Trying to set adapter view on screen...");
+
+			if(courseList != null) {
 				Log.d(TAG, "Course list not null, adapter view setted!");
 
-				rootView.setAdapter(new ArrayAdapter<Course>(
-			        getActionBar().getThemedContext(),
-			        R.layout.custom_textview,
-			        courseList));
-			}
-		} catch (SQLException e) {
+				rootView.setAdapter(new ArrayAdapter<Course>(getActionBar().getThemedContext(),
+			        R.layout.custom_textview, courseList));
+			} else {
+                /* Nothing to do */
+            }
+		} catch(SQLException exceptionSql) {
 			Log.e(TAG, "ERROR: CourseList null. Fix database search request.");
-			e.printStackTrace();
+
+			exceptionSql.printStackTrace();
 		}
+
+        Assert.assertNotNull(rootView);
 		return rootView;
 	}
 	
@@ -160,24 +175,31 @@ public class CourseListFragment extends ListFragment{
      * @param position
      *              position of the item clicked by the user.
      *
-     * @param id
+     * @param id_institution
      *              obligatory id parameter for original super class.
      */
 	@Override
-	public void onListItemClick(ListView listView, View view, int position, long id) {
-		if (getArguments().getInt(ID_INSTITUTION) == 0) {
+	public void onListItemClick(ListView listView, View view, int position, long id_institution) {
+        assert (id_institution >= 0) : "Receive a negative treatment";
+        assert (position >= 0) : "Receive a negative treatment";
+        assert (view != null) : "Receive a null treatment";
+        assert (listView != null) : "Receive a null treatment";
+
+		if(getArguments().getInt(ID_INSTITUTION) == 0) {
 			Log.i(TAG, "BeanList it was previously instantiated...");
+
 			beanCallbacks.onBeanListItemSelected(InstitutionListFragment.
 					newInstance((((Course)listView.getAdapter().getItem(position)).getId()),
-							getArguments().getInt(YEAR)));
+                            getArguments().getInt(YEAR)));
 		} else {
 			Log.i(TAG, "BeanList never instantiated, generating Beans and setting into layout...");
+
 			beanCallbacks.onBeanListItemSelected(EvaluationDetailFragment.
 					newInstance(getArguments().getInt(ID_INSTITUTION),
 							((Course)listView.getAdapter().getItem(position)).getId(),
 							getArguments().getInt(YEAR)));
 		}
-		super.onListItemClick(listView, view, position, id);
+		super.onListItemClick(listView, view, position, id_institution);
 	}
 	
 	@Override
@@ -189,7 +211,9 @@ public class CourseListFragment extends ListFragment{
 			Log.d(TAG, "Trying to attach beans into activity...");
             beanCallbacks = (BeanListCallbacks) activity;
 			Log.d(TAG, "Beans where succesfully attached!");
-        } catch (ClassCastException e) {
+
+        } catch(ClassCastException exceptionClass) {
+
 			Log.e(TAG, "Beans implementation FAILED.");
             throw new ClassCastException(activity.toString() + " must implement BeanListCallbacks.");
         }
@@ -199,6 +223,7 @@ public class CourseListFragment extends ListFragment{
     public void onDetach() {
         super.onDetach();
         beanCallbacks = null;
+        Assert.assertNotNull(beanCallbacks);
     }
 
     /**
@@ -214,14 +239,17 @@ public class CourseListFragment extends ListFragment{
      *              there maybe a problem accessing the database.
      */
 	private static ArrayList<Course> getCoursesList(int idInstitution) throws SQLException{
-		ArrayList<Course> courseList;
-		if (idInstitution == 0) {
+        assert (idInstitution >= 0) : "Receive a negative treatment";
+
+        ArrayList<Course> courseList = null;
+
+		if(idInstitution == 0) {
 			courseList = Course.getAll();
-			return courseList;
 		} else {
 			courseList = Institution.get(idInstitution).getCourses();
-			return courseList;
 		}
+        Assert.assertNotNull(courseList);
+        return courseList;
 	}
 
     /**
@@ -230,6 +258,8 @@ public class CourseListFragment extends ListFragment{
      */
 	private ActionBar getActionBar() {
 		ActionBar actionBar = ((ActionBarActivity) getActivity()).getSupportActionBar();
+        Assert.assertNotNull(actionBar);
+
         return actionBar;
     }
 	

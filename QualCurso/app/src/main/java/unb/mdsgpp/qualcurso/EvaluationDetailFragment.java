@@ -1,5 +1,6 @@
 /*****************************
  * Class name: EvaluationDetailFragment (.java)
+ *
  * Purpose: Class that shows a fragment.
  *****************************/
 
@@ -16,6 +17,7 @@ import models.Book;
 import models.Course;
 import models.Evaluation;
 import models.Institution;
+
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -27,10 +29,10 @@ import android.widget.TextView;
 
 public class EvaluationDetailFragment extends Fragment{
 
-	// Represents the unic identification number field of the course.
+	// Represents the unique identification number field of the course.
 	private static final String ID_COURSE = "idCourse";
 
-	// Represents the field of the institution in which this course is tought.
+	// Represents the field of the institution in which this course is thought.
 	private static final String ID_INSTITUTION = "idInstitution";
 
 	// Represents field year of the evaluated institution.
@@ -39,7 +41,7 @@ public class EvaluationDetailFragment extends Fragment{
 	// Object that connects with the database.
 	BeanListCallbacks beanCallbacks;
 
-	// Method that instatiate the evaluationDetailFragment, an contructor.
+	// Method that instantiate the evaluationDetailFragment, an constructor.
 	public EvaluationDetailFragment() {
 		super();
 
@@ -65,7 +67,7 @@ public class EvaluationDetailFragment extends Fragment{
 	 * 				A new fragment with basic informations.
 	 *
 	 */
-	public static EvaluationDetailFragment newInstance(int id_institution, int id_course,int year){
+	public static EvaluationDetailFragment newInstance(int id_institution, int id_course,int year) {
 		assert (id_institution >= 0) : "idInstitution must never be negative";
 		assert (id_course >= 0) : "idCourse must never be negative";
 		assert (year > 1990) : "year must never be smaller 1990";
@@ -85,8 +87,7 @@ public class EvaluationDetailFragment extends Fragment{
 
 	// Android default method  for fragment.
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		// View containing the main screen to be shown to the user.
 		View rootView = inflater.inflate(R.layout.fragment_main, container, false);
@@ -101,15 +102,17 @@ public class EvaluationDetailFragment extends Fragment{
 
 		// Area of text that will be filled with all the evaluation information.
 		TextView textView2 = (TextView) rootView.findViewById(R.id.general_data);
-		textView2.setText(getString(R.string.evaluation_date)+": " + evaluation.getYear() +
-				          "\n"+getString(R.string.course)+": " + Course.get(getArguments().getInt(ID_COURSE)).getName()
-				          + "\n"+getString(R.string.modality)+": " + evaluation.getModality());
+		textView2.setText(getString(R.string.evaluation_date) + ": " + evaluation.getYear() +
+				          "\n"+getString(R.string.course)+": " + Course.get(getArguments()
+                            .getInt(ID_COURSE)).getName() + "\n" + getString(R.string.modality) + ": " +
+                            evaluation.getModality());
 
 		// List that indicates the institution evaluation.
 		ListView indicatorList = (ListView) rootView.findViewById(R.id.indicator_list);
-		indicatorList.setAdapter(new IndicatorListAdapter(getActivity().getApplicationContext(), R.layout.evaluation_list_item, getListItems(evaluation)));
+		indicatorList.setAdapter(new IndicatorListAdapter(getActivity().getApplicationContext(),
+                R.layout.evaluation_list_item, getListItems(evaluation)));
 
-		assert (rootView != null) : "Rootview can never be null";
+		assert (rootView != null) : "RootView can never be null";
 
 
 		indicatorList.setAdapter(new IndicatorListAdapter(getActivity().getApplicationContext(),
@@ -143,19 +146,24 @@ public class EvaluationDetailFragment extends Fragment{
 
 			//Hash map containing all assets from the evaluated intitution, like books and articles.
 			HashMap<String, String> hashMap = new HashMap<String, String>();
-			if(evaluation.fieldsList().contains(i.getValue())){
+
+			if(evaluation.fieldsList().contains(i.getValue())) {
 				bean = evaluation;
-			}else if(book.fieldsList().contains(i.getValue())){
+			} else if(book.fieldsList().contains(i.getValue())) {
 				bean = book;
-			}else if(article.fieldsList().contains(i.getValue())) {
+			} else if(article.fieldsList().contains(i.getValue())) {
 				bean = article;
 			}
-			if(bean!=null){
+
+			if(bean != null){
 				hashMap.put(IndicatorListAdapter.INDICATOR_VALUE, i.getValue());
 				hashMap.put(IndicatorListAdapter.VALUE, bean.get(i.getValue()));
 				hashList.add(hashMap);
-			}
+			} else {
+                /* Nothing to do! */
+            }
 		}
+
 		return hashList;
 	}
 	
@@ -166,8 +174,8 @@ public class EvaluationDetailFragment extends Fragment{
 		super.onAttach(activity);
 		try {
             beanCallbacks = (BeanListCallbacks) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()+" must implement BeanListCallbacks.");
+        } catch(ClassCastException exceptionCast) {
+            throw new ClassCastException(activity.toString() + " must implement BeanListCallbacks.");
         }
 	}
 	

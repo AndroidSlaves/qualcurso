@@ -3,12 +3,97 @@ package model;
 import android.database.SQLException;
 import android.test.AndroidTestCase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import libraries.DataBaseStructures;
+import models.Article;
+import models.Book;
+import models.Course;
 import models.Evaluation;
+import models.GenericBeanDAO;
+import models.Institution;
+import unb.mdsgpp.qualcurso.QualCurso;
 
 /**
  * Created by Vinícius Carvalho on 16/06/2016.
  */
 public class TestEvaluation extends AndroidTestCase {
+
+    @Override
+    public void testAndroidTestCaseSetupProperly() {
+
+        super.testAndroidTestCaseSetupProperly();
+        QualCurso.getInstance().setDatabaseName("database_test.sqlite3.db");
+        DataBaseStructures db = new DataBaseStructures();
+        db.dropDB();
+        db.initDB();
+        Institution institution = new Institution();
+        institution.setAcronym("1");
+        institution.save();
+
+        Course course = new Course();
+        course.setName("name course");
+        course.save();
+
+        Article article = new Article();
+        article.setPublishedJournals(1);
+        article.save();
+
+        Book book = new Book();
+        book.setIntegralText(1);
+        book.save();
+
+        Evaluation evaluation = new Evaluation();
+        evaluation.setIdInstitution(institution.getId());
+        evaluation.setIdCourse(course.getId());
+        evaluation.setYear(Integer.parseInt("2014"));
+        evaluation.setModality("modality");
+        evaluation.setMasterDegreeStartYear(Integer.parseInt("2000"));
+        evaluation.setDoctorateStartYear(Integer.parseInt("2010"));
+        evaluation.setTriennialEvaluation(Integer.parseInt("1990"));
+        evaluation.setPermanentTeachers(Integer.parseInt("1"));
+        evaluation.setTheses(Integer.parseInt("2"));
+        evaluation.setDissertations(Integer.parseInt("3"));
+        evaluation.setIdArticles(article.getId());
+        evaluation.setIdBooks(book.getId());
+        evaluation.setArtisticProduction(Integer.parseInt("5"));
+        evaluation.save();
+
+        institution = new Institution();
+        institution.setAcronym("2");
+        institution.save();
+
+        course = new Course();
+        course.setName("name course 2");
+        course.save();
+
+        article = new Article();
+        article.setPublishedJournals(Integer.parseInt("2"));
+        article.save();
+
+        book = new Book();
+        book.setIntegralText(Integer.parseInt("2"));
+        book.save();
+
+        evaluation = new Evaluation();
+        evaluation.setIdInstitution(institution.getId());
+        evaluation.setIdCourse(course.getId());
+        evaluation.setYear(Integer.parseInt("2015"));
+        evaluation.setModality("modality 2");
+        evaluation.setMasterDegreeStartYear(Integer.parseInt("2001"));
+        evaluation.setDoctorateStartYear(Integer.parseInt("2011"));
+        evaluation.setTriennialEvaluation(Integer.parseInt("2016"));
+        evaluation.setPermanentTeachers(Integer.parseInt("2"));
+        evaluation.setTheses(Integer.parseInt("3"));
+        evaluation.setDissertations(Integer.parseInt("4"));
+        evaluation.setIdArticles(article.getId());
+        evaluation.setIdBooks(book.getId());
+        evaluation.setArtisticProduction(Integer.parseInt("6"));
+        evaluation.save();
+    }
+
+
     @Override
     protected void tearDown() throws Exception{
 
@@ -23,7 +108,7 @@ public class TestEvaluation extends AndroidTestCase {
         evaluation.setMasterDegreeStartYear(1);
         evaluation.save();
 
-        assertEquals(initialCount+1, Evaluation.count());
+        assertEquals(initialCount + 1, Evaluation.count());
         assertEquals(Evaluation.getAll().size(), Evaluation.count());
 
         evaluation.delete();
@@ -81,4 +166,100 @@ public class TestEvaluation extends AndroidTestCase {
         int last = Evaluation.getAll().size()-1;
         assertEquals(lastEvaluation.getArtisticProduction(), Evaluation.getAll().get(last).getArtisticProduction());
     }
+
+    public void testShouldCreateNewEvaluationOnDataBase() throws ClassNotFoundException, SQLException{
+        int initialCount = Evaluation.count();
+
+        Institution institution = new Institution();
+        institution.setAcronym("1");
+        institution.save();
+
+        Course course = new Course();
+        course.setName("name course");
+        course.save();
+
+        Article article = new Article();
+        article.setPublishedJournals(Integer.parseInt("1"));
+        article.save();
+
+        Book book = new Book();
+        book.setIntegralText(Integer.parseInt("1"));
+        book.save();
+
+        Evaluation evaluation = new Evaluation();
+        evaluation.setIdInstitution(institution.getId());
+        evaluation.setIdCourse(course.getId());
+        evaluation.setYear(Integer.parseInt("2014"));
+        evaluation.setModality("modality");
+        evaluation.setMasterDegreeStartYear(Integer.parseInt("2000"));
+        evaluation.setDoctorateStartYear(Integer.parseInt("2010"));
+        evaluation.setTriennialEvaluation(Integer.parseInt("1990"));
+        evaluation.setPermanentTeachers(Integer.parseInt("1"));
+        evaluation.setTheses(Integer.parseInt("2"));
+        evaluation.setDissertations(Integer.parseInt("3"));
+        evaluation.setIdArticles(article.getId());
+        evaluation.setIdBooks(book.getId());
+        evaluation.setArtisticProduction(Integer.parseInt("5"));
+
+        assertEquals(true, evaluation.save());
+        assertEquals(initialCount, Evaluation.count()-1);
+        assertEquals("1", Institution.get(Evaluation.last().getIdInstitution()).getAcronym());
+        assertEquals("name course", Course.get(Evaluation.last().getIdCourse()).getName());
+        assertEquals(1, Article.get(Evaluation.last().getIdArticles()).getPublishedJournals());
+        assertEquals(1, Book.get(Evaluation.last().getIdBooks()).getIntegralText());
+
+        institution.delete();
+        course.delete();
+        book.delete();
+        article.delete();
+        evaluation.delete();
+    }
+
+    public void testShouldGetEvaluationsWithWhereOnDataBase() throws ClassNotFoundException, SQLException{
+        Evaluation evaluation1 = new Evaluation();
+        evaluation1.setModality("Moda Test");
+        evaluation1.save();
+
+        Evaluation evaluation2 = new Evaluation();
+        evaluation2.setModality("Moda ABC");
+        evaluation2.save();
+
+        ArrayList<Evaluation> evaluations_1 = Evaluation.getWhere("modality", "Moda ", true);
+        ArrayList<Evaluation> evaluations_2 = Evaluation.getWhere("modality", "Test", true);
+        ArrayList<Evaluation> evaluations_3 = Evaluation.getWhere("modality", "Moda Test", false);
+
+        assertEquals(2, evaluations_1.size());
+        assertEquals(1, evaluations_2.size());
+        assertEquals(1, evaluations_3.size());
+        evaluation1.delete();
+        evaluation2.delete();
+    }
+
+    public void testShouldGetEvaluationsFromRelation(){
+        Evaluation evaluation1 = Evaluation.get(1);
+        assertEquals(Evaluation.getFromRelation(1, 1,2014).getDissertations(), evaluation1.getDissertations());
+
+        Evaluation evaluation2 = Evaluation.get(2);
+        assertEquals(Evaluation.getFromRelation(2, 2,2010).getDissertations(), evaluation2.getDissertations());
+
+        Evaluation evaluation3 = Evaluation.get(2);
+        assertEquals(Evaluation.getFromRelation(2, 2,1990).getDissertations(), evaluation3.getDissertations());
+    }
+
+    public void testShouldRankEvaluationsByIndicator(){
+        GenericBeanDAO gDB = new GenericBeanDAO();
+        ArrayList<String> fields = new ArrayList<String>();
+        fields.add("triennial_evaluation");
+        fields.add("acronym");
+        ArrayList<HashMap<String , String>> list = gDB.selectOrdered(fields, fields.get(0), null,
+                fields.get(1), true);
+
+        assertEquals("2016", list.get(0).get(fields.get(0)));
+        assertEquals("2", list.get(0).get(fields.get(1)));
+
+        assertEquals("1990", list.get(1).get(fields.get(0)));
+        assertEquals("1", list.get(1).get(fields.get(1)));
+
+    }
+
 }

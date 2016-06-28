@@ -7,8 +7,6 @@
 package unb.mdsgpp.qualcurso;
 
 import android.app.Application;
-import android.content.Context;
-
 
 public class QualCurso extends Application {
 
@@ -38,22 +36,22 @@ public class QualCurso extends Application {
 	}
 
     /**
-     * gets the database name store in this application.
+     * Gets the database name store in this application.
      *
      * @return
      *              the database name for QualCurso.
      */
-	public String getDatabaseName(){
+	public String getDatabaseName() {
 		return databaseName;
 	}
 
     /**
-     * gets a running instance of QualCurso class.
+     * Gets a running instance of QualCurso class.
      *
      * @return
      *              an instance of QualCurso class.
      */
-	public static QualCurso getInstance(){
+	public static QualCurso getInstance() {
 		return instance;
 	}
 }

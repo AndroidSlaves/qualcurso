@@ -4,27 +4,28 @@
  * Purpose: First and primary activity that connects with the other screens and the rest of the
  * components.
  ****************************/
+
 package unb.mdsgpp.qualcurso;
+
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView.OnQueryTextListener;
+import android.text.Html;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import junit.framework.Assert;
 
 import models.Course;
 import models.Institution;
 import models.Search;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.SearchView.OnQueryTextListener;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.text.Html;
-import android.text.Spanned;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks, BeanListCallbacks, OnQueryTextListener {
@@ -55,11 +56,13 @@ public class MainActivity extends ActionBarActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
 		if(savedInstanceState != null){
 			drawerPosition = savedInstanceState.getInt(DRAWER_POSITION);
 			screenTitle = savedInstanceState.getCharSequence(CURRENT_TITLE);
+
 		}else{
-			
+            Assert.assertNull(savedInstanceState);
 			screenTitle = getFormatedTitle(getTitle());
 		}
 		navigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
@@ -68,8 +71,12 @@ public class MainActivity extends ActionBarActivity implements
 		// Set up the drawer.
 		navigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-		
-	}
+
+        Assert.assertNotNull(screenTitle);
+        Assert.assertNotNull(navigationDrawerFragment);
+        Assert.assertNotNull(drawerPosition);
+
+    }
 
 	/**
 	 * Obligatory method.
@@ -98,10 +105,19 @@ public class MainActivity extends ActionBarActivity implements
      *              formatted text.
      */
 	public CharSequence getFormatedTitle(CharSequence stringTitle){
-		int actionBarTitleColor = getResources().getColor(R.color.actionbar_title_color);
-		return Html.fromHtml("<font color='#"+Integer.toHexString(actionBarTitleColor).substring(2)+"'><b>"+stringTitle+"</b></font>");
-	}
+        /**
+         * Returns the string representation of the unsigned integer value represented by the argument
+         * in hexadecimal (base 16).
+          */
+        final int START = 2;
 
+		int actionBarTitleColor = getResources().getColor(R.color.actionbar_title_color);
+
+		CharSequence html =  Html.fromHtml("<font color='#" +
+                Integer.toHexString(actionBarTitleColor).substring(START) + "'><b>"+stringTitle+"</b></font>");
+
+        return html;
+    }
 
     /**
      * Creates a new fragment based on the option clicked.
@@ -113,10 +129,10 @@ public class MainActivity extends ActionBarActivity implements
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
-		//fragmentManager.beginTransaction().remove(fragmentManager.findFragmentById(R.id.container)).addToBackStack(null).commit();
 		ActionBar actionBar = getSupportActionBar();	
 		Fragment fragment = null;
 		String formatedTitle = "";
+
 		switch (position) {
 			case 0:
 				formatedTitle = getString(R.string.title_section1);
@@ -147,29 +163,30 @@ public class MainActivity extends ActionBarActivity implements
 			default:
 				fragment = null;
 				break;
-			}		
-		if(fragment != null){
-			actionBar.setTitle(getFormatedTitle(formatedTitle));
-			screenTitle = getFormatedTitle(formatedTitle);
-			if(fragment instanceof TabsFragment){
-				fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-				fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,fragment).commit();
-			}else{
-				fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,fragment).addToBackStack(null).commit();
 			}
-		}
-	}
 
-    /*
-	public void onSectionAttached(int number) {
-		switch (number) {
-		//Nothing
-		}
-	}*/
+		if(fragment != null) {
+            actionBar.setTitle(getFormatedTitle(formatedTitle));
+            screenTitle = getFormatedTitle(formatedTitle);
+
+            if (fragment instanceof TabsFragment) {
+                fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, fragment).commit();
+
+            } else {
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, fragment).addToBackStack(null).commit();
+            }
+
+            Assert.assertNotNull(screenTitle);
+        } else {
+            Assert.assertNull(fragment);
+            Log.i("Main Activity", "Fragment is null!");
+        }
+	}
 
     /**
      * Brings back the action bar with the options to the user.
@@ -223,21 +240,27 @@ public class MainActivity extends ActionBarActivity implements
      */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+
 		/* Handle action bar item clicks here. The action bar will automatically handle clicks on
 		the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml.*/
-
 		boolean isItemClicked = false;
 
+        final int actionAbout = R.id.action_about;
+        final int actionExit = R.id.action_exit;
+
         switch(item.getItemId()) {
-	 		case R.id.action_about:
-				aboutApplication();
-				isItemClicked = true;
-				break;
+	 		case actionAbout:
+                aboutApplication();
+                isItemClicked = true;
+                break;
 
-			case R.id.action_exit:
-				closeApplication();
-				isItemClicked = true;
+			case actionExit:
+                closeApplication();
+                isItemClicked = true;
+                break;
 
+            default:
+                isItemClicked = false;
 		}
 
 		return isItemClicked;
@@ -269,13 +292,12 @@ public class MainActivity extends ActionBarActivity implements
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
-		fragmentManager.beginTransaction()
-						.replace(R.id.container,
-								fragment).addToBackStack(null).commit();
+		fragmentManager.beginTransaction().replace(R.id.container,
+                fragment).addToBackStack(null).commit();
 	}
 
     /**
-     * Adds the selected fragment to a fragment record maneger, FragmentManeger class.
+     * Adds the selected fragment to a fragment record manager, FragmentManager class.
      *
      * @param fragment
      *              open intended fragment.
@@ -286,10 +308,7 @@ public class MainActivity extends ActionBarActivity implements
 	public void onBeanListItemSelected(Fragment fragment, int container) {
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
-		fragmentManager
-				.beginTransaction()
-				.replace(container,
-						fragment).commit();
+		fragmentManager.beginTransaction().replace(container, fragment).commit();
 	}
 
     /**
@@ -303,25 +322,26 @@ public class MainActivity extends ActionBarActivity implements
      */
 	@Override
 	public void onSearchBeanSelected(Search search, Parcelable bean) {
-		if(bean instanceof Institution){
-			onBeanListItemSelected(CourseListFragment.newInstance(((Institution)bean).getId(),
-					search.getYear(),
+		if(bean instanceof Institution) {
+			onBeanListItemSelected(CourseListFragment.newInstance(((Institution)bean).getId(),search.getYear(),
 					Institution.getCoursesByEvaluationFilter(((Institution)bean).getId(),search)));
-		}else if(bean instanceof Course){
-			onBeanListItemSelected(InstitutionListFragment.newInstance(((Course)bean).getId(),
-					search.getYear(),
+
+		}else if(bean instanceof Course) {
+			onBeanListItemSelected(InstitutionListFragment.newInstance(((Course)bean).getId(), search.getYear(),
 					Course.getInstitutionsByEvaluationFilter(((Course)bean).getId(),search)));
-		}		
+
+		} else {
+            /* Nothing to do! */
+        }
 	}
 
 	@Override
 	public boolean onQueryTextChange(String arg0) {
-		return false;
+        return false;
 	}
 
 	@Override
 	public boolean onQueryTextSubmit(String arg0) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

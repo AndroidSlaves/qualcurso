@@ -4,19 +4,18 @@
  * Purpose: Class que handles the date of the indicators used to institutions rating.
  ************************/
 
-// Package of file.
 package helpers;
 
-// Android API imports.
 import android.annotation.SuppressLint;
 
-// Java API imports.
+import junit.framework.Assert;
+
 import java.util.ArrayList;
 
-// Project imports.
 import models.Article;
 import models.Book;
 import models.Evaluation;
+
 import unb.mdsgpp.qualcurso.QualCurso;
 import unb.mdsgpp.qualcurso.R;
 
@@ -37,6 +36,7 @@ public class Indicator {
 	 */
 	@SuppressLint("Assert")
 	public Indicator(String name, String value) {
+
 		assert (name != null) : "Received null name";
 		assert (name.length() > 1) : "Treatment to minor of character in a name";
 		assert (!name.equals("")) : "Treatment empty name";
@@ -104,8 +104,7 @@ public class Indicator {
 	 * 				list of indicators.
 	 */
 	public static ArrayList<Indicator> getIndicators() {
-		String [] indicatorList = QualCurso.getInstance().getResources()
-				.getStringArray(R.array.indicator);
+		String [] indicatorList = QualCurso.getInstance().getResources().getStringArray(R.array.indicator);
 		ArrayList<Indicator> result = new ArrayList<Indicator>();
 
 		// Attribute INDICATOR List
@@ -124,21 +123,50 @@ public class Indicator {
 		final int NUMBER_ARTICLES = 12;
 		final int NUMBER_WORK = 13;
 
+        // Attribute INDICATOR List
+        final int ID = 0;
+        final int ID_INSTITUTION = 1;
+        final int ID_COURSE = 2;
+        final int YEAR = 3;
+        final int MODALITY = 4;
+        final int MASTER_DEGREE_START_YEAR = 5;
+        final int DOCTORATE_START_YEAR = 6;
+        final int TRIENNIAL_EVALUATION = 7;
+        final int PERMANENT_EVALUATION = 8;
+        final int THESES = 9;
+        final int DISSERTATIONS_EVALUATION = 10;
+        final int ID_ARTICLES = 11;
+        final int ID_BOOKS = 12;
+        final int ARTISTIC_PRODUCTION = 13;
+
 		// Creating indicator objects
 		result.add(new Indicator(indicatorList[INDICATOR], DEFAULT_INDICATOR));
-		result.add(new Indicator(indicatorList[CONCEPT_YEAR], new Evaluation().fieldsList().get(7)));
-		result.add(new Indicator(indicatorList[YEAR_START_MASTERS], new Evaluation().fieldsList().get(5)));
-		result.add(new Indicator(indicatorList[YEAR_START_DOCTORATE], new Evaluation().fieldsList().get(6)));
-		result.add(new Indicator(indicatorList[AVERAGE_ANNUAL_TEACHER], new Evaluation().fieldsList().get(8)));
-		result.add(new Indicator(indicatorList[THESES_DEFENDED], new Evaluation().fieldsList().get(9)));
-		result.add(new Indicator(indicatorList[DISSERTATIONS], new Evaluation().fieldsList().get(10)));
-		result.add(new Indicator(indicatorList[ARTWORK], new Evaluation().fieldsList().get(13)));
-		result.add(new Indicator(indicatorList[NUMBER_OF_BOOK_CHAPTERS], new Book().fieldsList().get(2)));
-		result.add(new Indicator(indicatorList[NUMBER_FULL_TEXT], new Book().fieldsList().get(1)));
-		result.add(new Indicator(indicatorList[NUMBER_COLLECTIONS], new Book().fieldsList().get(3)));
-		result.add(new Indicator(indicatorList[NUMBER_ENTRIES], new Book().fieldsList().get(4)));
-		result.add(new Indicator(indicatorList[NUMBER_ARTICLES], new Article().fieldsList().get(1)));
-		result.add(new Indicator(indicatorList[NUMBER_WORK], new Article().fieldsList().get(2)));
+		result.add(new Indicator(indicatorList[CONCEPT_YEAR],
+                new Evaluation().fieldsList().get(TRIENNIAL_EVALUATION)));
+		result.add(new Indicator(indicatorList[YEAR_START_MASTERS],
+                new Evaluation().fieldsList().get(MASTER_DEGREE_START_YEAR)));
+		result.add(new Indicator(indicatorList[YEAR_START_DOCTORATE],
+                new Evaluation().fieldsList().get(DOCTORATE_START_YEAR)));
+		result.add(new Indicator(indicatorList[AVERAGE_ANNUAL_TEACHER],
+                new Evaluation().fieldsList().get(PERMANENT_EVALUATION)));
+		result.add(new Indicator(indicatorList[THESES_DEFENDED],
+                new Evaluation().fieldsList().get(THESES)));
+		result.add(new Indicator(indicatorList[DISSERTATIONS],
+                new Evaluation().fieldsList().get(DISSERTATIONS_EVALUATION)));
+		result.add(new Indicator(indicatorList[ARTWORK],
+                new Evaluation().fieldsList().get(ARTISTIC_PRODUCTION)));
+		result.add(new Indicator(indicatorList[NUMBER_OF_BOOK_CHAPTERS],
+                new Book().fieldsList().get(ID_COURSE)));
+		result.add(new Indicator(indicatorList[NUMBER_FULL_TEXT],
+                new Book().fieldsList().get(ID_INSTITUTION)));
+		result.add(new Indicator(indicatorList[NUMBER_COLLECTIONS],
+                new Book().fieldsList().get(YEAR)));
+		result.add(new Indicator(indicatorList[NUMBER_ENTRIES],
+                new Book().fieldsList().get(MODALITY)));
+		result.add(new Indicator(indicatorList[NUMBER_ARTICLES],
+                new Article().fieldsList().get(ID_INSTITUTION)));
+		result.add(new Indicator(indicatorList[NUMBER_WORK],
+                new Article().fieldsList().get(ID_COURSE)));
 
         assert (result != null) : "this list must never be null";
 
@@ -147,6 +175,7 @@ public class Indicator {
 
         assert (result.get(FIRST) != null) : "should have first element";
         assert (result.get(LAST) != null) : "should have last element";
+
 		return result;
 	}
 
@@ -160,16 +189,19 @@ public class Indicator {
 	 */
 	public static Indicator getIndicatorByValue(String value) {
 		Indicator indicator = null;
+
 		for(Indicator ind : getIndicators()) {
 			assert (ind.getValue() != null) : "this value is used";
+
 			if(ind.getValue().equals(value)) {
 				indicator = ind;
-				break;
 			} else {
 				/* Nothing to do. */
 			}
 		}
+
         assert (indicator != null) : "Indicator must not be null";
+
 		return indicator;
 	}
 }

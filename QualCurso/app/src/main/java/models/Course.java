@@ -10,9 +10,10 @@ import android.database.SQLException;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import junit.framework.Assert;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 
 public class Course extends Bean implements Parcelable{
@@ -95,8 +96,10 @@ public class Course extends Bean implements Parcelable{
 	 */
 	public boolean save() throws  SQLException {
 		boolean result = false;
+        Assert.assertFalse(result);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = gDB.insertBean(this);
+		assert (gDB != null) : "Receive a null treatment";
 
 		this.setId(Course.last().getId());
 
@@ -119,8 +122,10 @@ public class Course extends Bean implements Parcelable{
 		assert (institution != null) : "Receive a null treatment";
 
 		boolean result = false;
+        Assert.assertFalse(result);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = gDB.addBeanRelationship(this, institution);
+        assert (gDB != null) : "Receive a null treatment";
 
 		return result;
 	}
@@ -143,6 +148,8 @@ public class Course extends Bean implements Parcelable{
 		Course result = new Course(id);
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Course) gDB.selectBean(result);
+        assert (gDB != null) : "Receive a null treatment";
+        assert (result != null) : "Receive a null treatment";
 
 		return result;
 	}
@@ -161,9 +168,11 @@ public class Course extends Bean implements Parcelable{
 		ArrayList<Course> result = new ArrayList<Course>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.selectAllBeans(type,"name")) {
-			result.add((Course) b);
+		for (Bean bean : gDB.selectAllBeans(type,"name")) {
+			result.add((Course) bean);
 		}
+
+        assert (result != null) : "Receive a null treatment";
 
 		return result;
 	}
@@ -180,8 +189,9 @@ public class Course extends Bean implements Parcelable{
 	public static int count() throws SQLException {
 		Course type = new Course();
 		GenericBeanDAO gDB = new GenericBeanDAO();
-
-		return gDB.countBean(type);
+        int countBean = gDB.countBean(type);
+        assert (countBean >= 0) : "Receive a negative treatment";
+		return countBean;
 	}
 
 	/**
@@ -197,7 +207,7 @@ public class Course extends Bean implements Parcelable{
 		Course result = new Course();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Course) gDB.firstOrLastBean(result, false);
-
+        assert (result != null) : "Receive a null treatment";
 		return result;
 	}
 
@@ -214,7 +224,7 @@ public class Course extends Bean implements Parcelable{
 		Course result = new Course();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 		result = (Course) gDB.firstOrLastBean(result, true);
-
+        assert (result != null) : "Receive a null treatment";
 		return result;
 	}
 
@@ -231,10 +241,10 @@ public class Course extends Bean implements Parcelable{
 		ArrayList<Institution> institutions = new ArrayList<Institution>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.selectBeanRelationship(this, "institution", "acronym")) {
-			institutions.add((Institution) b);
+		for(Bean bean : gDB.selectBeanRelationship(this, "institution", "acronym")) {
+			institutions.add((Institution) bean);
 		}
-
+        assert (institutions != null) : "Receive a null treatment";
 		return institutions;
 	}
 
@@ -259,10 +269,10 @@ public class Course extends Bean implements Parcelable{
 		ArrayList<Institution> institutions = new ArrayList<Institution>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.selectBeanRelationship(this, "institution",year,"acronym")) {
-			institutions.add((Institution) b);
+		for (Bean bean : gDB.selectBeanRelationship(this, "institution",year,"acronym")) {
+			institutions.add((Institution) bean);
 		}
-
+        assert (institutions != null) : "Receive a null treatment";
 		return institutions;
 	}
 
@@ -286,18 +296,18 @@ public class Course extends Bean implements Parcelable{
 	 */
 	public static ArrayList<Course> getWhere(String field, String value, boolean like) throws  SQLException {
 		assert (field != null) : "Receive a null treatment";
-		assert (field != "") : "Receive a empty treatment";
+		assert (field.equals("")) : "Receive a empty treatment";
 		assert (value != null) : "Receive a null treatment";
-		assert (value != "") : "Receive a null treatment";
+		assert (value.equals("")) : "Receive a null treatment";
 
 		Course type = new Course();
 		ArrayList<Course> result = new ArrayList<Course>();
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.selectBeanWhere(type, field, value, like,"name")) {
-			result.add((Course) b);
+		for (Bean bean : gDB.selectBeanWhere(type, field, value, like,"name")) {
+			result.add((Course) bean);
 		}
-
+        assert (result != null) : "Receive a null treatment";
 		return result;
 	}
 
@@ -315,7 +325,9 @@ public class Course extends Bean implements Parcelable{
 	 */
 	public static ArrayList<Course> getCoursesByEvaluationFilter(Search search) throws  SQLException {
 		assert (search != null) : "Receive a null tratment";
+
 		ArrayList<Course> result = new ArrayList<Course>();
+
 		String sql = "SELECT c.* FROM course AS c, evaluation AS e, articles AS a, books AS b "+
 					" WHERE year=" + Integer.toString(search.getYear()) +
 					" AND e.id_course = c._id" +
@@ -323,20 +335,21 @@ public class Course extends Bean implements Parcelable{
 					" AND e.id_books = b._id" +
 					" AND " + search.getIndicator().getValue();
 
-		if(search.getMaxValue() == -1){
+		if(search.getMaxValue() == -1) {
 			sql += " >= " + Integer.toString(search.getMinValue());
-		} else{
+		} else {
 			sql += " BETWEEN " + Integer.toString(search.getMinValue()) + " AND " +
 					Integer.toString(search.getMaxValue());
 		}
-		sql += " GROUP BY c._id";
-		GenericBeanDAO
-		gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.runSql(new Course(), sql)){
-			result.add((Course)b);
+		sql += " GROUP BY c._id";
+		GenericBeanDAO gDB = new GenericBeanDAO();
+
+		for (Bean bean : gDB.runSql(new Course(), sql)){
+			result.add((Course)bean);
 		}
 
+        assert (result != null) : "Receive a null treatment";
 		return result;
 	}
 
@@ -359,7 +372,7 @@ public class Course extends Bean implements Parcelable{
 		assert (search != null) : "Receive a null treatment";
 
 		ArrayList<Institution> result = new ArrayList<Institution>();
-		String sql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a, books AS b "+
+		String commandSql = "SELECT i.* FROM institution AS i, evaluation AS e, articles AS a, books AS b "+
 					" WHERE e.id_course=" + Integer.toString(id_course) +
 					" AND e.id_institution = i._id" +
 					" AND e.id_articles = a._id" +
@@ -367,19 +380,22 @@ public class Course extends Bean implements Parcelable{
 					" AND year=" + Integer.toString(search.getYear())+
 					" AND " + search.getIndicator().getValue();
 
-		if(search.getMaxValue() == -1){
-			sql += " >= " + search.getMinValue();
-		}else{
-			sql += " BETWEEN " + Integer.toString(search.getMinValue()) + " AND " +
+        String sql = null;
+		if(search.getMaxValue() == -1) {
+			sql = commandSql + " >= " + search.getMinValue();
+		} else {
+			sql = commandSql + " BETWEEN " + Integer.toString(search.getMinValue()) + " AND " +
 					Integer.toString(search.getMaxValue());
 		}
-		sql += " GROUP BY i._id";
+        Assert.assertNotSame(commandSql, sql);
+
+		commandSql += " GROUP BY i._id";
 		GenericBeanDAO gDB = new GenericBeanDAO();
 
-		for (Bean b : gDB.runSql(new Institution(), sql)){
+		for (Bean b : gDB.runSql(new Institution(), commandSql)){
 			result.add((Institution) b);
 		}
-
+        assert (result != null) : "Receive a null treatment";
 		return result;
 	}
 
@@ -400,6 +416,9 @@ public class Course extends Bean implements Parcelable{
 			genericBeanDao.deleteBeanRelationship(this, i);
 		}
 		isBeanDeleted = genericBeanDao.deleteBean(this);
+
+        assert (genericBeanDao != null) : "Receive a null treatment";
+        Assert.assertNotNull(isBeanDeleted);
 
 		return isBeanDeleted;
 	}
@@ -428,6 +447,8 @@ public class Course extends Bean implements Parcelable{
 			selectedField = "";
 		}
 
+        Assert.assertNotNull(selectedField);
+
 		return selectedField;
 	}
 
@@ -447,13 +468,14 @@ public class Course extends Bean implements Parcelable{
 		assert (data != null) : "Receive a null treatment";
 		assert (data != "") : "Receive a empty treatment";
 
-		if(field.equals("_id")){
+		if(field.equals("_id")) {
 			this.setId(Integer.parseInt(data));
-		}else if(field.equals("name")){
+		} else if(field.equals("name")){
 			this.setName(data);
-		}else {
+		} else {
 			/* Nothing to do! */
 		}
+
 	}
 
     /**
@@ -469,6 +491,8 @@ public class Course extends Bean implements Parcelable{
 		fields.add("_id");
 		fields.add("name");
 
+        assert (fields != null) : "Receive a null treatment";
+
 		return fields;
 	}
 
@@ -479,11 +503,11 @@ public class Course extends Bean implements Parcelable{
      */
 	@Override
 	public String toString() {
-		return getName();
+        return getName();
 	}
 
     /**
-     * transform a parcel into a course.
+     * Transform a parcel into a course.
      *
      * @param in
      *              parcel to receive data.
@@ -498,19 +522,18 @@ public class Course extends Bean implements Parcelable{
 	}
 
     /**
-     * nothing to do.
+     * Nothing to do.
      *
      * @return
      *              zero.
      */
     @Override
     public int describeContents() {
-        // TODO Auto-generated method stub
         return 0;
     }
 
     /**
-     * transform course to parcel
+     * Transform course to parcel
      *
      * @param dest
      *                  parcel to e written.
@@ -527,6 +550,8 @@ public class Course extends Bean implements Parcelable{
 		dest.writeString(this.name);
 		dest.writeString(this.identifier);
 		dest.writeString(this.relationship);
+
+        assert (dest != null) : "Receive a null treatment";
 	}
 	
 	public static final Parcelable.Creator<Course> CREATOR = new Parcelable.Creator<Course>() {
@@ -534,14 +559,15 @@ public class Course extends Bean implements Parcelable{
 		@Override
 		public Course createFromParcel(Parcel source) {
 			assert (source != null) : "Receive a null tratment";
-			return new Course(source);
+            Course course = new Course(source);
+			return course;
 		}
 
 		@Override
 		public Course[] newArray(int size) {
 			assert (size != 0) : "Receive a size tratment";
-			// TODO Auto-generated method stub
-			return new Course[size];
+            Course[] courseArray = new Course[size];
+			return courseArray;
 		}
 	};
 	

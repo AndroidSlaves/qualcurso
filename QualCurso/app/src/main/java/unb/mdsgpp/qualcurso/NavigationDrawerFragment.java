@@ -8,20 +8,18 @@
 
 package unb.mdsgpp.qualcurso;
 
-import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.text.Html;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,7 +29,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import junit.framework.Assert;
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -57,6 +56,8 @@ public class NavigationDrawerFragment extends Fragment {
     // Learner of the Drawer.
     private boolean mUserLearnedDrawer = false;
 
+    private static final String TAG = "QuickNotesNavigationDrawer";
+
     /**
      * Empty constructor
      */
@@ -80,19 +81,26 @@ public class NavigationDrawerFragment extends Fragment {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
         boolean changed = true;
+
         if (savedInstanceState != null) {
-        	if(mCurrentSelectedPosition != savedInstanceState.getInt(STATE_SELECTED_POSITION)){
+        	if(mCurrentSelectedPosition != savedInstanceState.getInt(STATE_SELECTED_POSITION)) {
         		mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
         		changed = true;
-        	}else{
+
+        	} else {
         		changed = false;
         	}
             mFromSavedInstanceState = true;
+
+        } else {
+            Assert.assertNull(savedInstanceState);
         }
 
         // Select either the default item (0) or the last selected item.
-        if(changed){
+        if(changed == true){
         	selectItem(mCurrentSelectedPosition);
+        } else {
+            /* Nothing to do! */
         }
     }
 
@@ -119,19 +127,20 @@ public class NavigationDrawerFragment extends Fragment {
      *              Obligatory parameter.
      * @param savedInstanceState
      *              Obligatory parameter.
-     * @return
+     * @return mDrawerListView
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
+
         mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectItem(position);
             }
         });
+
         mDrawerListView.setAdapter(new ArrayAdapter<String>(
                 getActionBar().getThemedContext(),
                 android.R.layout.simple_list_item_1,
@@ -144,6 +153,7 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section5),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+
         return mDrawerListView;
     }
 
@@ -156,7 +166,7 @@ public class NavigationDrawerFragment extends Fragment {
     public boolean isDrawerOpen() {
         boolean isOpen = false;
 
-        if (mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView)){
+        if(mDrawerLayout != null && mDrawerLayout.isDrawerOpen(mFragmentContainerView)){
             isOpen = true;
         } else {
             isOpen = false;
@@ -197,20 +207,16 @@ public class NavigationDrawerFragment extends Fragment {
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
 
-                if (isAdded()) {
+                if(isAdded()) {
                     getActivity().supportInvalidateOptionsMenu();
                 } else {
                     /* Nothing to Do. */
                 }
-
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                if (!isAdded()) {
-                    return;
-                }
 
                 if (!mUserLearnedDrawer) {
                     // The user manually opened the drawer; store this flag to prevent auto-showing
@@ -219,6 +225,9 @@ public class NavigationDrawerFragment extends Fragment {
                     SharedPreferences sp = PreferenceManager
                             .getDefaultSharedPreferences(getActivity());
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
+
+                } else {
+                    /* Nothing to do! */
                 }
 
                 getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
@@ -243,21 +252,35 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private void selectItem(int position) {
-        if (mDrawerListView != null) {
-        	if(position != mCurrentSelectedPosition){
+        if(mDrawerListView != null) {
+        	if(position != mCurrentSelectedPosition) {
         		mDrawerListView.setItemChecked(position, true);
-        	}
+        	} else {
+                    /* Nothing to do! */
+            }
+        }  else {
+                    /* Nothing to do! */
         }
-        if (mDrawerLayout != null) {
+
+        if(mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
+        } else {
+                    /* Nothing to do! */
         }
-        if (mCallbacks != null) {
-        	if(position != mCurrentSelectedPosition){
+
+        if(mCallbacks != null) {
+        	if(position != mCurrentSelectedPosition) {
             	mCallbacks.onNavigationDrawerItemSelected(position);
-    		}else if(mCurrentSelectedPosition == 0){
+    		} else if(mCurrentSelectedPosition == 0) {
     			mCallbacks.onNavigationDrawerItemSelected(position);
-    		}
+    		}  else {
+                    /* Nothing to do! */
+            }
+
+        }  else {
+                    /* Nothing to do! */
         }
+
         mCurrentSelectedPosition = position;
     }
 
@@ -265,9 +288,10 @@ public class NavigationDrawerFragment extends Fragment {
     public void onAttach(Activity activity) {
         assert (activity != null) : "Receive a null treatment";
         super.onAttach(activity);
+
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
-        } catch (ClassCastException e) {
+        } catch (ClassCastException exceptionClass) {
             throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
         }
     }
@@ -308,7 +332,7 @@ public class NavigationDrawerFragment extends Fragment {
         assert (item != null) : "Receive a null treatment";
 
         boolean isItemSelected = false;
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if(mDrawerToggle.onOptionsItemSelected(item)) {
             isItemSelected = true;
         } else {
             isItemSelected = super.onOptionsItemSelected(item);
@@ -328,10 +352,16 @@ public class NavigationDrawerFragment extends Fragment {
         actionBar.setTitle(getFormatedTitle(getString(R.string.app_name)));
     }
     
-    public CharSequence getFormatedTitle(CharSequence s){
+    public CharSequence getFormatedTitle(CharSequence charSequence){
+        /**
+         * Returns the string representation of the unsigned integer value represented by the argument
+         * in hexadecimal (base 16).
+         */
+        final int START = 2;
+
 		int actionBarTitleColor = getResources().getColor(R.color.actionbar_title_color);
         final CharSequence FORMATED_TITLE = Html.fromHtml("<font color='#" +
-                Integer.toHexString(actionBarTitleColor).substring(2) + "'><b>" + s + "</b></font>");
+                Integer.toHexString(actionBarTitleColor).substring(START) + "'><b>" + charSequence + "</b></font>");
 
 		return FORMATED_TITLE;
 	}

@@ -8,6 +8,7 @@ package unb.mdsgpp.qualcurso;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Logger;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -73,12 +74,14 @@ public class ListAdapter extends ArrayAdapter<HashMap<String, String>> {
 
 		View view = convertView;
 
-		if (view == null) {
+		if(view == null) {
 			LayoutInflater layoutInflater;
 			layoutInflater = LayoutInflater.from(getContext());
 			assert (layoutInflater != null) : "layout should not be null";
 			view = layoutInflater.inflate(R.layout.list_item, null);
-		}else{/*Nothing to do*/}
+		} else {
+		    /*Nothing to do*/
+        }
 
 		HashMap<String, String> hashMap = getItem(position);
 

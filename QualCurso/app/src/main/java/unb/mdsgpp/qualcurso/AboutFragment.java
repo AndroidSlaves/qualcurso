@@ -3,6 +3,7 @@
  *
  * Purpose: Screen that shows information about the QualCurso application.
  ****************************/
+
 package unb.mdsgpp.qualcurso;
 
 import android.app.Activity;
@@ -12,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import junit.framework.Assert;
+
 public class AboutFragment extends Fragment {
 	BeanListCallbacks beanCallbacks;
 
@@ -19,7 +22,7 @@ public class AboutFragment extends Fragment {
      * Empty Constructor.
      */
 	public AboutFragment() {
-		super();
+        super();
 	}
 
     /**
@@ -29,8 +32,8 @@ public class AboutFragment extends Fragment {
      *              a new instance of AboutFragment class.
      */
 	public static AboutFragment newInstance() {
-		AboutFragment about = new AboutFragment();
-		return about;
+		AboutFragment aboutFragment = new AboutFragment();
+		return aboutFragment;
 	}
 
     /**
@@ -42,11 +45,12 @@ public class AboutFragment extends Fragment {
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+        assert (activity != null) : "Receive a null treatment";
+
 		try {
 			beanCallbacks = (BeanListCallbacks) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement BeanListCallbacks.");
+		} catch(ClassCastException exceptionClass) {
+			throw new ClassCastException(activity.toString() + " must implement BeanListCallbacks.");
 		}
 	}
 
@@ -57,6 +61,7 @@ public class AboutFragment extends Fragment {
 	public void onDetach() {
 		super.onDetach();
 		beanCallbacks = null;
+        Assert.assertNull(beanCallbacks);
 	}
 
     /**
@@ -71,6 +76,8 @@ public class AboutFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 	Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.about_fragment, container, false);
+
+        Assert.assertNotNull(rootView);
 
 		return rootView;
 	}

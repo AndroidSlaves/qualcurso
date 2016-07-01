@@ -14,6 +14,7 @@ import models.Institution;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +29,24 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
 
 	// Defines the structure of the term presented institutions, word formatting.
 	public static int INSTITUTION = R.string.institution;
+
 	// Indicates the selected position of the item in the CheckBox component list.
 	public static int POSITION = R.id.checkbox;
+
 	// Calls to call another Fragment identifying call.
 	private Fragment callingFragment = null;
+
 	// Used to identify which item from the list of institutions was selected by the user.
 	private CheckBoxListCallbacks checkBoxCallBacks;
+
 	// Component used to list the institutions.
 	private CheckBox checkBox = null;
+
 	// List of items within the CheckBox component to the user's selection.
 	private ArrayList<Boolean> checkedItems = new ArrayList<Boolean>();
+
+    // Used to Log system.
+    final String TAG = ListCompareAdapter.class.getSimpleName();
 
 	/**
 	 * Rescuing Father class attribute values, sets the Fragment type attribute to call fragment
@@ -55,6 +64,7 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
 	@SuppressLint("Assert")
 	public ListCompareAdapter(Context context, int resource, List<Institution> item,
 							  Fragment callingFragment) {
+
 		super(context, resource, item);
 		assert (context != null) : "Receive the null context of treatment";
 		assert (resource > 0) : "Treatment to lower value of resource";
@@ -62,7 +72,7 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
 
 		this.callingFragment = callingFragment;
 		checkedItems = new ArrayList<Boolean>();
-		for (int i = 0; i < this.getCount(); i++) {
+		for(int aux = 0; aux < this.getCount(); aux++) {
 			checkedItems.add(false);
 		}
 	}
@@ -82,30 +92,36 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
      */
 	@SuppressLint("InflateParams")
 	@Override
-	public View getView(int position, View contextView, ViewGroup parent){
+	public View getView(int position, View contextView, ViewGroup parent) {
+
 		View currentView = contextView;
 		checkBoxCallBacks = (CheckBoxListCallbacks)this.callingFragment;
-		if(currentView == null){
-			LayoutInflater li;
-			li = LayoutInflater.from(getContext());
-			currentView = li.inflate(R.layout.compare_choose_list_item, null);
+
+		if(currentView == null) {
+			LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+			currentView = layoutInflater.inflate(R.layout.compare_choose_list_item, null);
 			assert (currentView != null) : "this view should not be null";
 
-		}else{/*Nothing to do*/}
-
+		} else {
+		    /*Nothing to do*/
+        }
 
 		Institution institution = getItem(position);
 
-		if(institution != null){
+		if(institution != null) {
 			checkBox = (CheckBox) currentView.findViewById(R.id.compare_institution_checkbox);
 			assert (checkBox != null) : "checkbox should not be null";
+
 			checkBox.setText(institution.getAcronym());
 			checkBox.setTag(INSTITUTION, institution);
 			checkBox.setTag(POSITION, position);
 			checkBox.setChecked(checkedItems.get(position));
 			checkBox.setOnCheckedChangeListener(this);
 			currentView.setTag(checkBox);
-		}else{/*Nothing to do*/}
+
+		} else {
+            Log.w(TAG, "Null institution to take position");
+        }
 
 		return currentView;
 	}
@@ -120,15 +136,17 @@ public class ListCompareAdapter extends ArrayAdapter<Institution> implements
      */
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		int pos = (Integer)buttonView.getTag(ListCompareAdapter.POSITION);
+		int position = (Integer)buttonView.getTag(ListCompareAdapter.POSITION);
 
-        if (pos != ListView.INVALID_POSITION) {
-        	if(isChecked){
+        if (position != ListView.INVALID_POSITION) {
+        	if(isChecked == true) {
 				checkBoxCallBacks.onCheckedItem((CheckBox)buttonView);
-			}else{
+			} else {
 				checkBoxCallBacks.onUnchekedItem((CheckBox)buttonView);
 			}
-        	checkedItems.set(pos, isChecked);
-        }else{/*Nothing to do*/}
+        	checkedItems.set(position, isChecked);
+        } else {
+            Log.d(TAG, "Invalid position - buttonView");
+        }
 	}
 }

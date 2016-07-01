@@ -66,9 +66,7 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
         assert (position >= 0) : "Treatment for lower position of an item in the list";
         assert (parent != null) : "Receive the null treatment";
 
-		View view = convertView;
-
-        view = nullView(convertView);
+		View view = nullView(convertView);
 
         // Getting indicators in their positions.
 		HashMap<String,String> hashMap = getItem(position);
@@ -92,6 +90,7 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
     	} else {
     	    /*Nothing to do*/
         }
+
     	return view;
 	}
 
@@ -111,7 +110,7 @@ public class IndicatorListAdapter extends ArrayAdapter<HashMap<String,String>> {
             inflateView = LayoutInflater.from(getContext());
             view = inflateView.inflate(itemLayout, null);
 
-            Log.i(CLASS_NAME_FOR_LOG + "nullView", "View sucesfully initialized!");
+            Log.i(CLASS_NAME_FOR_LOG + "nullView", "View successfully initialized!");
         } else {
             Log.w(CLASS_NAME_FOR_LOG + "nullView", "View not initialized!");
         }

@@ -31,19 +31,19 @@ public class TestCourse extends AndroidTestCase {
 
     public void testSetName(){
         Course nameCourse = new Course();
-        nameCourse.setName("Fogo e Gelo");
-        assertEquals(nameCourse.getName(), "Fogo e Gelo");
+        nameCourse.setName("Business");
+        assertEquals(nameCourse.getName(), "Business");
     }
 
     public void testSetNameMustFail(){
         Course nameCourse = new Course();
-        nameCourse.setName("Fogo e Gelo");
-        assertNotSame(nameCourse.getName(), "FOGO e Gelo");
+        nameCourse.setName("Engineering");
+        assertNotSame(nameCourse.getName(), "Business");
     }
 
     public void testSetNameNotNull(){
         Course nameCourse = new Course();
-        nameCourse.setName("Princesa de Fogo");
+        nameCourse.setName("Engineering");
         assertNotNull(nameCourse.getName());
     }
 

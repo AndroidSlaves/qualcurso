@@ -17,12 +17,6 @@ public class TestCourse extends AndroidTestCase {
         assertNotSame(idCourse.getId(), 10);
     }
 
-    public void testSetIdCourseMustNotBeZero(){
-        Course idCourse = new Course();
-        idCourse.setId(0);
-        assertNotSame(idCourse.getId(), 10);
-    }
-
     public void testGetIdCourse(){
         Course idCourse = new Course();
         idCourse.setId(15);

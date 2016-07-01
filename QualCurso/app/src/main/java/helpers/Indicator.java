@@ -8,14 +8,11 @@ package helpers;
 
 import android.annotation.SuppressLint;
 
-import junit.framework.Assert;
-
 import java.util.ArrayList;
 
 import models.Article;
 import models.Book;
 import models.Evaluation;
-
 import unb.mdsgpp.qualcurso.QualCurso;
 import unb.mdsgpp.qualcurso.R;
 
@@ -80,7 +77,7 @@ public class Indicator {
 	 * 				Value of bookmark.
 	 */
 	public void setValue(String value) {
-        this.value = value;
+		this.value = value;
 	}
 
 	/**

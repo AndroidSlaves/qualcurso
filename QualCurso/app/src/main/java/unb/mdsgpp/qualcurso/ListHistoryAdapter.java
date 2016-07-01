@@ -7,17 +7,24 @@ import models.Search;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import junit.framework.Assert;
+
 public class ListHistoryAdapter extends ArrayAdapter<Search> {
+
+    // Used to Log system.
+    final String TAG = ListHistoryAdapter.class.getSimpleName();
 
 	@SuppressLint("Assert")
 	public ListHistoryAdapter(Context context, int resource, List<Search> items) {
 		super(context, resource, items);
+
 		assert (context != null) : "Receive the null context of treatment";
 		assert (resource > 0) : "Treatment to lower value of resource";
 	}
@@ -34,30 +41,41 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 	public View getView(int position, View contextView, ViewGroup parent) {
 		View view = contextView;
 
-		if (view == null) {
-			LayoutInflater li;
-			li = LayoutInflater.from(getContext());
-			view = li.inflate(R.layout.history_list_item, null);
-		}else{/*Nothing to do*/}
+		if(view == null) {
+			LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+			view = layoutInflater.inflate(R.layout.history_list_item, null);
+
+		} else {
+			/* Nothing to do! */
+        }
 
 		// Getting values of the search screen
 		Search search = getItem(position);
-		if (search != null) {
+
+		if(search != null) {
 			option = (TextView) view.findViewById(R.id.option);
 			assert (option != null) : "option text view should not be null";
+
 			year = (TextView) view.findViewById(R.id.year);
 			assert (year != null) : "year text view should not be null";
+
 			indicator = (TextView) view.findViewById(R.id.indicator);
 			assert (indicator != null) : "indicator text view should not be null";
+
 			firstValue = (TextView) view.findViewById(R.id.firstValue);
 			assert (firstValue != null) : "firstValues text view should not be null";
+
 			secondValue = (TextView) view.findViewById(R.id.secondValue);
-			assert (secondValue != null) : "secondvalue text view should not be null";
+			assert (secondValue != null) : "secondValue text view should not be null";
+
 			searchDate = (TextView) view.findViewById(R.id.searchDate);
 			assert (searchDate != null) : "search date text view should not be null";
-			setListRow(search);
-		}else{/*Nothing to do*/}
 
+			setListRow(search);
+
+		} else {
+		    /* Nothing to do! */
+        }
 
 		assert (view != null) : "this view should never be null";
 		return view;
@@ -70,41 +88,46 @@ public class ListHistoryAdapter extends ArrayAdapter<Search> {
 	 * @param search
 	 */
 	public void setListRow(Search search) {
-		if (search.getOption() == Search.COURSE) {
-			setItem(option, R.string.course);
-		} else if (search.getOption() == Search.INSTITUTION) {
-			setItem(option, R.string.institution);
 
-		}else{/*Nothing to do*/}
+		if(search.getOption() == Search.COURSE) {
+			setItem(option, R.string.course);
+		} else if(search.getOption() == Search.INSTITUTION) {
+			setItem(option, R.string.institution);
+		} else {
+		    /* Nothing to do! */
+        }
 
 		setItem(year, Integer.toString(search.getYear()));
 		setItem(indicator, search.getIndicator().getName());
 		setItem(firstValue, Integer.toString(search.getMinValue()));
 
-
 		int max = search.getMaxValue();
-		if (max == -1) {
-			setItem(secondValue, R.string.maximum);
-		} else {
-			setItem(secondValue, Integer.toString(max));
-		}
-		setItem(searchDate,
-				SimpleDateFormat.getDateTimeInstance().format(search.getDate()));
+
+        if(max != -1) {
+            setItem(secondValue, Integer.toString(max));
+        } else {
+            setItem(secondValue, R.string.maximum);
+            Log.w(TAG, "Value max is negative in the setListRow");
+        }
+
+		setItem(searchDate,SimpleDateFormat.getDateTimeInstance().format(search.getDate()));
 	}
 
 	public void setItem(TextView view, String data) {
-		if (view != null) {
+		if(view != null) {
 			view.setText(data);
-		}else {
-			/*Nothing to do */
-		}
+		} else {
+            Assert.assertNull(view);
+            Log.d(TAG, "View null in the setView with data.");
+        }
 	}
 
 	public void setItem(TextView view, int resId) {
-		if (view != null) {
+		if(view != null) {
 			view.setText(resId);
-		}else {
-			/*Nothing to do */
+		} else {
+            Assert.assertNull(view);
+            Log.d(TAG, "View null in the setView with resId.");
 		}
 	}
 }

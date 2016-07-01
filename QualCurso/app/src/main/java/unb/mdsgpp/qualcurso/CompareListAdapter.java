@@ -4,23 +4,22 @@
  * Purpose: Comparison screen presentation institutions.
  ************************/
 
-// Package of file.
 package unb.mdsgpp.qualcurso;
 
-// Java API imports.
 import java.util.HashMap;
 import java.util.List;
 
-// Android API imports.
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-// Project imports.
+import junit.framework.Assert;
+
 import helpers.Indicator;
 
 public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
@@ -31,6 +30,9 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 	public static String IGNORE_INDICATOR = "ignoreIndicator";
 	public static String FALSE = "false";
 
+    // Used to Log system.
+    final String TAG = CompareListAdapter.class.getSimpleName();
+
 	@SuppressLint("Assert")
 	public CompareListAdapter(Context context, int textViewResourceId) {
 		super(context, textViewResourceId);
@@ -40,8 +42,7 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 	}
 
 	@SuppressLint("Assert")
-	public CompareListAdapter(Context context, int resource,
-			List<HashMap<String, String>> items) {
+	public CompareListAdapter(Context context, int resource, List<HashMap<String, String>> items) {
 		super(context, resource, items);
 
 		assert (context != null) : "Receive the null context of treatment";
@@ -54,26 +55,30 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 		View view = convertView;
 
 		if(view == null) {
-			LayoutInflater layoutInflater;
-			layoutInflater = LayoutInflater.from(getContext());
+			LayoutInflater layoutInflater = LayoutInflater.from(getContext());
 			view = layoutInflater.inflate(R.layout.compare_show_list_item, null);
-
-		}else{/*Nothing to do*/}
+            Log.i(TAG, "View inflate with LayoutInflater when was null");
+		} else {
+            Assert.assertNotNull(view);
+            Log.i(TAG, "View is not null");
+		}
 
 		HashMap<String, String> hashMap = getItem(position);
 
 		if(hashMap != null) {
 			TextView indicatorNameTextView = (TextView) view
-					.findViewById(R.id.compare_indicator_name);
+                    .findViewById(R.id.compare_indicator_name);
 			TextView firstIndicatorTextView = (TextView) view
 					.findViewById(R.id.compare_first_institution_indicator);
 			TextView secondIndicatorTextView = (TextView) view
-					.findViewById(R.id.compare_second_institution_indicator);
+                    .findViewById(R.id.compare_second_institution_indicator);
 
 			if(indicatorNameTextView != null) {
 				indicatorNameTextView.setText(Indicator.getIndicatorByValue(
 						hashMap.get(INDICATOR_VALUE)).getName());
-			} else {/*Nothing to do*/}
+			} else {
+			    /* Nothing to do! */
+            }
 
 			if(firstIndicatorTextView != null || secondIndicatorTextView != null) {
 				int first = Integer.parseInt(hashMap.get(FIRST_VALUE));
@@ -81,41 +86,76 @@ public class CompareListAdapter extends ArrayAdapter<HashMap<String, String>> {
 				firstIndicatorTextView.setText(Integer.toString(first));
 				secondIndicatorTextView.setText(Integer.toString(second));
 
-				if (hashMap.get(IGNORE_INDICATOR).equals(FALSE)) {
-					if(first > second) {
-						firstIndicatorTextView.setBackgroundColor(QualCurso
-								.getInstance().getResources()
-								.getColor(R.color.light_green));
-						secondIndicatorTextView.setBackgroundColor(QualCurso
-								.getInstance().getResources()
-								.getColor(R.color.smooth_red));
-					} else if(second > first) {
-						secondIndicatorTextView.setBackgroundColor(QualCurso
-								.getInstance().getResources()
-								.getColor(R.color.light_green));
-						firstIndicatorTextView.setBackgroundColor(QualCurso
-								.getInstance().getResources()
-								.getColor(R.color.smooth_red));
-					} else {
-						secondIndicatorTextView.setBackgroundColor(QualCurso
-								.getInstance().getResources()
-								.getColor(R.color.white));
-						firstIndicatorTextView.setBackgroundColor(QualCurso
-								.getInstance().getResources()
-								.getColor(R.color.white));
-					}
+				if(hashMap.get(IGNORE_INDICATOR).equals(FALSE)) {
+
+                    int comparisonIndicators = compareIndicators(first, second);
+                    Assert.assertNotNull(comparisonIndicators);
+                    assert (comparisonIndicators > 0) : "ComparisonIndcator - Receive the null of treatment";
+
+                    switch(comparisonIndicators){
+                        case 1: firstBiggerSecond(firstIndicatorTextView,secondIndicatorTextView);
+                            break;
+                        case 2: secondBiggerFirst(firstIndicatorTextView, secondIndicatorTextView);
+                            break;
+                        case 3: secondEqualsFirst(firstIndicatorTextView, secondIndicatorTextView);
+                            break;
+                        default: Log.w(TAG, "There was no comparison between the indicators.");
+                            break;
+                    }
 				} else {
-					secondIndicatorTextView.setBackgroundColor(QualCurso
-							.getInstance().getResources()
+					secondIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
 							.getColor(R.color.white));
-					firstIndicatorTextView.setBackgroundColor(QualCurso
-							.getInstance().getResources()
+					firstIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
 							.getColor(R.color.white));
 				}
 			}
-		}else{/*Nothing to do*/}
+
+		} else {
+            Log.i(TAG, "HashMap is null");
+        }
 
 		return view;
 	}
+
+    public static int compareIndicators (int first, int second) {
+        int comparisonIndicators = 0;
+
+        if(first > second){
+            comparisonIndicators = 1;
+        } else if (second > first) {
+            comparisonIndicators = 2;
+        } else {
+            comparisonIndicators = 3;
+        }
+
+        return comparisonIndicators;
+    }
+
+    private static void firstBiggerSecond(TextView firstIndicatorTextView,
+                                          TextView secondIndicatorTextView) {
+
+        firstIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
+                .getColor(R.color.light_green));
+        secondIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
+                .getColor(R.color.smooth_red));
+    }
+
+    private static void secondBiggerFirst(TextView firstIndicatorTextView,
+                                          TextView secondIndicatorTextView) {
+
+        secondIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
+                .getColor(R.color.light_green));
+        firstIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
+                .getColor(R.color.smooth_red));
+    }
+
+    private static void secondEqualsFirst(TextView firstIndicatorTextView,
+                                          TextView secondIndicatorTextView) {
+
+        secondIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
+                .getColor(R.color.white));
+        firstIndicatorTextView.setBackgroundColor(QualCurso.getInstance().getResources()
+                .getColor(R.color.white));
+    }
 
 }

@@ -23,27 +23,42 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class CompareShowFragment extends Fragment{
-	
+	// First evaluation to be compared
 	private static String ID_EVALUATION_A = "idEvaluationA";
+	// Second evaluation to be compared
 	private static String ID_EVALUATION_B = "idEvaluationB";
+	// generic object with data
 	BeanListCallbacks beanCallbacks;
-
+	// View object with the compare results of the first institution
 	private TextView compareFirstInstitutionBetterResults;
+	// View object with the compare results of the second institution
 	private TextView compareSecondInstitutionBetterResults;
-
+	// value of the compared institutions
 	private int totalBetterEvaluationInstitutionA;
+	// value of the compared institutions
 	private int totalBetterEvaluationInstitutionB;
-	
-	
+
+	/**
+	 * View object that will compare institutions.
+	 */
 	public CompareShowFragment() {
-		// TODO Auto-generated constructor stub
 		super();
 		Bundle args = new Bundle();
 		args.putInt(ID_EVALUATION_A, 0);
 		args.putInt(ID_EVALUATION_B, 0);
 		this.setArguments(args);
 	}
-	
+
+	/**
+	 * Constructor for new instance of the compare view.
+	 *
+	 * @param idEvaluationA
+	 * 				First institution to be compared
+	 * @param idEvaluationB
+	 * 				Second institution to be compared
+	 * @return
+	 * 				The view object with the comparison.
+	 */
 	public static CompareShowFragment newInstance(int idEvaluationA, int idEvaluationB){
 		CompareShowFragment fragment = new CompareShowFragment();
 		Bundle args = new Bundle();
@@ -57,6 +72,13 @@ public class CompareShowFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, 	Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.compare_show_fragment, container, false);
 
+		compareInstitutions(rootView);
+
+		super.onCreateView(inflater, container, savedInstanceState);
+		return rootView;
+	}
+
+	private void compareInstitutions(View rootView) {
 		TextView courseNameTextView = (TextView) rootView.findViewById(R.id.compare_course_name);
 		TextView firstAcronymTextView = (TextView) rootView.findViewById(R.id.compare_first_institution_acronym);
 		TextView secondAcronymTextView = (TextView) rootView.findViewById(R.id.compare_second_institution_acronym);
@@ -84,9 +106,6 @@ public class CompareShowFragment extends Fragment{
 				, R.layout.compare_show_list_item, getListItems(evaluationA, evaluationB)));
 
 		this.setBetterInstitutionsValues();
-
-		super.onCreateView(inflater, container, savedInstanceState);
-		return rootView;
 	}
 
 

@@ -63,7 +63,7 @@
         <item>2010</item>
     </string-array>
 
-    <string name="course">Curso</string>
+    <string name="course">Course</string>
     <string name="institution">Institution</string>
     <string name="institutions">Institutions</string>
     <string name="courses">Courses</string>

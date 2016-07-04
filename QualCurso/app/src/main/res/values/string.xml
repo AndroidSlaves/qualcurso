@@ -52,10 +52,10 @@
         <item>Total defended artwork</item>
         <item>Amount of books published chapters</item>
         <item>Number of published full texts</item>
-        <item>Quantidade de coletâneas publicadas</item>
-        <item>Quantidade de verbetes e outros publicados</item>
-        <item>Quantidade de artigos publicados</item>
-        <item>Quantidade de trabalhos publicados</item>
+        <item>Number of published compilations</item>
+        <item>Entries of quantity and other published</item>
+        <item>Number of published articles</item>
+        <item>Number of published works</item>
     </string-array>
     <string-array name="year">
         <item>Year</item>
@@ -63,41 +63,41 @@
         <item>2010</item>
     </string-array>
 
-    <string name="course">Curso</string>
+    <string name="course">Course</string>
     <string name="institution">Institution</string>
     <string name="institutions">Institutions</string>
-    <string name="courses">Cursos</string>
+    <string name="courses">Courses</string>
     <string name="evaluation_date">DATE OF EVALUATION</string>
     <string name="modality">MODALIDADE</string>
-    <string name="history">Histórico</string>
+    <string name="history">Historic</string>
     <string name="search_by">Search for: </string>
     <string name="byYear">Year: </string>
     <string name="by_indicator">Indicator: </string>
     <string name="and">and</string>
-    <string name="maximum">Máximo</string>
-    <string name="search_date">Busca realizada em:</string>
+    <string name="maximum">Maximum</string>
+    <string name="search_date">Search took: </string>
     <string name="title_text_compare">Compare Institutution</string>
     <string name="choose_the_evaluation_year">Year of Evaluation:</string>
     <string name="select_a_course">Select a course</string>
     <string name="select_a_year">Select a year</string>
-    <string name="compare_show_better_institutions_results">Total de melhores resuldados:</string>
-    <string name="empty_histoty_search_result">Esta busca resulta em uma lista vazia</string>
+    <string name="compare_show_better_institutions_results">Total best results:</string>
+    <string name="empty_histoty_search_result">This search results in an empty list</string>
     <string name="trophyImage">trophyImage</string>
-    <string name="about_studens_text">Este é um projeto realizado pelos alunos da disciplina de
-                                      Métodos de Desenvolvimento de Software (MDS) e gerenciado por
-                                      alunos da disciplina de Gerenciamento de Projetos e Portfólios
-                                      (GPP), ministrada pelo professor Hilmer Rodrigues Neri na
-                                      Universidade de Brasília.</string>
-    <string name="about_app_text">O “Qual Curso?” é um aplicativo Android destinado a auxiliar
-                                  estudantes a encontrar uma instituição de ensino superior com uma
-                                  melhor qualificação acadêmica, por meio da reunião de dados e
-                                  indicadores referentes a avaliações de universidades
-                                  brasileiras.</string>
-    <string name="about_mds_studens_title">Alunos de MDS:</string>
-    <string name="about_gpp_studens_title">Alunos de GPP:</string>
+    <string name="about_studens_text">This is a project carried out by students of the discipline
+                                       Software Development Methods (MDS) and managed by
+                                       students of the discipline of Project and Portfolio Management
+                                       (GPP), given by Professor Hilmer Neri Rodrigues in
+                                       University of Brasilia.</string>
+    <string name="about_app_text">The "Qual Curso?" It is an Android application designed to help
+                                   students find a higher education institution with a
+                                   better academic qualifications through the data gathering and
+                                   indicators for universities assessments
+                                   Brazilian.</string>
+    <string name="about_mds_studens_title">MDS students:</string>
+    <string name="about_gpp_studens_title">GPP students:</string>
     <string name="about_mds_studens_text">André Bernardes\nBrenddon Gontijo\nElaine Cristina
                                           Meirelles\nFábio Teixeira\nJônnatas Lennon</string>
     <string name="about_gpp_studens_text">Gabriela Navarro\nYeltsin Suares</string>
-    <string name="version_year">Versão 1.0\n©2014\n</string>
+    <string name="version_year">Version 1.0\n©2014\n</string>
 
 </resources>

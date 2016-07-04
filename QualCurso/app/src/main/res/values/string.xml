@@ -44,7 +44,7 @@
     <string-array name="indicator">
         <item>Indicator</item>
         <item>Concept in the reporting year</item>
-        <item>Year master's start</item>
+        <item>Year master\'s start</item>
         <item>Year doctoral start</item>
         <item>Average annual permanent teachers</item>
         <item>Total theses defended</item>
